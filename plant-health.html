@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Health Analysis - SmartFarm</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-seedling"></i>
+                <span>SmartFarm</span>
+            </div>
+            <ul class="nav-menu">
+    <li><a href="index.html" class="nav-link">Home</a></li>
+    <li><a href="weather.html" class="nav-link active">Weather</a></li>
+    <li><a href="plant-health.html" class="nav-link">Plant Health</a></li>
+    <li><a href="know-your-plant.html" class="nav-link">Know Your Plant</a></li>
+    <li><a href="hardware.html" class="nav-link">Hardware</a></li>
+    <li><a href="team.html" class="nav-link">Our Team</a></li>
+    <li><a href="login.html" class="nav-link login-btn">Login</a></li>
+</ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <h1><i class="fas fa-leaf"></i> Plant Health Analysis</h1>
+            <p>AI-powered plant disease detection and health assessment</p>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="form-container">
+                <h2>Upload Plant Image for Analysis</h2>
+                <p class="text-center mb-3">Take a clear photo of the plant leaf or affected area and upload it below.</p>
+                
+                <form id="plant-health-form">
+                    <div class="form-group">
+                        <label for="plant-type">Plant Type (Optional)</label>
+                        <select id="plant-type" name="plant-type">
+                            <option value="">Select plant type...</option>
+                            <option value="tomato">Tomato</option>
+                            <option value="potato">Potato</option>
+                            <option value="wheat">Wheat</option>
+                            <option value="rice">Rice</option>
+                            <option value="corn">Corn</option>
+                            <option value="cotton">Cotton</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="plant-image">Upload Plant Image</label>
+                        <div class="file-upload">
+                            <input type="file" id="plant-image" name="plant-image" accept="image/*" required>
+                            <label for="plant-image" class="file-upload-label">
+                                <i class="fas fa-cloud-upload-alt"></i> Choose image file...
+                            </label>
+                        </div>
+                        <small>Supported formats: JPG, PNG, JPEG (Max 5MB)</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="symptoms">Observed Symptoms (Optional)</label>
+                        <textarea 
+                            id="symptoms" 
+                            name="symptoms" 
+                            rows="3" 
+                            placeholder="Describe any symptoms you've observed (e.g., yellowing leaves, spots, wilting...)"
+                        ></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-microscope"></i> Analyze Plant Health
+                    </button>
+                </form>
+            </div>
+
+            <div id="analysis-result" class="analysis-result"></div>
+
+            <div class="info-card">
+                <h3><i class="fas fa-camera"></i> Photography Tips for Better Analysis</h3>
+                <div class="photo-tips-grid">
+                    <div class="tip-card">
+                        <i class="fas fa-sun"></i>
+                        <h4>Good Lighting</h4>
+                        <p>Take photos in natural daylight or bright, even lighting conditions.</p>
+                    </div>
+                    <div class="tip-card">
+                        <i class="fas fa-focus"></i>
+                        <h4>Clear Focus</h4>
+                        <p>Ensure the affected area is in sharp focus and clearly visible.</p>
+                    </div>
+                    <div class="tip-card">
+                        <i class="fas fa-crop-alt"></i>
+                        <h4>Close-up View</h4>
+                        <p>Capture close-up images showing the symptoms clearly.</p>
+                    </div>
+                    <div class="tip-card">
+                        <i class="fas fa-hand-paper"></i>
+                        <h4>Steady Shot</h4>
+                        <p>Keep your hands steady to avoid blurry images.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3><i class="fas fa-info-circle"></i> How Our AI Analysis Works</h3>
+                <div class="process-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Image Processing</h4>
+                            <p>Our AI analyzes the uploaded image using advanced computer vision algorithms.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Disease Detection</h4>
+                            <p>The system identifies potential diseases, pests, or nutrient deficiencies.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Health Assessment</h4>
+                            <p>A comprehensive health score is calculated based on multiple factors.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Treatment Recommendations</h4>
+                            <p>Specific treatment options and preventive measures are provided.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3><i class="fas fa-shield-alt"></i> Common Plant Health Issues</h3>
+                <div class="health-issues-grid">
+                    <div class="issue-card">
+                        <i class="fas fa-bug"></i>
+                        <h4>Pest Damage</h4>
+                        <p>Insects and other pests can cause visible damage to leaves, stems, and fruits.</p>
+                    </div>
+                    <div class="issue-card">
+                        <i class="fas fa-virus"></i>
+                        <h4>Fungal Diseases</h4>
+                        <p>Spots, mold, and discoloration often indicate fungal infections.</p>
+                    </div>
+                    <div class="issue-card">
+                        <i class="fas fa-flask"></i>
+                        <h4>Nutrient Deficiency</h4>
+                        <p>Yellowing, browning, or unusual leaf coloration may indicate nutrient problems.</p>
+                    </div>
+                    <div class="issue-card">
+                        <i class="fas fa-thermometer-three-quarters"></i>
+                        <h4>Environmental Stress</h4>
+                        <p>Heat, cold, drought, or overwatering can cause various symptoms.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-seedling"></i> SmartFarm</h3>
+                    <p>Revolutionizing agriculture with IoT and smart farming solutions</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="weather.html">Weather</a></li>
+                        <li><a href="plant-health.html">Plant Health</a></li>
+                        <li><a href="know-your-plant.html">Know Your Plant</a></li>
+                        <li><a href="team.html">Our Team</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-envelope"></i> contact@smartfarm.com</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SmartFarm. All rights reserved. | Final Year Project</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="javascript.js"></script>
+
+    <style>
+        .photo-tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .tip-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .tip-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .tip-card i {
+            font-size: 2rem;
+            color: #2c7a2c;
+            margin-bottom: 1rem;
+        }
+
+        .tip-card h4 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .step:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #2c7a2c, #4CAF50);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content p {
+            color: #666;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .health-issues-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .issue-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #2c7a2c;
+            transition: all 0.3s ease;
+        }
+
+        .issue-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .issue-card i {
+            font-size: 2rem;
+            color: #2c7a2c;
+            margin-bottom: 1rem;
+        }
+
+        .issue-card h4 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .issue-card p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .detail-section {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .detail-section h4 {
+            color: #333;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .detail-section h4 i {
+            margin-right: 0.5rem;
+            color: #2c7a2c;
+        }
+
+        .detail-section p {
+            color: #666;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .process-steps {
+                grid-template-columns: 1fr;
+            }
+            
+            .photo-tips-grid,
+            .health-issues-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>

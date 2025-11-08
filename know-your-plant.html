@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Know Your Plant - SmartFarm</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-seedling"></i>
+                <span>SmartFarm</span>
+            </div>
+            <ul class="nav-menu">
+    <li><a href="index.html" class="nav-link">Home</a></li>
+    <li><a href="weather.html" class="nav-link active">Weather</a></li>
+    <li><a href="plant-health.html" class="nav-link">Plant Health</a></li>
+    <li><a href="know-your-plant.html" class="nav-link">Know Your Plant</a></li>
+    <li><a href="hardware.html" class="nav-link">Hardware</a></li>
+    <li><a href="team.html" class="nav-link">Our Team</a></li>
+    <li><a href="login.html" class="nav-link login-btn">Login</a></li>
+</ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <h1><i class="fas fa-database"></i> Know Your Plant</h1>
+            <p>Comprehensive plant database with pesticide recommendations</p>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="plant-search">
+                <div class="form-group">
+                    <label for="plant-search-input">
+                        <i class="fas fa-search"></i> Search Plants
+                    </label>
+                    <input 
+                        type="text" 
+                        id="plant-search" 
+                        placeholder="Search by plant name or type..."
+                        autocomplete="off"
+                    >
+                </div>
+            </div>
+
+            <div id="plant-grid" class="plant-grid"></div>
+
+            <div class="info-card mt-4">
+                <h3><i class="fas fa-exclamation-triangle"></i> Important Safety Guidelines</h3>
+                <div class="safety-guidelines">
+                    <div class="guideline-item">
+                        <i class="fas fa-mask"></i>
+                        <div>
+                            <h4>Personal Protection</h4>
+                            <p>Always wear protective equipment including masks, gloves, and appropriate clothing when handling pesticides.</p>
+                        </div>
+                    </div>
+                    <div class="guideline-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4>Application Timing</h4>
+                            <p>Apply pesticides during early morning or late evening to avoid harming beneficial insects and reduce evaporation.</p>
+                        </div>
+                    </div>
+                    <div class="guideline-item">
+                        <i class="fas fa-wind"></i>
+                        <div>
+                            <h4>Weather Conditions</h4>
+                            <p>Avoid application during windy conditions (>10 mph) or when rain is expected within 24 hours.</p>
+                        </div>
+                    </div>
+                    <div class="guideline-item">
+                        <i class="fas fa-balance-scale"></i>
+                        <div>
+                            <h4>Proper Dosage</h4>
+                            <p>Always follow the recommended dosage. More is not better and can harm plants and the environment.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3><i class="fas fa-leaf"></i> Integrated Pest Management (IPM)</h3>
+                <p class="mb-3">IPM is an environmentally sensitive approach to pest management that relies on multiple techniques:</p>
+                <div class="ipm-strategies">
+                    <div class="strategy-card">
+                        <i class="fas fa-eye"></i>
+                        <h4>Monitoring</h4>
+                        <p>Regular inspection of crops to identify pest problems early and determine when treatment is needed.</p>
+                    </div>
+                    <div class="strategy-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>Prevention</h4>
+                        <p>Using resistant varieties, proper sanitation, and cultural practices to prevent pest problems.</p>
+                    </div>
+                    <div class="strategy-card">
+                        <i class="fas fa-bug"></i>
+                        <h4>Biological Control</h4>
+                        <p>Encouraging natural enemies of pests through habitat management and beneficial insect releases.</p>
+                    </div>
+                    <div class="strategy-card">
+                        <i class="fas fa-flask"></i>
+                        <h4>Targeted Treatment</h4>
+                        <p>Using pesticides only when necessary and selecting products that are least harmful to beneficial insects.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3><i class="fas fa-recycle"></i> Sustainable Farming Practices</h3>
+                <div class="sustainability-tips">
+                    <div class="tip-row">
+                        <i class="fas fa-water"></i>
+                        <div>
+                            <h4>Water Management</h4>
+                            <p>Use drip irrigation and mulching to conserve water and reduce pesticide runoff.</p>
+                        </div>
+                    </div>
+                    <div class="tip-row">
+                        <i class="fas fa-sync-alt"></i>
+                        <div>
+                            <h4>Crop Rotation</h4>
+                            <p>Rotate crops to break pest cycles and maintain soil health naturally.</p>
+                        </div>
+                    </div>
+                    <div class="tip-row">
+                        <i class="fas fa-seedling"></i>
+                        <div>
+                            <h4>Cover Crops</h4>
+                            <p>Plant cover crops to improve soil structure, suppress weeds, and provide habitat for beneficial insects.</p>
+                        </div>
+                    </div>
+                    <div class="tip-row">
+                        <i class="fas fa-chart-line"></i>
+                        <div>
+                            <h4>Data-Driven Decisions</h4>
+                            <p>Use IoT sensors and data analytics to make informed decisions about irrigation and pest management.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-seedling"></i> SmartFarm</h3>
+                    <p>Revolutionizing agriculture with IoT and smart farming solutions</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="weather.html">Weather</a></li>
+                        <li><a href="plant-health.html">Plant Health</a></li>
+                        <li><a href="know-your-plant.html">Know Your Plant</a></li>
+                        <li><a href="team.html">Our Team</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-envelope"></i> contact@smartfarm.com</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SmartFarm. All rights reserved. | Final Year Project</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="javascript.js"></script>
+
+    <style>
+        .safety-guidelines {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .guideline-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 1.5rem;
+            background: #fff3cd;
+            border-radius: 10px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .guideline-item i {
+            font-size: 1.5rem;
+            color: #856404;
+            margin-right: 1rem;
+            margin-top: 0.2rem;
+            flex-shrink: 0;
+        }
+
+        .guideline-item h4 {
+            color: #856404;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .guideline-item p {
+            color: #664d03;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .ipm-strategies {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .strategy-card {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .strategy-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .strategy-card i {
+            font-size: 2.5rem;
+            color: #2c7a2c;
+            margin-bottom: 1rem;
+        }
+
+        .strategy-card h4 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .strategy-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .sustainability-tips {
+            margin-top: 1rem;
+        }
+
+        .tip-row {
+            display: flex;
+            align-items: flex-start;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            background: #d4f6d4;
+            border-radius: 10px;
+            border-left: 4px solid #2c7a2c;
+            transition: all 0.3s ease;
+        }
+
+        .tip-row:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(44, 122, 44, 0.2);
+        }
+
+        .tip-row i {
+            font-size: 1.5rem;
+            color: #155724;
+            margin-right: 1rem;
+            margin-top: 0.2rem;
+            flex-shrink: 0;
+        }
+
+        .tip-row h4 {
+            color: #155724;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .tip-row p {
+            color: #0f3b0f;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .plant-grid {
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .safety-guidelines,
+            .ipm-strategies {
+                grid-template-columns: 1fr;
+            }
+            
+            .guideline-item,
+            .tip-row {
+                padding: 1rem;
+            }
+        }
+    </style>
+</body>
+</html>
