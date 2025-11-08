@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SmartFarm</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-seedling"></i>
+                <span>SmartFarm</span>
+            </div>
+            <ul class="nav-menu">
+    <li><a href="index.html" class="nav-link">Home</a></li>
+    <li><a href="weather.html" class="nav-link">Weather</a></li>
+    <li><a href="plant-health.html" class="nav-link">Plant Health</a></li>
+    <li><a href="know-your-plant.html" class="nav-link">Know Your Plant</a></li>
+    <li><a href="hardware.html" class="nav-link">Hardware</a></li>
+    <li><a href="team.html" class="nav-link">Our Team</a></li>
+    <li><a href="login.html" class="nav-link login-btn active">Login</a></li>
+</ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <h1><i class="fas fa-tachometer-alt"></i> Welcome, <span id="welcome-user">User</span>!</h1>
+            <p>Your personalized SmartFarm dashboard</p>
+            <button id="logout-btn" class="btn-secondary">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <!-- Dashboard Statistics -->
+            <div class="dashboard-stats">
+                <h2>Your Farming Statistics</h2>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card stat-card">
+                        <div class="stat-header">
+                            <h3><i class="fas fa-spray-can"></i> Total Applications</h3>
+                            <div class="stat-number" id="total-applications">0</div>
+                        </div>
+                        <p>Pesticide applications logged</p>
+                    </div>
+
+                    <div class="dashboard-card stat-card">
+                        <div class="stat-header">
+                            <h3><i class="fas fa-seedling"></i> Plants Monitored</h3>
+                            <div class="stat-number" id="plants-monitored">0</div>
+                        </div>
+                        <p>Different plant types tracked</p>
+                    </div>
+
+                    <div class="dashboard-card stat-card">
+                        <div class="stat-header">
+                            <h3><i class="fas fa-calendar-alt"></i> This Month</h3>
+                            <div class="stat-number" id="monthly-applications">0</div>
+                        </div>
+                        <p>Applications this month</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="dashboard-section">
+                <h2>Quick Actions</h2>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card action-card">
+                        <i class="fas fa-cloud-sun"></i>
+                        <h3>Check Weather</h3>
+                        <p>Get current weather conditions for your area</p>
+                        <a href="weather.html" class="btn-primary">Check Now</a>
+                    </div>
+
+                    <div class="dashboard-card action-card">
+                        <i class="fas fa-leaf"></i>
+                        <h3>Analyze Plant Health</h3>
+                        <p>Upload plant images for AI-powered health analysis</p>
+                        <a href="plant-health.html" class="btn-primary">Analyze</a>
+                    </div>
+
+                    <div class="dashboard-card action-card">
+                        <i class="fas fa-database"></i>
+                        <h3>Browse Plant Database</h3>
+                        <p>Find pesticide recommendations for your plants</p>
+                        <a href="know-your-plant.html" class="btn-primary">Browse</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="dashboard-section">
+                <h2>Recent Pesticide Applications</h2>
+                <div class="dashboard-card">
+                    <div class="activity-header">
+                        <h3><i class="fas fa-history"></i> Application Log</h3>
+                        <button class="btn-secondary" onclick="clearLogs()">
+                            <i class="fas fa-trash"></i> Clear All
+                        </button>
+                    </div>
+                    <div id="pesticide-logs" class="pesticide-log">
+                        <p class="text-center">No pesticide usage logged yet.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add New Log -->
+            <div class="dashboard-section">
+                <h2>Add New Application Record</h2>
+                <div class="dashboard-card">
+                    <form id="new-log-form" class="log-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="log-plant">Plant Name</label>
+                                <input type="text" id="log-plant" placeholder="e.g., Tomato, Wheat..." required>
+                            </div>
+                            <div class="form-group">
+                                <label for="log-pesticide">Pesticide Used</label>
+                                <input type="text" id="log-pesticide" placeholder="e.g., Neem Oil, Malathion..." required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="log-amount">Amount Applied</label>
+                                <input type="text" id="log-amount" placeholder="e.g., 2ml per liter" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="log-area">Area Treated</label>
+                                <input type="text" id="log-area" placeholder="e.g., 100 sq ft">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="log-notes">Notes (Optional)</label>
+                            <textarea id="log-notes" rows="3" placeholder="Any additional observations or notes..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-plus"></i> Add Record
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Data Export -->
+            <div class="dashboard-section">
+                <h2>Data Management</h2>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h3><i class="fas fa-download"></i> Export Data</h3>
+                        <p>Download your pesticide application records</p>
+                        <button class="btn-secondary" onclick="exportData()">
+                            <i class="fas fa-file-csv"></i> Export CSV
+                        </button>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <h3><i class="fas fa-chart-pie"></i> Usage Analytics</h3>
+                        <p>View detailed analytics of your pesticide usage patterns</p>
+                        <button class="btn-secondary" onclick="showAnalytics()">
+                            <i class="fas fa-chart-bar"></i> View Analytics
+                        </button>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <h3><i class="fas fa-bell"></i> Smart Reminders</h3>
+                        <p>Set up reminders for next pesticide applications</p>
+                        <button class="btn-secondary" onclick="setupReminders()">
+                            <i class="fas fa-calendar-plus"></i> Set Reminders
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Farming Tips -->
+            <div class="dashboard-section">
+                <h2>Today's Farming Tips</h2>
+                <div class="dashboard-card">
+                    <div class="tips-container">
+                        <div class="tip-of-day">
+                            <i class="fas fa-lightbulb"></i>
+                            <div>
+                                <h4>Tip of the Day</h4>
+                                <p>Early morning is the best time to apply pesticides as it's cooler and there's less wind, ensuring better coverage and reduced drift.</p>
+                            </div>
+                        </div>
+                        <div class="weather-alert">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <div>
+                                <h4>Weather Alert</h4>
+                                <p>Check weather conditions before applying pesticides. Avoid application if rain is expected within 24 hours.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-seedling"></i> SmartFarm</h3>
+                    <p>Revolutionizing agriculture with IoT and smart farming solutions</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="weather.html">Weather</a></li>
+                        <li><a href="plant-health.html">Plant Health</a></li>
+                        <li><a href="know-your-plant.html">Know Your Plant</a></li>
+                        <li><a href="team.html">Our Team</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-envelope"></i> contact@smartfarm.com</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SmartFarm. All rights reserved. | Final Year Project</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="javascript.js"></script>
+    <script>
+        // Dashboard-specific functions
+        document.getElementById('new-log-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const plant = document.getElementById('log-plant').value;
+            const pesticide = document.getElementById('log-pesticide').value;
+            const amount = document.getElementById('log-amount').value;
+            const area = document.getElementById('log-area').value;
+            const notes = document.getElementById('log-notes').value;
+            
+            if (plant && pesticide && amount) {
+                const logEntry = {
+                    id: Date.now(),
+                    userId: SmartFarm.currentUser()?.id,
+                    plantName: plant,
+                    pesticide: pesticide,
+                    amount: amount,
+                    area: area,
+                    notes: notes,
+                    date: new Date().toISOString()
+                };
+                
+                // Add to logs (this would normally save to database)
+                SmartFarm.pesticideLogs().push(logEntry);
+                
+                // Update display
+                displayPesticideLogs();
+                updateDashboardStats();
+                
+                // Clear form
+                this.reset();
+                
+                showMessage('Application record added successfully!', 'success');
+            }
+        });
+        
+        function clearLogs() {
+            if (confirm('Are you sure you want to clear all pesticide logs?')) {
+                const currentUserId = SmartFarm.currentUser()?.id;
+                const allLogs = SmartFarm.pesticideLogs();
+                
+                // Remove only current user's logs
+                const filteredLogs = allLogs.filter(log => log.userId !== currentUserId);
+                
+                // Update logs array
+                while(allLogs.length > 0) allLogs.pop();
+                filteredLogs.forEach(log => allLogs.push(log));
+                
+                displayPesticideLogs();
+                updateDashboardStats();
+                
+                showMessage('All logs cleared successfully!', 'success');
+            }
+        }
+        
+        function exportData() {
+            const userLogs = SmartFarm.pesticideLogs().filter(log => log.userId === SmartFarm.currentUser()?.id);
+            
+            if (userLogs.length === 0) {
+                showMessage('No data to export!', 'error');
+                return;
+            }
+            
+            let csvContent = 'Date,Plant,Pesticide,Amount,Area,Notes\n';
+            
+            userLogs.forEach(log => {
+                const date = new Date(log.date).toLocaleDateString();
+                csvContent += `${date},${log.plantName},${log.pesticide},${log.amount},${log.area || ''},${log.notes || ''}\n`;
+            });
+            
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'pesticide-records.csv';
+            a.click();
+            window.URL.revokeObjectURL(url);
+            
+            showMessage('Data exported successfully!', 'success');
+        }
+        
+        function showAnalytics() {
+            alert('Analytics feature would show detailed charts and graphs of your pesticide usage patterns, seasonal trends, and recommendations for optimization.');
+        }
+        
+        function setupReminders() {
+            alert('Reminder feature would allow you to set up notifications for next pesticide applications based on your usage history and plant requirements.');
+        }
+    </script>
+
+    <style>
+        .dashboard-stats {
+            margin-bottom: 3rem;
+        }
+
+        .dashboard-stats h2 {
+            color: #2c7a2c;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        .dashboard-section {
+            margin-bottom: 3rem;
+        }
+
+        .dashboard-section h2 {
+            color: #2c7a2c;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #2c7a2c 0%, #4CAF50 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .stat-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stat-header h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .stat-card p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .action-card {
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .action-card i {
+            font-size: 2.5rem;
+            color: #2c7a2c;
+            margin-bottom: 1rem;
+        }
+
+        .action-card h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .action-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .activity-header h3 {
+            color: #333;
+            margin: 0;
+        }
+
+        .log-form {
+            max-width: 600px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .tips-container {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .tip-of-day,
+        .weather-alert {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+
+        .tip-of-day {
+            border-left: 4px solid #28a745;
+        }
+
+        .weather-alert {
+            border-left: 4px solid #ffc107;
+        }
+
+        .tip-of-day i {
+            color: #28a745;
+            font-size: 1.5rem;
+            margin-top: 0.2rem;
+        }
+
+        .weather-alert i {
+            color: #ffc107;
+            font-size: 1.5rem;
+            margin-top: 0.2rem;
+        }
+
+        .tip-of-day h4,
+        .weather-alert h4 {
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .tip-of-day p,
+        .weather-alert p {
+            color: #666;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .page-header {
+            position: relative;
+        }
+
+        .page-header .btn-secondary {
+            position: absolute;
+            top: 50%;
+            right: 2rem;
+            transform: translateY(-50%);
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .activity-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .activity-header .btn-secondary {
+                align-self: center;
+            }
+            
+            .page-header .btn-secondary {
+                position: static;
+                transform: none;
+                margin-top: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stat-number {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</body>
+</html>
