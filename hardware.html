@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hardware - SmartFarm</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-seedling"></i>
+                <span>SmartFarm</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="weather.html" class="nav-link">Weather</a></li>
+                <li><a href="plant-health.html" class="nav-link">Plant Health</a></li>
+                <li><a href="know-your-plant.html" class="nav-link">Know Your Plant</a></li>
+                <li><a href="hardware.html" class="nav-link active">Hardware</a></li>
+                <li><a href="team.html" class="nav-link">Our Team</a></li>
+                <li><a href="login.html" class="nav-link login-btn">Login</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <h1><i class="fas fa-microchip"></i> Project Hardware</h1>
+            <p>The core components powering our IoT agricultural robot</p>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <!-- Sensor Information -->
+            <div class="hardware-section">
+                <h2 class="section-title">Sensors & Components</h2>
+                <div class="hardware-grid">
+                    <div class="hardware-card slide-up">
+                        <div class="hardware-icon"><i class="fas fa-thermometer-half"></i></div>
+                        <h3>DHT22 Sensor</h3>
+                        <p>Measures ambient temperature and humidity to provide crucial environmental data for crop health monitoring.</p>
+                    </div>
+                    <div class="hardware-card slide-up-delay">
+                        <div class="hardware-icon"><i class="fas fa-ruler-combined"></i></div>
+                        <h3>Ultrasonic Distance Sensors</h3>
+                        <p>Two sensors (front and back) for obstacle detection and autonomous navigation, ensuring the robot moves safely.</p>
+                    </div>
+                    <div class="hardware-card slide-up-delay-2">
+                        <div class="hardware-icon"><i class="fas fa-tint"></i></div>
+                        <h3>Soil Moisture Sensor</h3>
+                        <p>Provides real-time data on soil hydration levels, enabling the smart irrigation system to water crops precisely when needed.</p>
+                    </div>
+                    <div class="hardware-card slide-up">
+                        <div class="hardware-icon"><i class="fas fa-water"></i></div>
+                        <h3>Water Level Sensor</h3>
+                        <p>Monitors the water level in the irrigation tank, ensuring the robot has an adequate water supply for its tasks.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chassis and Motors Information -->
+            <div class="hardware-section">
+                <h2 class="section-title">Chassis & Propulsion</h2>
+                <div class="chassis-info">
+                    <div class="info-card">
+                        <h3><i class="fas fa-robot"></i> Robot Frame & Motors</h3>
+                        <p>The robot's frame is constructed from durable cardboard. It is powered by <strong>four 60 RPM BO motors</strong>, providing stable front and back movement. The robot is controlled via a joystick module, allowing for manual operation and testing.</p>
+                    </div>
+                    <div class="info-card">
+                        <h3><i class="fas fa-camera"></i> Servo Motors & Actuators</h3>
+                        <p>Multiple servo motors are used for precise control of components:</p>
+                        <ul>
+                            <li><strong>Camera Mount:</strong> One servo for panning the embedded camera.</li>
+                            <li><strong>Distance Sensors:</strong> Two servos for positioning the front and back sensors.</li>
+                            <li><strong>Water Level Sensor:</strong> One servo to adjust the sensor's position.</li>
+                            <li><strong>DHT22 Sensor:</strong> One servo for optimal placement of the environmental sensor.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Dashboard -->
+            <div class="hardware-section">
+                <h2 class="section-title">Bot Performance Dashboard</h2>
+                <div class="dashboard-container">
+                    <div class="joystick-control">
+                        <h4>Joystick Input</h4>
+                        <p>Move the slider to simulate joystick control.</p>
+                        <div class="joystick-slider">
+                            <span>Reverse</span>
+                            <input type="range" id="joystick" min="-100" max="100" value="0" class="slider">
+                            <span>Forward</span>
+                        </div>
+                        <div id="joystick-value">Value: 0%</div>
+                    </div>
+                    <div class="performance-metrics">
+                        <div class="metric-card">
+                            <div class="metric-header">
+                                <h3><i class="fas fa-sync-alt"></i> RPM</h3>
+                                <div class="metric-value" id="rpm-value">0</div>
+                            </div>
+                            <p>Revolutions Per Minute</p>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-header">
+                                <h3><i class="fas fa-tachometer-alt"></i> Speed</h3>
+                                <div class="metric-value" id="speed-value">0.00</div>
+                            </div>
+                            <p>Meters per Second</p>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-header">
+                                <h3><i class="fas fa-road"></i> Distance</h3>
+                                <div class="metric-value" id="distance-value">0.00</div>
+                            </div>
+                            <p>Meters Travelled</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                 <div class="footer-section">
+                    <h3><i class="fas fa-seedling"></i> SmartFarm</h3>
+                    <p>Revolutionizing agriculture with IoT and smart farming solutions</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="weather.html">Weather</a></li>
+                        <li><a href="plant-health.html">Plant Health</a></li>
+                        <li><a href="know-your-plant.html">Know Your Plant</a></li>
+                        <li><a href="hardware.html">Hardware</a></li>
+                        <li><a href="team.html">Our Team</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-envelope"></i> contact@smartfarm.com</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SmartFarm. All rights reserved. | Final Year Project</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="javascript.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const joystick = document.getElementById('joystick');
+            const joystickValueDisplay = document.getElementById('joystick-value');
+            const rpmDisplay = document.getElementById('rpm-value');
+            const speedDisplay = document.getElementById('speed-value');
+            const distanceDisplay = document.getElementById('distance-value');
+
+            const MAX_RPM = 60;
+            const WHEEL_DIAMETER_MM = 65;
+            const WHEEL_CIRCUMFERENCE_M = (Math.PI * WHEEL_DIAMETER_MM) / 1000;
+            
+            let distance = 0;
+            let lastTime = Date.now();
+
+            joystick.addEventListener('input', function() {
+                const joystickValue = parseInt(this.value);
+                joystickValueDisplay.textContent = `Value: ${joystickValue}%`;
+                
+                // Calculate RPM
+                const currentRPM = Math.abs(joystickValue / 100) * MAX_RPM;
+                rpmDisplay.textContent = currentRPM.toFixed(0);
+
+                // Calculate Speed
+                const speed = (currentRPM / 60) * WHEEL_CIRCUMFERENCE_M;
+                speedDisplay.textContent = speed.toFixed(2);
+            });
+
+            // Simulate distance traveled
+            setInterval(() => {
+                const now = Date.now();
+                const deltaTime = (now - lastTime) / 1000; // time in seconds
+                lastTime = now;
+
+                const currentSpeed = parseFloat(speedDisplay.textContent);
+                if (currentSpeed > 0) {
+                    distance += currentSpeed * deltaTime;
+                    distanceDisplay.textContent = distance.toFixed(2);
+                }
+            }, 100); // Update distance every 100ms
+        });
+    </script>
+    
+    <style>
+        .hardware-section {
+            margin-bottom: 4rem;
+        }
+        .hardware-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        .hardware-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .hardware-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        .hardware-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #2c7a2c, #4CAF50);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+        .hardware-icon i {
+            font-size: 2rem;
+            color: white;
+        }
+        .hardware-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        .chassis-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .chassis-info .info-card ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+        .chassis-info .info-card li {
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+        .chassis-info .info-card li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            color: #2c7a2c;
+            position: absolute;
+            left: -20px;
+        }
+        .dashboard-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        .joystick-control {
+            text-align: center;
+        }
+        .joystick-slider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .slider {
+            -webkit-appearance: none;
+            width: 60%;
+            height: 15px;
+            border-radius: 5px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity .2s;
+        }
+        .slider:hover {
+            opacity: 1;
+        }
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #2c7a2c;
+            cursor: pointer;
+        }
+        .performance-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        .metric-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        .metric-header {
+            margin-bottom: 1rem;
+        }
+        .metric-header h3 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: #333;
+            font-size: 1.1rem;
+        }
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2c7a2c;
+        }
+        .metric-card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 768px) {
+            .chassis-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</body>
+</html>
