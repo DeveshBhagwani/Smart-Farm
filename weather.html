@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast - SmartFarm</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-seedling"></i>
+                <span>SmartFarm</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="weather.html" class="nav-link active">Weather</a></li>
+                <li><a href="plant-health.html" class="nav-link">Plant Health</a></li>
+                <li><a href="know-your-plant.html" class="nav-link">Know Your Plant</a></li>
+                <li><a href="hardware.html" class="nav-link">Hardware</a></li>
+                <li><a href="team.html" class="nav-link">Our Team</a></li>
+                <li><a href="login.html" class="nav-link login-btn">Login</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <h1><i class="fas fa-cloud-sun"></i> Weather Forecast</h1>
+            <p>Get real-time weather information for better farming decisions</p>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="form-container">
+                <h2>Check Weather Conditions</h2>
+                <form id="weather-form">
+                    <div class="form-group">
+                        <label for="city">
+                            <i class="fas fa-map-marker-alt"></i> Enter City Name
+                        </label>
+                        <input 
+                            type="text" 
+                            id="city" 
+                            name="city" 
+                            placeholder="e.g., New Delhi, Mumbai, Chennai..."
+                            required
+                        >
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-search"></i> Get Weather
+                    </button>
+                </form>
+            </div>
+
+            <div id="weather-result"></div>
+
+            <div class="info-card mt-4">
+                <h3><i class="fas fa-info-circle"></i> Why Weather Matters in Agriculture</h3>
+                <div class="weather-importance-grid">
+                    <div class="importance-item">
+                        <i class="fas fa-tint"></i>
+                        <h4>Irrigation Planning</h4>
+                        <p>Monitor precipitation and humidity to optimize watering schedules and reduce water waste.</p>
+                    </div>
+                    <div class="importance-item">
+                        <i class="fas fa-thermometer-half"></i>
+                        <h4>Temperature Monitoring</h4>
+                        <p>Track temperature changes to protect crops from frost damage and heat stress.</p>
+                    </div>
+                    <div class="importance-item">
+                        <i class="fas fa-wind"></i>
+                        <h4>Wind Conditions</h4>
+                        <p>Plan pesticide application timing based on wind speed to ensure effective coverage.</p>
+                    </div>
+                    <div class="importance-item">
+                        <i class="fas fa-eye"></i>
+                        <h4>Visibility</h4>
+                        <p>Check visibility conditions for safe operation of agricultural machinery and equipment.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3><i class="fas fa-lightbulb"></i> Smart Farming Tips</h3>
+                <div class="tips-list">
+                    <div class="tip-item">
+                        <i class="fas fa-check-circle"></i>
+                        <p><strong>Morning Check:</strong> Check weather conditions every morning to plan your daily farming activities.</p>
+                    </div>
+                    <div class="tip-item">
+                        <i class="fas fa-check-circle"></i>
+                        <p><strong>Weekly Planning:</strong> Use 7-day forecasts to plan irrigation, fertilization, and harvesting schedules.</p>
+                    </div>
+                    <div class="tip-item">
+                        <i class="fas fa-check-circle"></i>
+                        <p><strong>Storm Preparation:</strong> Monitor severe weather alerts to protect crops and equipment in advance.</p>
+                    </div>
+                    <div class="tip-item">
+                        <i class="fas fa-check-circle"></i>
+                        <p><strong>Humidity Tracking:</strong> High humidity can increase disease risk - adjust preventive treatments accordingly.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-seedling"></i> SmartFarm</h3>
+                    <p>Revolutionizing agriculture with IoT and smart farming solutions</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="weather.html">Weather</a></li>
+                        <li><a href="plant-health.html">Plant Health</a></li>
+                        <li><a href="know-your-plant.html">Know Your Plant</a></li>
+                        <li><a href="team.html">Our Team</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-envelope"></i> contact@smartfarm.com</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SmartFarm. All rights reserved. | Final Year Project</p>
+            </div>
+        </div>
+    </footer>
+
+   <script src="javascript.js"></script>
+
+    <style>
+        .weather-importance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .importance-item {
+            text-align: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .importance-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .importance-item i {
+            font-size: 2rem;
+            color: #2c7a2c;
+            margin-bottom: 0.5rem;
+        }
+
+        .importance-item h4 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .tips-list {
+            margin-top: 1rem;
+        }
+
+        .tip-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .tip-item i {
+            color: #2c7a2c;
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        .tip-item p {
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .weather-main {
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .temperature {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #2c7a2c;
+            margin-bottom: 0.5rem;
+        }
+
+        .condition {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+    </style>
+</body>
+</html>
