@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Know Your Plant - SmartFarm</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/kyp.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-seedling"></i>
+                <span>SmartFarm</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="weather.html" class="nav-link">Weather</a></li>
+                <li><a href="plant-health.html" class="nav-link">Plant Health</a></li>
+                <li><a href="know-your-plant.html" class="nav-link active">Know Your Plant</a></li>
+                <li><a href="live-data.html" class="nav-link">Live Data</a></li>
+                <li><a href="team.html" class="nav-link">Our Team</a></li>
+                <li><a href="login.html" class="nav-link login-btn">Login</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <h1><i class="fas fa-database"></i> Know Your Plant</h1>
+            <p>Comprehensive plant database with pesticide recommendations</p>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="plant-search">
+                <div class="form-group">
+                    <label for="plant-search-input">
+                        <i class="fas fa-search"></i> Search Plants
+                    </label>
+                    <input 
+                        type="text" 
+                        id="plant-search" 
+                        placeholder="Search by plant name or type..."
+                        autocomplete="off"
+                    >
+                </div>
+            </div>
+
+            <div id="plant-grid" class="plant-grid"></div>
+
+            <div class="info-card mt-4">
+                <h3><i class="fas fa-exclamation-triangle"></i> Important Safety Guidelines</h3>
+                <div class="safety-guidelines">
+                    <div class="guideline-item">
+                        <i class="fas fa-mask"></i>
+                        <div>
+                            <h4>Personal Protection</h4>
+                            <p>Always wear protective equipment including masks, gloves, and appropriate clothing when handling pesticides.</p>
+                        </div>
+                    </div>
+                    <div class="guideline-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4>Application Timing</h4>
+                            <p>Apply pesticides during early morning or late evening to avoid harming beneficial insects and reduce evaporation.</p>
+                        </div>
+                    </div>
+                    <div class="guideline-item">
+                        <i class="fas fa-wind"></i>
+                        <div>
+                            <h4>Weather Conditions</h4>
+                            <p>Avoid application during windy conditions (>10 mph) or when rain is expected within 24 hours.</p>
+                        </div>
+                    </div>
+                    <div class="guideline-item">
+                        <i class="fas fa-balance-scale"></i>
+                        <div>
+                            <h4>Proper Dosage</h4>
+                            <p>Always follow the recommended dosage. More is not better and can harm plants and the environment.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3><i class="fas fa-leaf"></i> Integrated Pest Management (IPM)</h3>
+                <p class="mb-3">IPM is an environmentally sensitive approach to pest management that relies on multiple techniques:</p>
+                <div class="ipm-strategies">
+                    <div class="strategy-card">
+                        <i class="fas fa-eye"></i>
+                        <h4>Monitoring</h4>
+                        <p>Regular inspection of crops to identify pest problems early and determine when treatment is needed.</p>
+                    </div>
+                    <div class="strategy-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>Prevention</h4>
+                        <p>Using resistant varieties, proper sanitation, and cultural practices to prevent pest problems.</p>
+                    </div>
+                    <div class="strategy-card">
+                        <i class="fas fa-bug"></i>
+                        <h4>Biological Control</h4>
+                        <p>Encouraging natural enemies of pests through habitat management and beneficial insect releases.</p>
+                    </div>
+                    <div class="strategy-card">
+                        <i class="fas fa-flask"></i>
+                        <h4>Targeted Treatment</h4>
+                        <p>Using pesticides only when necessary and selecting products that are least harmful to beneficial insects.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3><i class="fas fa-recycle"></i> Sustainable Farming Practices</h3>
+                <div class="sustainability-tips">
+                    <div class="tip-row">
+                        <i class="fas fa-water"></i>
+                        <div>
+                            <h4>Water Management</h4>
+                            <p>Use drip irrigation and mulching to conserve water and reduce pesticide runoff.</p>
+                        </div>
+                    </div>
+                    <div class="tip-row">
+                        <i class="fas fa-sync-alt"></i>
+                        <div>
+                            <h4>Crop Rotation</h4>
+                            <p>Rotate crops to break pest cycles and maintain soil health naturally.</p>
+                        </div>
+                    </div>
+                    <div class="tip-row">
+                        <i class="fas fa-seedling"></i>
+                        <div>
+                            <h4>Cover Crops</h4>
+                            <p>Plant cover crops to improve soil structure, suppress weeds, and provide habitat for beneficial insects.</p>
+                        </div>
+                    </div>
+                    <div class="tip-row">
+                        <i class="fas fa-chart-line"></i>
+                        <div>
+                            <h4>Data-Driven Decisions</h4>
+                            <p>Use IoT sensors and data analytics to make informed decisions about irrigation and pest management.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-seedling"></i> SmartFarm</h3>
+                    <p>Revolutionizing agriculture with IoT and smart farming solutions</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="weather.html">Weather</a></li>
+                        <li><a href="plant-health.html">Plant Health</a></li>
+                        <li><a href="know-your-plant.html">Know Your Plant</a></li>
+                        <li><a href="team.html">Our Team</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-envelope"></i> contact@smartfarm.com</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SmartFarm. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+
+</body>
+</html>

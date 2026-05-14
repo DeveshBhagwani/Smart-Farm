@@ -1,0 +1,73 @@
+.weather-importance-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.importance-item {
+    text-align: center;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.importance-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.importance-item i {
+    font-size: 2rem;
+    color: #2c7a2c;
+    margin-bottom: 0.5rem;
+}
+
+.importance-item h4 {
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.tips-list {
+    margin-top: 1rem;
+}
+
+.tip-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.tip-item i {
+    color: #2c7a2c;
+    margin-right: 1rem;
+    font-size: 1.2rem;
+    margin-top: 2px;
+}
+
+.tip-item p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+.weather-main {
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.temperature {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #2c7a2c;
+    margin-bottom: 0.5rem;
+}
+
+.condition {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 1rem;
+}

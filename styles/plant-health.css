@@ -1,0 +1,149 @@
+.photo-tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.tip-card {
+    text-align: center;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.tip-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.tip-card i {
+    font-size: 2rem;
+    color: #2c7a2c;
+    margin-bottom: 1rem;
+}
+
+.tip-card h4 {
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.process-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.step {
+    display: flex;
+    align-items: flex-start;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.step:hover {
+    background: #e9ecef;
+    transform: translateX(5px);
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(45deg, #2c7a2c, #4CAF50);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+.step-content h4 {
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.step-content p {
+    color: #666;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.health-issues-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.issue-card {
+    text-align: center;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border-left: 4px solid #2c7a2c;
+    transition: all 0.3s ease;
+}
+
+.issue-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.issue-card i {
+    font-size: 2rem;
+    color: #2c7a2c;
+    margin-bottom: 1rem;
+}
+
+.issue-card h4 {
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.issue-card p {
+    color: #666;
+    line-height: 1.5;
+}
+
+.detail-section {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.detail-section h4 {
+    color: #333;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.detail-section h4 i {
+    margin-right: 0.5rem;
+    color: #2c7a2c;
+}
+
+.detail-section p {
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .process-steps {
+        grid-template-columns: 1fr;
+    }
+    
+    .photo-tips-grid,
+    .health-issues-grid {
+        grid-template-columns: 1fr;
+    }
+}

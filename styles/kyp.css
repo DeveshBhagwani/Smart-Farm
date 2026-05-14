@@ -1,0 +1,127 @@
+.safety-guidelines {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.guideline-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 1.5rem;
+    background: #fff3cd;
+    border-radius: 10px;
+    border-left: 4px solid #ffc107;
+}
+
+.guideline-item i {
+    font-size: 1.5rem;
+    color: #856404;
+    margin-right: 1rem;
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+}
+
+.guideline-item h4 {
+    color: #856404;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.guideline-item p {
+    color: #664d03;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.ipm-strategies {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.strategy-card {
+    text-align: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+}
+
+.strategy-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.strategy-card i {
+    font-size: 2.5rem;
+    color: #2c7a2c;
+    margin-bottom: 1rem;
+}
+
+.strategy-card h4 {
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.strategy-card p {
+    color: #666;
+    line-height: 1.6;
+}
+
+.sustainability-tips {
+    margin-top: 1rem;
+}
+
+.tip-row {
+    display: flex;
+    align-items: flex-start;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    background: #d4f6d4;
+    border-radius: 10px;
+    border-left: 4px solid #2c7a2c;
+    transition: all 0.3s ease;
+}
+
+.tip-row:hover {
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(44, 122, 44, 0.2);
+}
+
+.tip-row i {
+    font-size: 1.5rem;
+    color: #155724;
+    margin-right: 1rem;
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+}
+
+.tip-row h4 {
+    color: #155724;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.tip-row p {
+    color: #0f3b0f;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.plant-grid {
+    margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+    .safety-guidelines,
+    .ipm-strategies {
+        grid-template-columns: 1fr;
+    }
+    
+    .guideline-item,
+    .tip-row {
+        padding: 1rem;
+    }
+}

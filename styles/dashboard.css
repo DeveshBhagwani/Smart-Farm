@@ -1,0 +1,191 @@
+.dashboard-stats {
+    margin-bottom: 3rem;
+}
+
+.dashboard-stats h2 {
+    color: #2c7a2c;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+}
+
+.dashboard-section {
+    margin-bottom: 3rem;
+}
+
+.dashboard-section h2 {
+    color: #2c7a2c;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+.stat-card {
+    background: linear-gradient(135deg, #2c7a2c 0%, #4CAF50 100%);
+    color: white;
+    text-align: center;
+}
+
+.stat-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.stat-header h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.stat-card p {
+    opacity: 0.8;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.action-card {
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.action-card:hover {
+    transform: translateY(-5px);
+}
+
+.action-card i {
+    font-size: 2.5rem;
+    color: #2c7a2c;
+    margin-bottom: 1rem;
+}
+
+.action-card h3 {
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.action-card p {
+    color: #666;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+.activity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.activity-header h3 {
+    color: #333;
+    margin: 0;
+}
+
+.log-form {
+    max-width: 600px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.tips-container {
+    display: grid;
+    gap: 1rem;
+}
+
+.tip-of-day,
+.weather-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 10px;
+    background: #f8f9fa;
+}
+
+.tip-of-day {
+    border-left: 4px solid #28a745;
+}
+
+.weather-alert {
+    border-left: 4px solid #ffc107;
+}
+
+.tip-of-day i {
+    color: #28a745;
+    font-size: 1.5rem;
+    margin-top: 0.2rem;
+}
+
+.weather-alert i {
+    color: #ffc107;
+    font-size: 1.5rem;
+    margin-top: 0.2rem;
+}
+
+.tip-of-day h4,
+.weather-alert h4 {
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.tip-of-day p,
+.weather-alert p {
+    color: #666;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.page-header {
+    position: relative;
+}
+
+.page-header .btn-secondary {
+    position: absolute;
+    top: 50%;
+    right: 2rem;
+    transform: translateY(-50%);
+}
+
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .activity-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .activity-header .btn-secondary {
+        align-self: center;
+    }
+    
+    .page-header .btn-secondary {
+        position: static;
+        transform: none;
+        margin-top: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .stat-number {
+        font-size: 2.5rem;
+    }
+}

@@ -1,0 +1,305 @@
+.team-intro {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.team-intro h2 {
+    color: #2c7a2c;
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+}
+
+.team-description {
+    font-size: 1.1rem;
+    color: #666;
+    line-height: 1.8;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.student-id {
+    color: #2c7a2c;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.supervisor-card {
+    background: linear-gradient(135deg, #2c7a2c 0%, #4CAF50 100%);
+    color: white;
+}
+
+.supervisor-card h3,
+.supervisor-card .role,
+.supervisor-card .student-id,
+.supervisor-card p {
+    color: white;
+}
+
+.skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+.skill {
+    background: #e9ecef;
+    color: #2c7a2c;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.supervisor-card .skill {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.social-links {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.social-link {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #2c7a2c;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(44, 122, 44, 0.4);
+}
+
+.supervisor-card .social-link {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.supervisor-card .social-link:hover {
+    background: white;
+    color: #2c7a2c;
+}
+
+.project-info {
+    margin: 4rem 0;
+}
+
+.project-info h2 {
+    text-align: center;
+    color: #2c7a2c;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+}
+
+.journey-timeline {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.timeline-milestone {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    padding: 2rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.timeline-milestone:hover {
+    transform: translateX(10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.milestone-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(45deg, #2c7a2c, #4CAF50);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.milestone-icon i {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.milestone-content h4 {
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+}
+
+.milestone-content p {
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.project-stats {
+    background: #f8f9fa;
+    padding: 3rem 0;
+    border-radius: 15px;
+    margin: 3rem 0;
+}
+
+.project-stats h2 {
+    text-align: center;
+    color: #2c7a2c;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.stat-card {
+    text-align: center;
+    padding: 2rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(45deg, #2c7a2c, #4CAF50);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+}
+
+.stat-icon i {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2c7a2c;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: #666;
+    font-weight: 500;
+}
+
+.contact-section {
+    text-align: center;
+    margin: 4rem 0;
+}
+
+.contact-section h2 {
+    color: #2c7a2c;
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+}
+
+.contact-section p {
+    font-size: 1.1rem;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.contact-card {
+    padding: 2rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.contact-card i {
+    font-size: 2.5rem;
+    color: #2c7a2c;
+    margin-bottom: 1rem;
+}
+
+.contact-card h4 {
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.contact-card p {
+    color: #666;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .timeline-milestone {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .project-stats {
+        padding: 2rem 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .team-intro h2,
+    .project-info h2,
+    .project-stats h2,
+    .contact-section h2 {
+        font-size: 2rem;
+    }
+}
