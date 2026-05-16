@@ -23,6 +23,7 @@
                 <li><a href="live-data.html" class="nav-link">Live Data</a></li>
                 <li><a href="team.html" class="nav-link">Our Team</a></li>
                 <li><a href="dashboard.html" class="nav-link login-btn active">Dashboard</a></li>
+                <li style="display: flex; align-items: center;"><button class="theme-toggle" id="theme-toggle" aria-label="Toggle Dark Mode" style="background:none; border:none; color:inherit; cursor:pointer; margin-left: 15px; font-size:1.2rem;"><i class="fas fa-moon"></i></button></li>
             </ul>
             <div class="hamburger">
                 <span></span>
@@ -155,15 +156,20 @@
                     <div class="dashboard-card">
                         <h3><i class="fas fa-download"></i> Export Data</h3>
                         <p>Download your pesticide application records</p>
-                        <button class="btn-secondary" onclick="exportData()">
-                            <i class="fas fa-file-csv"></i> Export CSV
-                        </button>
+                        <div style="display: flex; gap: 10px; margin-top: 15px;">
+                            <button class="btn-secondary" onclick="exportData('csv')">
+                                <i class="fas fa-file-csv"></i> CSV
+                            </button>
+                            <button class="btn-secondary" onclick="exportData('pdf')">
+                                <i class="fas fa-file-pdf"></i> PDF
+                            </button>
+                        </div>
                     </div>
 
                     <div class="dashboard-card">
                         <h3><i class="fas fa-chart-pie"></i> Usage Analytics</h3>
                         <p>View detailed analytics of your pesticide usage patterns</p>
-                        <button class="btn-secondary" onclick="showAnalytics()">
+                        <button class="btn-secondary" onclick="showAnalytics()" style="margin-top: 15px;">
                             <i class="fas fa-chart-bar"></i> View Analytics
                         </button>
                     </div>
@@ -171,10 +177,18 @@
                     <div class="dashboard-card">
                         <h3><i class="fas fa-bell"></i> Smart Reminders</h3>
                         <p>Set up reminders for next pesticide applications</p>
-                        <button class="btn-secondary" onclick="setupReminders()">
-                            <i class="fas fa-calendar-plus"></i> Set Reminders
+                        <button class="btn-secondary" onclick="setupReminders()" style="margin-top: 15px;">
+                            <i class="fas fa-calendar-plus"></i> Demo Reminder
                         </button>
                     </div>
+                </div>
+            </div>
+
+            <!-- Chart Container (hidden by default) -->
+            <div id="analytics-section" class="dashboard-section" style="display: none;">
+                <h2>Analytics Overview</h2>
+                <div class="dashboard-card slide-up">
+                    <canvas id="pesticideChart" width="400" height="200"></canvas>
                 </div>
             </div>
 
@@ -230,6 +244,8 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="js/core.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/dashboard.js"></script>

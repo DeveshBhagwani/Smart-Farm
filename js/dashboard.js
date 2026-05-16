@@ -157,7 +157,9 @@ function clearLogs() {
     }
 }
 
-function exportData() {
+window.dashboardChart = null;
+
+function exportData(format = 'csv') {
     const currentUser = window.SmartFarm.getCurrentUser();
     const allLogs = window.SmartFarm.getPesticideLogs();
     const userLogs = allLogs.filter(log => log.userId === currentUser.id);
@@ -167,32 +169,125 @@ function exportData() {
         return;
     }
     
-    let csvContent = 'Date,Plant,Pesticide,Amount,Area,Notes\n';
-    
-    userLogs.forEach(log => {
-        const date = new Date(log.date).toLocaleDateString();
-        // Escape quotes to prevent CSV breaking
-        const safeNotes = log.notes ? log.notes.replace(/"/g, '""') : '';
-        const safeArea = log.area ? log.area.replace(/"/g, '""') : '';
+    if (format === 'csv') {
+        let csvContent = 'Date,Plant,Pesticide,Amount,Area,Notes\n';
         
-        csvContent += `${date},"${log.plantName}","${log.pesticide}","${log.amount}","${safeArea}","${safeNotes}"\n`;
-    });
-    
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'pesticide-records.csv';
-    a.click();
-    window.URL.revokeObjectURL(url);
-    
-    window.SmartFarm.showMessage('Data exported successfully!', 'success');
+        userLogs.forEach(log => {
+            const date = new Date(log.date).toLocaleDateString();
+            const safeNotes = log.notes ? log.notes.replace(/"/g, '""') : '';
+            const safeArea = log.area ? log.area.replace(/"/g, '""') : '';
+            
+            csvContent += `${date},"${log.plantName}","${log.pesticide}","${log.amount}","${safeArea}","${safeNotes}"\n`;
+        });
+        
+        const blob = new Blob([csvContent], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'pesticide-records.csv';
+        a.click();
+        window.URL.revokeObjectURL(url);
+        
+        window.SmartFarm.showMessage('CSV exported successfully!', 'success');
+    } else if (format === 'pdf') {
+        const element = document.getElementById('pesticide-logs');
+        const opt = {
+            margin:       1,
+            filename:     'pesticide-records.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2 },
+            jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+        html2pdf().set(opt).from(element).save().then(() => {
+            window.SmartFarm.showMessage('PDF exported successfully!', 'success');
+        });
+    }
 }
 
 function showAnalytics() {
-    alert('Analytics feature would show detailed charts and graphs of your pesticide usage patterns, seasonal trends, and recommendations for optimization.');
+    const currentUser = window.SmartFarm.getCurrentUser();
+    const allLogs = window.SmartFarm.getPesticideLogs();
+    const userLogs = allLogs.filter(log => log.userId === currentUser.id);
+    
+    if (userLogs.length === 0) {
+        window.SmartFarm.showMessage('No data available for analytics.', 'error');
+        return;
+    }
+
+    const analyticsSection = document.getElementById('analytics-section');
+    analyticsSection.style.display = 'block';
+    analyticsSection.scrollIntoView({ behavior: 'smooth' });
+
+    // Group by plant name
+    const plantCounts = {};
+    userLogs.forEach(log => {
+        plantCounts[log.plantName] = (plantCounts[log.plantName] || 0) + 1;
+    });
+
+    const labels = Object.keys(plantCounts);
+    const data = Object.values(plantCounts);
+
+    const ctx = document.getElementById('pesticideChart').getContext('2d');
+    
+    if (window.dashboardChart) {
+        window.dashboardChart.destroy();
+    }
+
+    window.dashboardChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Number of Applications',
+                data: data,
+                backgroundColor: 'rgba(76, 175, 80, 0.6)',
+                borderColor: 'rgba(76, 175, 80, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    }
+                }
+            }
+        }
+    });
 }
 
 function setupReminders() {
-    alert('Reminder feature would allow you to set up notifications for next pesticide applications based on your usage history and plant requirements.');
+    if (!("Notification" in window)) {
+        window.SmartFarm.showMessage("This browser does not support desktop notification", "error");
+        return;
+    }
+
+    if (Notification.permission === "granted") {
+        scheduleDemoNotification();
+    } else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then(function (permission) {
+            if (permission === "granted") {
+                scheduleDemoNotification();
+            }
+        });
+    } else {
+        window.SmartFarm.showMessage("Notification permissions denied.", "error");
+    }
+}
+
+function scheduleDemoNotification() {
+    window.SmartFarm.showMessage("Demo reminder scheduled! You will receive a notification in 5 seconds.", "success");
+    setTimeout(() => {
+        const notification = new Notification("SmartFarm Alert", {
+            body: "Time to check your crops and apply scheduled pesticide!",
+            icon: "https://cdn-icons-png.flaticon.com/512/683/683566.png"
+        });
+        notification.onclick = function() {
+            window.focus();
+            this.close();
+        };
+    }, 5000);
 }

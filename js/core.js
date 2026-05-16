@@ -6,12 +6,45 @@
 window.SmartFarm = window.SmartFarm || {};
 
 document.addEventListener('DOMContentLoaded', function() {
+    setupTheme();
     setupNavigation();
     setupSmoothScrolling();
     setupAnimationTriggers();
     setupInteractiveEffects();
     updateNavigationAuth();
 });
+
+/**
+ * Sets up Theme toggle and persistence
+ */
+function setupTheme() {
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    if (!themeToggleBtn) return;
+
+    const currentTheme = localStorage.getItem('theme');
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    // Apply theme on load
+    if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme)) {
+        document.body.classList.add('dark-mode');
+        themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+    } else {
+        themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+    }
+
+    // Toggle theme on click
+    themeToggleBtn.addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        let theme = 'light';
+        if (document.body.classList.contains('dark-mode')) {
+            theme = 'dark';
+            themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+        } else {
+            themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+        localStorage.setItem('theme', theme);
+    });
+}
 
 /**
  * Sets up mobile navigation hamburger menu

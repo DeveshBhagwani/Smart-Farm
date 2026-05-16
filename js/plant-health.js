@@ -112,28 +112,47 @@ function displayPlantHealthResult(result) {
     
     if (analysisResult) {
         analysisResult.innerHTML = `
-            <div class="health-status">
-                <div class="status-icon status-${result.status}">
-                    <i class="fas ${result.icon}"></i>
+            <div id="pdf-report-content" style="padding: 20px; background: var(--card-bg, #fff);">
+                <div class="health-status">
+                    <div class="status-icon status-${result.status}">
+                        <i class="fas ${result.icon}"></i>
+                    </div>
+                    <div>
+                        <h3>Plant Health: ${result.health}</h3>
+                        <p>Confidence: ${result.confidence}%</p>
+                    </div>
                 </div>
-                <div>
-                    <h3>Plant Health: ${result.health}</h3>
-                    <p>Confidence: ${result.confidence}%</p>
+                <div class="analysis-details">
+                    <div class="detail-section">
+                        <h4><i class="fas fa-search"></i> Issues Detected</h4>
+                        <p>${result.issues}</p>
+                    </div>
+                    <div class="detail-section">
+                        <h4><i class="fas fa-lightbulb"></i> Recommendations</h4>
+                        <p>${result.recommendations}</p>
+                    </div>
                 </div>
             </div>
-            <div class="analysis-details">
-                <div class="detail-section">
-                    <h4><i class="fas fa-search"></i> Issues Detected</h4>
-                    <p>${result.issues}</p>
-                </div>
-                <div class="detail-section">
-                    <h4><i class="fas fa-lightbulb"></i> Recommendations</h4>
-                    <p>${result.recommendations}</p>
-                </div>
-            </div>
+            <button class="btn-primary" onclick="downloadPlantReport()" style="margin-top: 15px;">
+                <i class="fas fa-file-pdf"></i> Download PDF Report
+            </button>
         `;
         
         analysisResult.classList.add('show');
         analysisResult.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 }
+
+window.downloadPlantReport = function() {
+    const element = document.getElementById('pdf-report-content');
+    const opt = {
+        margin:       1,
+        filename:     'plant-health-report.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+    html2pdf().set(opt).from(element).save().then(() => {
+        window.SmartFarm.showMessage('Report downloaded successfully!', 'success');
+    });
+};

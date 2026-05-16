@@ -1,3 +1,23 @@
+/* CSS Variables for Themes */
+:root {
+    --bg-color: #f5f7fa;
+    --text-color: #333;
+    --text-muted: #666;
+    --card-bg: #ffffff;
+    --nav-bg: rgba(255, 255, 255, 0.95);
+    --border-color: #e9ecef;
+    --primary-gradient: linear-gradient(45deg, #2c7a2c, #4CAF50);
+}
+
+body.dark-mode {
+    --bg-color: #121212;
+    --text-color: #e0e0e0;
+    --text-muted: #a0a0a0;
+    --card-bg: #1e1e1e;
+    --nav-bg: rgba(30, 30, 30, 0.95);
+    --border-color: #333;
+}
+
 /* CSS Reset and Base Styles */
 * {
     margin: 0;
@@ -8,8 +28,53 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: #333;
+    color: var(--text-color);
+    background-color: var(--bg-color);
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark Mode Overrides */
+body.dark-mode .info-card, 
+body.dark-mode .dashboard-card,
+body.dark-mode .plant-card,
+body.dark-mode .problem-card,
+body.dark-mode .team-card,
+body.dark-mode .form-container,
+body.dark-mode .timeline-item,
+body.dark-mode .analysis-result {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode h4,
+body.dark-mode p, body.dark-mode label, body.dark-mode .nav-link {
+    color: var(--text-color) !important;
+}
+
+body.dark-mode p {
+    color: var(--text-muted) !important;
+}
+
+body.dark-mode .navbar {
+    background: var(--nav-bg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+body.dark-mode .hero, body.dark-mode .problems, body.dark-mode .objectives, body.dark-mode .methodology {
+    background: var(--bg-color);
+}
+
+body.dark-mode input, body.dark-mode select, body.dark-mode textarea {
+    background-color: #2c2c2c;
+    color: #fff;
+    border-color: var(--border-color);
+}
+
+body.dark-mode .file-upload-label {
+    background: #2c2c2c;
+    color: #e0e0e0;
 }
 
 .container {
