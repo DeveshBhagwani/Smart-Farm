@@ -343,3 +343,91 @@ document.addEventListener('DOMContentLoaded', () => {
     // Wait for Leaflet to be ready
     setTimeout(initFarmMap, 500);
 });
+
+// Web Bluetooth API Simulator for ESP32 Robot
+async function pairRobot() {
+    const statusEl = document.getElementById('bt-status');
+    const btnIcon = document.querySelector('#pairBtn i');
+    
+    if (!navigator.bluetooth) {
+        statusEl.innerHTML = '<span style="color: red;"><i class="fas fa-times-circle"></i> Web Bluetooth API is not available in your browser. (Requires HTTPS/Localhost and Chrome/Edge)</span>';
+        return;
+    }
+
+    try {
+        statusEl.innerHTML = 'Scanning for SmartFarm ESP32...';
+        btnIcon.className = 'fas fa-spinner fa-spin';
+
+        // Request Bluetooth device (filtering by common ESP32 services or name)
+        // In a real scenario, you'd use a specific service UUID. 
+        // Here we use acceptAllDevices for demonstration purposes so it actually prompts.
+        const device = await navigator.bluetooth.requestDevice({
+            acceptAllDevices: true,
+            optionalServices: ['battery_service']
+        });
+
+        statusEl.innerHTML = `Found device: <b>${device.name || 'Unknown Device'}</b>. Connecting...`;
+
+        // Simulate connection delay
+        await new Promise(resolve => setTimeout(resolve, 1500));
+
+        statusEl.innerHTML = `<span style="color: #4CAF50;"><i class="fas fa-check-circle"></i> Successfully connected to ${device.name || 'SmartFarm Robot'}!</span>`;
+        btnIcon.className = 'fas fa-link';
+        document.getElementById('pairBtn').classList.replace('btn-primary', 'btn-secondary');
+        document.getElementById('pairBtn').innerHTML = '<i class="fas fa-unlink"></i> Disconnect';
+        
+        window.SmartFarm.showMessage("Hardware synchronized successfully.", "success");
+
+    } catch (error) {
+        console.error(error);
+        statusEl.innerHTML = `<span style="color: red;"><i class="fas fa-exclamation-triangle"></i> Pairing cancelled or failed.</span>`;
+        btnIcon.className = 'fas fa-link';
+    }
+}
+
+// Machine Learning Crop Predictor Mock
+function predictYield() {
+    const mlResult = document.getElementById('ml-result');
+    const btn = document.querySelector('button[onclick="predictYield()"]');
+    
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing Data...';
+    btn.disabled = true;
+    mlResult.style.display = 'none';
+
+    // Simulate ML processing time
+    setTimeout(() => {
+        const currentUser = window.SmartFarm.getCurrentUser();
+        const allLogs = window.SmartFarm.getPesticideLogs();
+        const userLogs = allLogs.filter(log => log.userId === currentUser.id);
+
+        let prediction = "";
+        let confidence = Math.floor(Math.random() * (98 - 85 + 1)) + 85;
+        let estYieldTons = (Math.random() * 5 + 10).toFixed(2); // Mock tons
+
+        if (userLogs.length === 0) {
+            prediction = `<strong>Insufficient Data:</strong> Please add pesticide logs to generate a valid prediction model. Baseline estimated yield: Average.`;
+        } else if (userLogs.length < 3) {
+            prediction = `<strong>Model Output:</strong> Based on minimal historical data, your current soil health and recent pesticide applications indicate a <strong>Moderate Yield (+5%)</strong> compared to last season.`;
+        } else {
+            // Find most treated plant
+            const plantCounts = {};
+            userLogs.forEach(l => plantCounts[l.plantName] = (plantCounts[l.plantName] || 0) + 1);
+            const topPlant = Object.keys(plantCounts).reduce((a, b) => plantCounts[a] > plantCounts[b] ? a : b);
+            
+            prediction = `<strong>Model Output:</strong> Optimal pesticide management detected for <strong>${topPlant}</strong>. Combined with simulated weather patterns (adequate rainfall, moderate temp), the neural network predicts a <strong>High Yield (+18%)</strong>. Risk of pest-related crop loss is minimal (< 4%).`;
+        }
+
+        mlResult.innerHTML = `
+            <h4 style="margin-bottom: 10px;"><i class="fas fa-chart-line"></i> Prediction Results (Confidence: ${confidence}%)</h4>
+            <p>${prediction}</p>
+            <div style="margin-top: 10px; font-weight: bold; font-size: 1.1em;">Estimated Yield: ${estYieldTons} Tons/Acre</div>
+        `;
+        mlResult.style.display = 'block';
+        
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        
+        window.SmartFarm.showMessage("AI Prediction Complete", "success");
+    }, 2000);
+}

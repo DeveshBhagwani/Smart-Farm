@@ -37,11 +37,11 @@
         <section class="hero">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1 class="fade-in">Revolutionizing Agriculture with IoT</h1>
-                    <p class="fade-in-delay">Smart farming solutions for soil monitoring, intelligent irrigation, and sustainable crop management</p>
+                    <h1 class="fade-in" data-i18n="hero_title">SmartFarm IoT Enabled Robot</h1>
+                    <p class="fade-in-delay" data-i18n="hero_desc">Revolutionizing agriculture with automated soil monitoring, precise irrigation, and intelligent plant health analysis.</p>
                     <div class="hero-buttons fade-in-delay-2">
-                        <button class="btn-primary">Get Started</button>
-                        <button class="btn-secondary">Learn More</button>
+                        <button class="btn-primary" data-i18n="get_started">Get Started</button>
+                        <button class="btn-secondary" data-i18n="learn_more">Learn More</button>
                     </div>
                 </div>
                 <div class="hero-image">
@@ -224,8 +224,15 @@
         </div>
     </footer>
 
+    <script src="js/lang.js"></script>
     <script src="js/core.js"></script>
     <script src="js/auth.js"></script>
+
+    <!-- Microphone button for voice commands -->
+    <button id="voice-btn" class="voice-btn" title="Voice Commands">
+        <i class="fas fa-microphone"></i>
+    </button>
+
 
     <!-- Microphone button for voice commands -->
     <button id="voice-btn" class="voice-btn" title="Voice Commands">
