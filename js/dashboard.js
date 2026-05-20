@@ -291,3 +291,55 @@ function scheduleDemoNotification() {
         };
     }, 5000);
 }
+
+// Leaflet Map Initialization
+let farmMap = null;
+function initFarmMap() {
+    const mapEl = document.getElementById('farmMap');
+    if (!mapEl || typeof L === 'undefined') return;
+
+    // Default location: Central India (Nagpur approx) as generic rural center
+    const defaultLocation = [21.1458, 79.0882];
+    
+    farmMap = L.map('farmMap').setView(defaultLocation, 15);
+    
+    // Satellite view using Esri World Imagery
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+    }).addTo(farmMap);
+
+    // Add Robot Location Marker
+    const robotIcon = L.divIcon({
+        html: '<i class="fas fa-robot fa-2x" style="color: #00b0ff; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));"></i>',
+        className: 'custom-leaflet-icon',
+        iconSize: [30, 30],
+        iconAnchor: [15, 15]
+    });
+
+    L.marker(defaultLocation, {icon: robotIcon}).addTo(farmMap)
+        .bindPopup('<b>IoT Robot</b><br>Status: Active<br>Last Scan: 2 mins ago')
+        .openPopup();
+        
+    // Add a recent pesticide application marker
+    const sprayIcon = L.divIcon({
+        html: '<i class="fas fa-spray-can fa-2x" style="color: #4CAF50; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));"></i>',
+        className: 'custom-leaflet-icon',
+        iconSize: [30, 30],
+        iconAnchor: [15, 15]
+    });
+    
+    const sprayLocation = [21.1465, 79.0870];
+    L.marker(sprayLocation, {icon: sprayIcon}).addTo(farmMap)
+        .bindPopup('<b>Recent Application</b><br>Tomato Crop<br>Neem Oil');
+
+    // Fix map sizing issues if container was hidden initially
+    setTimeout(() => {
+        farmMap.invalidateSize();
+    }, 100);
+}
+
+// Ensure map is initialized
+document.addEventListener('DOMContentLoaded', () => {
+    // Wait for Leaflet to be ready
+    setTimeout(initFarmMap, 500);
+});

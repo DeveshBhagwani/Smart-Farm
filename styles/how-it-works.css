@@ -1,0 +1,115 @@
+/* Simulator Grid */
+.simulator-container {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.farm-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 10px;
+    background: #e9ecef;
+    padding: 10px;
+    border-radius: 8px;
+    position: relative;
+    height: 400px;
+}
+
+body.dark-mode .farm-grid {
+    background: #2c2c2c;
+}
+
+.grid-cell {
+    background: #fff;
+    border: 2px dashed #ccc;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+body.dark-mode .grid-cell {
+    background: #1e1e1e;
+    border-color: #444;
+}
+
+.grid-cell.plant {
+    border: 2px solid #4CAF50;
+    background: rgba(76, 175, 80, 0.1);
+}
+
+.grid-cell.plant::after {
+    content: '\\f4d8'; /* fa-seedling */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    color: #4CAF50;
+    font-size: 24px;
+}
+
+/* Robot */
+#robot {
+    position: absolute;
+    width: calc(20% - 10px);
+    height: calc(25% - 10px);
+    background: var(--primary-gradient);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    transition: all 1s ease-in-out;
+    z-index: 10;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    top: 10px;
+    left: 10px;
+}
+
+#robot.scanning {
+    animation: pulse-scan 1s infinite;
+}
+
+#robot.watering {
+    animation: spray-water 1s infinite;
+}
+
+@keyframes pulse-scan {
+    0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(76, 175, 80, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+}
+
+@keyframes spray-water {
+    0% { background: linear-gradient(45deg, #2c7a2c, #4CAF50); }
+    50% { background: linear-gradient(45deg, #0277bd, #00b0ff); }
+    100% { background: linear-gradient(45deg, #2c7a2c, #4CAF50); }
+}
+
+.simulator-controls {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.log-panel {
+    background: #333;
+    color: #4CAF50;
+    font-family: monospace;
+    padding: 15px;
+    border-radius: 8px;
+    height: 150px;
+    overflow-y: auto;
+    margin-top: 20px;
+}
+
+.log-panel p {
+    margin: 5px 0;
+    color: #4CAF50 !important;
+}

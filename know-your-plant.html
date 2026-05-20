@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/kyp.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
     <nav class="navbar">
@@ -21,7 +22,7 @@
                 <li><a href="plant-health.html" class="nav-link">Plant Health</a></li>
                 <li><a href="know-your-plant.html" class="nav-link active">Know Your Plant</a></li>
                 <li><a href="live-data.html" class="nav-link">Live Data</a></li>
-                <li><a href="team.html" class="nav-link">Our Team</a></li>
+                <li><a href="how-it-works.html" class="nav-link">How It Works</a></li>
                 <li><a href="login.html" class="nav-link login-btn">Login</a></li>
                 <li style="display: flex; align-items: center;"><button class="theme-toggle" id="theme-toggle" aria-label="Toggle Dark Mode" style="background:none; border:none; color:inherit; cursor:pointer; margin-left: 15px; font-size:1.2rem;"><i class="fas fa-moon"></i></button></li>
             </ul>
@@ -168,7 +169,7 @@
                         <li><a href="weather.html">Weather</a></li>
                         <li><a href="plant-health.html">Plant Health</a></li>
                         <li><a href="know-your-plant.html">Know Your Plant</a></li>
-                        <li><a href="team.html">Our Team</a></li>
+                        <li><a href="how-it-works.html">How It Works</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -186,5 +187,11 @@
     <script src="js/core.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/know-your-plant.js"></script>
+
+    <!-- Microphone button for voice commands -->
+    <button id="voice-btn" class="voice-btn" title="Voice Commands">
+        <i class="fas fa-microphone"></i>
+    </button>
+
 </body>
 </html>

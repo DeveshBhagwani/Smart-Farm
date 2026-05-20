@@ -291,3 +291,72 @@ function updateNavigationAuth() {
         loginLink.innerHTML = '<i class="fas fa-user"></i> Dashboard';
     }
 }
+
+// PWA Service Worker Registration
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js')
+            .then(reg => console.log('Service Worker registered', reg))
+            .catch(err => console.error('Service Worker registration failed', err));
+    });
+}
+
+// Voice Command System (Web Speech API)
+document.addEventListener('DOMContentLoaded', () => {
+    const voiceBtn = document.getElementById('voice-btn');
+    if (!voiceBtn) return;
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+        voiceBtn.style.display = 'none'; // Hide if not supported
+        return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    voiceBtn.addEventListener('click', () => {
+        voiceBtn.classList.add('listening');
+        window.SmartFarm.showMessage("Listening... Say a command like 'Go to Weather'.", "info");
+        recognition.start();
+    });
+
+    recognition.onresult = (event) => {
+        const command = event.results[0][0].transcript.toLowerCase();
+        console.log('Voice Command Received: ', command);
+        
+        if (command.includes('weather')) {
+            window.location.href = 'weather.html';
+        } else if (command.includes('dashboard')) {
+            window.location.href = 'dashboard.html';
+        } else if (command.includes('plant') || command.includes('health')) {
+            window.location.href = 'plant-health.html';
+        } else if (command.includes('dark')) {
+            const themeBtn = document.getElementById('theme-toggle');
+            if(themeBtn && !document.body.classList.contains('dark-mode')) themeBtn.click();
+            window.SmartFarm.showMessage("Dark Mode activated.", "success");
+        } else if (command.includes('light')) {
+            const themeBtn = document.getElementById('theme-toggle');
+            if(themeBtn && document.body.classList.contains('dark-mode')) themeBtn.click();
+            window.SmartFarm.showMessage("Light Mode activated.", "success");
+        } else {
+            window.SmartFarm.showMessage("Command not recognized.", "error");
+        }
+    };
+
+    recognition.onspeechend = () => {
+        recognition.stop();
+        voiceBtn.classList.remove('listening');
+    };
+
+    recognition.onerror = (event) => {
+        console.error('Speech recognition error', event.error);
+        voiceBtn.classList.remove('listening');
+        if (event.error !== 'no-speech') {
+            window.SmartFarm.showMessage("Voice recognition error: " + event.error, "error");
+        }
+    };
+});

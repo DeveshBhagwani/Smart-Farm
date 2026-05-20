@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/dashboard.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
     <nav class="navbar">
@@ -21,7 +23,7 @@
                 <li><a href="plant-health.html" class="nav-link">Plant Health</a></li>
                 <li><a href="know-your-plant.html" class="nav-link">Know Your Plant</a></li>
                 <li><a href="live-data.html" class="nav-link">Live Data</a></li>
-                <li><a href="team.html" class="nav-link">Our Team</a></li>
+                <li><a href="how-it-works.html" class="nav-link">How It Works</a></li>
                 <li><a href="dashboard.html" class="nav-link login-btn active">Dashboard</a></li>
                 <li style="display: flex; align-items: center;"><button class="theme-toggle" id="theme-toggle" aria-label="Toggle Dark Mode" style="background:none; border:none; color:inherit; cursor:pointer; margin-left: 15px; font-size:1.2rem;"><i class="fas fa-moon"></i></button></li>
             </ul>
@@ -193,6 +195,14 @@
             </div>
 
             <div class="dashboard-section">
+                <h2>Interactive Farm Map</h2>
+                <div class="dashboard-card slide-up">
+                    <p class="mb-3">Live geographical tracking of your IoT robot and recent field scans.</p>
+                    <div id="farmMap" style="height: 400px; border-radius: 8px; z-index: 1;"></div>
+                </div>
+            </div>
+
+            <div class="dashboard-section">
                 <h2>Today's Farming Tips</h2>
                 <div class="dashboard-card">
                     <div class="tips-container">
@@ -229,7 +239,7 @@
                         <li><a href="weather.html">Weather</a></li>
                         <li><a href="plant-health.html">Plant Health</a></li>
                         <li><a href="know-your-plant.html">Know Your Plant</a></li>
-                        <li><a href="team.html">Our Team</a></li>
+                        <li><a href="how-it-works.html">How It Works</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -246,8 +256,15 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="js/core.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/dashboard.js"></script>
+
+    <!-- Microphone button for voice commands -->
+    <button id="voice-btn" class="voice-btn" title="Voice Commands">
+        <i class="fas fa-microphone"></i>
+    </button>
+
 </body>
 </html>

@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Sensor Data - SmartFarm</title>
+    <title>How It Works - SmartFarm</title>
     <link rel="stylesheet" href="styles/main.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/how-it-works.css">
     <link rel="manifest" href="manifest.json">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar">
@@ -20,8 +21,8 @@
                 <li><a href="weather.html" class="nav-link">Weather</a></li>
                 <li><a href="plant-health.html" class="nav-link">Plant Health</a></li>
                 <li><a href="know-your-plant.html" class="nav-link">Know Your Plant</a></li>
-                <li><a href="live-data.html" class="nav-link active">Live Data</a></li>
-                <li><a href="how-it-works.html" class="nav-link">How It Works</a></li>
+                <li><a href="live-data.html" class="nav-link">Live Data</a></li>
+                <li><a href="how-it-works.html" class="nav-link active">How It Works</a></li>
                 <li><a href="login.html" class="nav-link login-btn">Login</a></li>
                 <li style="display: flex; align-items: center;"><button class="theme-toggle" id="theme-toggle" aria-label="Toggle Dark Mode" style="background:none; border:none; color:inherit; cursor:pointer; margin-left: 15px; font-size:1.2rem;"><i class="fas fa-moon"></i></button></li>
             </ul>
@@ -35,71 +36,43 @@
 
     <header class="page-header">
         <div class="container">
-            <h1><i class="fas fa-satellite-dish"></i> Live Sensor Data Feed</h1>
-            <p>Real-time monitoring from your IoT agricultural robot</p>
+            <h1><i class="fas fa-robot"></i> Interactive Robot Simulator</h1>
+            <p>Understand how the SmartFarm IoT robot navigates and maintains your crops.</p>
         </div>
     </header>
 
     <main class="main-content">
         <div class="container">
-            <div class="live-data-grid">
-                <div class="live-data-card">
-                    <div class="card-header">
-                        <i class="fas fa-thermometer-half"></i>
-                        <span>Temperature</span>
-                    </div>
-                    <div class="data-value" id="temperature-value">--°C</div>
-                    <p>Real-time ambient temperature.</p>
-                </div>
-
-                <div class="live-data-card">
-                    <div class="card-header">
-                        <i class="fas fa-tint"></i>
-                        <span>Humidity</span>
-                    </div>
-                    <div class="data-value" id="humidity-value">--%</div>
-                    <p>Current atmospheric moisture.</p>
-                </div>
-
-                <div class="live-data-card">
-                    <div class="card-header">
-                        <i class="fas fa-arrow-up"></i>
-                        <span>Front Distance</span>
-                    </div>
-                    <div class="data-value" id="front-distance-value">-- cm</div>
-                    <p>Forward-facing sensor.</p>
-                </div>
+            <div class="simulator-container fade-in">
+                <h2>Field Simulator</h2>
+                <p class="text-muted">Watch the robot autonomously navigate the farm grid, scan soil moisture, and apply targeted irrigation.</p>
                 
-                <div class="live-data-card">
-                    <div class="card-header">
-                        <i class="fas fa-arrow-down"></i>
-                        <span>Back Distance</span>
-                    </div>
-                    <div class="data-value" id="back-distance-value">-- cm</div>
-                    <p>Rear-facing sensor.</p>
+                <div class="farm-grid" id="farm-grid">
+                    <!-- Robot -->
+                    <div id="robot"><i class="fas fa-robot"></i></div>
+                    
+                    <!-- Grid Cells populated by JS -->
                 </div>
 
-                <div class="live-data-card">
-                    <div class="card-header">
-                        <i class="fas fa-fill-drip"></i>
-                        <span>Water Level</span>
-                    </div>
-                    <div class="data-value" id="water-level-value">--%</div>
-                    <p>Irrigation tank water level.</p>
+                <div class="simulator-controls">
+                    <button class="btn-primary" onclick="startSimulation()">
+                        <i class="fas fa-play"></i> Start Autonomous Mode
+                    </button>
+                    <button class="btn-secondary" onclick="resetSimulation()">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
                 </div>
 
-                <div class="live-data-card">
-                    <div class="card-header">
-                        <i class="fas fa-arrows-alt-h"></i>
-                        <span>Servo Motor</span>
-                    </div>
-                    <div class="data-value" id="servo-motor-value">--</div>
-                    <p>Current steering direction.</p>
+                <div class="log-panel" id="sim-log">
+                    <p>> System initialized. Awaiting commands...</p>
                 </div>
             </div>
-            <p class="last-updated" id="last-updated">Initializing live feed...</p>
-            
+
+            <div class="info-card mt-4 slide-up">
+                <h3><i class="fas fa-microchip"></i> IoT Architecture</h3>
+                <p>The physical robot is built using an ESP32 microcontroller. It uses ultrasonic sensors to navigate around obstacles and capacitive soil moisture sensors to check the soil's hydration level. When moisture drops below a threshold, the onboard water pump activates precisely at the plant's roots, conserving water.</p>
             </div>
+        </div>
     </main>
 
     <footer class="footer">
@@ -130,13 +103,13 @@
         </div>
     </footer>
 
-    <script src="js/core.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/live-data.js"></script>
     <!-- Microphone button for voice commands -->
     <button id="voice-btn" class="voice-btn" title="Voice Commands">
         <i class="fas fa-microphone"></i>
     </button>
 
+    <script src="js/core.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/how-it-works.js"></script>
 </body>
 </html>
