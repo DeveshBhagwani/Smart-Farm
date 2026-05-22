@@ -47,6 +47,20 @@
 
     <main class="main-content">
         <div class="container">
+            <!-- Market Price Tracker -->
+            <div class="dashboard-section" style="margin-bottom: 30px;">
+                <h2 style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-chart-line" style="color: #4CAF50;"></i> Live Market Prices
+                    <span style="font-size: 0.5em; background: #e53935; color: white; padding: 3px 8px; border-radius: 12px; font-weight: bold; animation: pulse-record 1.5s infinite;">LIVE</span>
+                </h2>
+                <div class="market-ticker" style="background: var(--card-bg); padding: 15px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-left: 4px solid var(--primary-color); display: flex; gap: 30px; overflow-x: auto; white-space: nowrap;">
+                    <!-- Populated by market.js -->
+                    <div id="market-prices" style="display: flex; gap: 40px; font-weight: 500;">
+                        <span>Loading market data...</span>
+                    </div>
+                </div>
+            </div>
+
             <div class="dashboard-stats">
                 <h2>Your Farming Statistics</h2>
                 <div class="dashboard-grid">
@@ -293,6 +307,7 @@
     <script src="js/lang.js"></script>
     <script src="js/core.js"></script>
     <script src="js/auth.js"></script>
+    <script src="js/market.js"></script>
     <script src="js/dashboard.js"></script>
 
     <!-- Microphone button for voice commands -->
