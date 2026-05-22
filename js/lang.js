@@ -10,6 +10,7 @@ const translations = {
         know_plant: "Know Your Plant",
         live_data: "Live Data",
         how_it_works: "How It Works",
+        community_forum: "Community Forum",
         login: "Login",
         hero_title: "SmartFarm IoT Enabled Robot",
         hero_desc: "Revolutionizing agriculture with automated soil monitoring, precise irrigation, and intelligent plant health analysis.",

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Forum - SmartFarm</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/forum.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-seedling"></i>
+                <span>SmartFarm</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="weather.html" class="nav-link">Weather</a></li>
+                <li><a href="plant-health.html" class="nav-link">Plant Health</a></li>
+                <li><a href="know-your-plant.html" class="nav-link">Know Your Plant</a></li>
+                <li><a href="live-data.html" class="nav-link">Live Data</a></li>
+                <li><a href="how-it-works.html" class="nav-link">How It Works</a></li>
+                <li><a href="forum.html" class="nav-link active" data-i18n="community_forum">Community Forum</a></li>
+                <li><a href="login.html" class="nav-link login-btn">Login</a></li>
+                <li style="display: flex; align-items: center;"><button class="theme-toggle" id="theme-toggle" aria-label="Toggle Dark Mode" style="background:none; border:none; color:inherit; cursor:pointer; margin-left: 15px; font-size:1.2rem;"><i class="fas fa-moon"></i></button></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content" style="padding-top: 100px;">
+        <div class="container">
+            <div class="forum-container slide-up">
+                <div class="forum-header">
+                    <h2><i class="fas fa-users"></i> Expert Community Forum</h2>
+                    <p>Ask questions, share pictures, and get live advice from agricultural experts.</p>
+                </div>
+                
+                <div class="chat-window">
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message system">
+                            <p>Welcome to the SmartFarm Community! An agricultural expert is online and ready to help. 🌾</p>
+                            <span class="time">Just now</span>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input-area">
+                        <input type="text" id="chatInput" placeholder="Type your question here (e.g. My tomato leaves are turning yellow...)">
+                        <button class="btn-primary" id="sendBtn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 SmartFarm. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Microphone button for voice commands -->
+    <button id="voice-btn" class="voice-btn" title="Voice Commands">
+        <i class="fas fa-microphone"></i>
+    </button>
+
+    <script src="js/lang.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/forum.js"></script>
+</body>
+</html>
