@@ -223,6 +223,19 @@
             </div>
 
             <div class="dashboard-section">
+                <h2>Drone Imagery (NDVI Maps)</h2>
+                <div class="dashboard-card slide-up">
+                    <p class="mb-3">Simulated overhead drone scan highlighting crop health hotspots (NDVI Heatmap).</p>
+                    <div class="ndvi-container" style="position: relative; width: 100%; height: 350px; background: url('https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80') center/cover; border-radius: 8px; overflow: hidden;">
+                        <div class="ndvi-overlay" id="ndviOverlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 30% 40%, rgba(255, 0, 0, 0.6) 0%, rgba(255, 255, 0, 0.4) 20%, rgba(0, 255, 0, 0.3) 50%, rgba(0, 0, 255, 0.1) 100%); mix-blend-mode: multiply; opacity: 0; transition: opacity 1s ease;"></div>
+                    </div>
+                    <button class="btn-primary" onclick="toggleNDVI()" style="margin-top: 15px;">
+                        <i class="fas fa-layer-group"></i> Toggle NDVI Overlay
+                    </button>
+                </div>
+            </div>
+
+            <div class="dashboard-section">
                 <h2>Today's Farming Tips</h2>
                 <div class="dashboard-card">
                     <div class="tips-container">

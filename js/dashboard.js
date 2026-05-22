@@ -431,3 +431,15 @@ function predictYield() {
         window.SmartFarm.showMessage("AI Prediction Complete", "success");
     }, 2000);
 }
+// Drone Imagery NDVI Toggle
+window.toggleNDVI = function() {
+    const overlay = document.getElementById('ndviOverlay');
+    if (overlay.style.opacity === '0' || overlay.style.opacity === '') {
+        overlay.style.opacity = '1';
+        window.SmartFarm.showMessage('NDVI Overlay Activated.', 'success');
+    } else {
+        overlay.style.opacity = '0';
+        window.SmartFarm.showMessage('NDVI Overlay Deactivated.', 'info');
+    }
+};
+
