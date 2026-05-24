@@ -201,6 +201,62 @@
                     </div>
                 </article>
             </section>
+
+            <section class="control-room-panel command-panel" aria-label="Remote control console">
+                <div class="panel-head">
+                    <div>
+                        <span class="panel-eyebrow">Remote Control</span>
+                        <h2>Mission Console</h2>
+                    </div>
+                    <span class="state-chip warning" id="command-state">Operator Ready</span>
+                </div>
+                <div class="command-layout">
+                    <div class="command-grid">
+                        <button class="command-btn" data-command="scan">
+                            <i class="fas fa-magnifying-glass"></i>
+                            <strong>Start Scan</strong>
+                            <span>Initiate autonomous field sweep</span>
+                        </button>
+                        <button class="command-btn" data-command="irrigate">
+                            <i class="fas fa-droplet"></i>
+                            <strong>Run Irrigation</strong>
+                            <span>Trigger targeted pump cycle</span>
+                        </button>
+                        <button class="command-btn" data-command="home">
+                            <i class="fas fa-house"></i>
+                            <strong>Return Base</strong>
+                            <span>Send the robot to docking point</span>
+                        </button>
+                        <button class="command-btn danger" data-command="stop">
+                            <i class="fas fa-triangle-exclamation"></i>
+                            <strong>Emergency Stop</strong>
+                            <span>Freeze all motion and pump output</span>
+                        </button>
+                    </div>
+                    <div class="threshold-panel">
+                        <div class="threshold-head">
+                            <strong>Moisture Threshold</strong>
+                            <span id="threshold-value">32%</span>
+                        </div>
+                        <input id="moisture-threshold" type="range" min="20" max="60" value="32" aria-label="Set moisture threshold">
+                        <p>Adjust the irrigation trigger level used by the robot and alert system.</p>
+                    </div>
+                </div>
+
+                <div class="console-head">
+                    <span>Command History</span>
+                    <span class="console-subtitle">Every operator action is logged here</span>
+                </div>
+                <ol class="command-log" id="command-log" aria-live="polite">
+                    <li class="placeholder-command">
+                        <span class="event-time">--:--</span>
+                        <div>
+                            <strong>Console armed</strong>
+                            <p>Waiting for an operator command.</p>
+                        </div>
+                    </li>
+                </ol>
+            </section>
         </div>
     </main>
 

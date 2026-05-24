@@ -23,6 +23,9 @@ const controlRoomState = {
     missionCoverage: 12,
     robotMode: 'Patrolling',
     streamMode: 'Simulated Stream',
+    moistureThreshold: 32,
+    manualMode: null,
+    manualModeUntil: 0,
     history: [],
     chart: null,
     timer: null,
@@ -38,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     seedHistory();
     renderTelemetry(controlRoomState);
     controlRoomState.chart = createChart(chartCanvas);
+    bindControlConsole();
     controlRoomState.timer = window.setInterval(stepTelemetry, 1800);
 
     window.SmartFarmControlRoom.receiveSnapshot = receiveExternalSnapshot;
@@ -148,6 +152,7 @@ function createChart(canvas) {
 
 function stepTelemetry() {
     const latest = controlRoomState.history[controlRoomState.history.length - 1] || createSnapshot(controlRoomState);
+    const manualModeActive = controlRoomState.manualMode && Date.now() < controlRoomState.manualModeUntil;
     const next = createSnapshot({
         temperature: latest.temperature + randomFloat(-0.5, 0.7),
         humidity: latest.humidity + randomFloat(-3, 3),
@@ -160,7 +165,14 @@ function stepTelemetry() {
         robotMode: 'Patrolling'
     });
 
-    if (next.soilMoisture < 32) {
+    if (manualModeActive) {
+        next.robotMode = controlRoomState.manualMode;
+        next.pumpActive = controlRoomState.manualMode === 'Irrigating';
+        if (controlRoomState.manualMode === 'Standby') {
+            next.pumpActive = false;
+            next.missionCoverage = latest.missionCoverage;
+        }
+    } else if (next.soilMoisture < controlRoomState.moistureThreshold) {
         next.pumpActive = true;
         next.robotMode = 'Irrigating';
     } else if (next.pumpActive) {
@@ -202,6 +214,12 @@ function renderTelemetry(snapshot) {
     updateCard('connectivity-status', controlRoomState.streamMode);
     updateCard('mission-coverage', `${Math.round(snapshot.missionCoverage)}%`);
     updateCard('last-update', formatTime(snapshot.timestamp));
+    updateCard('command-state', snapshot.robotMode === 'Irrigating' ? 'Pump Active' : snapshot.robotMode);
+
+    const thresholdValue = document.getElementById('threshold-value');
+    if (thresholdValue) {
+        thresholdValue.textContent = `${controlRoomState.moistureThreshold}%`;
+    }
 
     renderMetric('telemetry-summary', [
         ['Temperature', `${snapshot.temperature.toFixed(1)} °C`],
@@ -259,7 +277,12 @@ function updateRouteBoard(progress, mode) {
     robot.style.left = `${left}%`;
     robot.style.top = `${top}%`;
     robot.style.transform = `translate(-50%, -50%) ${mode === 'Irrigating' ? 'scale(1.08)' : 'scale(1)'}`;
-    robot.innerHTML = `<i class="fas ${mode === 'Irrigating' ? 'fa-droplet' : 'fa-robot'}"></i>`;
+    robot.style.background = mode === 'Standby'
+        ? 'rgba(255, 82, 82, 0.18)'
+        : mode === 'Irrigating'
+            ? 'rgba(61, 220, 132, 0.16)'
+            : 'rgba(15, 26, 17, 0.78)';
+    robot.innerHTML = `<i class="fas ${mode === 'Irrigating' ? 'fa-droplet' : mode === 'Returning' ? 'fa-house' : mode === 'Standby' ? 'fa-ban' : 'fa-robot'}"></i>`;
 
     scan.style.opacity = progress > 45 ? '1' : '0.55';
     water.style.opacity = progress > 20 ? '1' : '0.55';
@@ -297,7 +320,7 @@ function maybeAppendEvent(snapshot) {
 
     const events = [];
 
-    if (snapshot.soilMoisture < 32) {
+    if (snapshot.soilMoisture < controlRoomState.moistureThreshold) {
         events.push({
             id: 'low-moisture',
             label: 'Low soil moisture detected',
@@ -352,6 +375,142 @@ function maybeAppendEvent(snapshot) {
             feed.removeChild(feed.lastElementChild);
         }
     });
+}
+
+function bindControlConsole() {
+    document.querySelectorAll('.command-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            executeCommand(button.dataset.command);
+        });
+    });
+
+    const threshold = document.getElementById('moisture-threshold');
+    if (threshold) {
+        threshold.addEventListener('input', (event) => {
+            controlRoomState.moistureThreshold = Number(event.target.value);
+            const thresholdValue = document.getElementById('threshold-value');
+            if (thresholdValue) {
+                thresholdValue.textContent = `${controlRoomState.moistureThreshold}%`;
+            }
+
+            appendCommandEntry(
+                'Threshold updated',
+                `Irrigation trigger adjusted to ${controlRoomState.moistureThreshold}% soil moisture.`,
+                'success'
+            );
+        });
+    }
+}
+
+function executeCommand(command) {
+    const commandMap = {
+        scan: {
+            label: 'Start Scan',
+            message: 'Autonomous scan sequence initiated.',
+            mode: 'Scanning',
+            tone: 'success'
+        },
+        irrigate: {
+            label: 'Run Irrigation',
+            message: 'Pump engaged for targeted watering.',
+            mode: 'Irrigating',
+            tone: 'success'
+        },
+        home: {
+            label: 'Return Base',
+            message: 'Robot returning to base station.',
+            mode: 'Returning',
+            tone: 'warning'
+        },
+        stop: {
+            label: 'Emergency Stop',
+            message: 'Emergency stop engaged. Motion and pump output frozen.',
+            mode: 'Standby',
+            tone: 'danger'
+        }
+    };
+
+    const selected = commandMap[command];
+    if (!selected) return;
+
+    controlRoomState.manualMode = selected.mode;
+    controlRoomState.manualModeUntil = Date.now() + (command === 'stop' ? 10000 : 6500);
+
+    if (command === 'irrigate') {
+        controlRoomState.soilMoisture = clamp(controlRoomState.soilMoisture + 8, 10, 100);
+        controlRoomState.waterTank = clamp(controlRoomState.waterTank - 2, 0, 100);
+        controlRoomState.pumpActive = true;
+    }
+
+    if (command === 'scan') {
+        controlRoomState.missionCoverage = clamp(controlRoomState.missionCoverage + 4, 0, 100);
+    }
+
+    if (command === 'home') {
+        controlRoomState.missionCoverage = clamp(controlRoomState.missionCoverage + 1.5, 0, 100);
+    }
+
+    if (command === 'stop') {
+        controlRoomState.pumpActive = false;
+        controlRoomState.signal = clamp(controlRoomState.signal + 2, 20, 100);
+    }
+
+    updateCard('command-state', selected.label);
+    appendCommandEntry(selected.label, selected.message, selected.tone);
+    maybeAppendManualEvent(selected.label, selected.message, selected.tone);
+
+    if (command === 'stop') {
+        stopTelemetry();
+        window.setTimeout(() => {
+            if (!controlRoomState.timer) {
+                controlRoomState.timer = window.setInterval(stepTelemetry, 1800);
+            }
+        }, 2500);
+    }
+}
+
+function appendCommandEntry(title, message, tone = 'success') {
+    const log = document.getElementById('command-log');
+    if (!log) return;
+
+    const item = document.createElement('li');
+    item.className = `command-entry ${tone}`;
+    item.innerHTML = `
+        <span class="event-time">${formatTime(Date.now())}</span>
+        <div>
+            <strong>${title}</strong>
+            <p>${message}</p>
+        </div>
+    `;
+
+    log.prepend(item);
+    while (log.children.length > 5) {
+        log.removeChild(log.lastElementChild);
+    }
+}
+
+function maybeAppendManualEvent(label, message, tone) {
+    const id = `manual-${label.toLowerCase().replace(/\s+/g, '-')}`;
+    if (controlRoomState.eventIds.has(id)) {
+        controlRoomState.eventIds.delete(id);
+    }
+
+    const feed = document.getElementById('event-feed');
+    if (!feed) return;
+
+    const entry = document.createElement('li');
+    entry.className = `placeholder-event event-${tone}`;
+    entry.innerHTML = `
+        <span class="event-time">${formatTime(Date.now())}</span>
+        <div>
+            <strong>${label}</strong>
+            <p>${message}</p>
+        </div>
+    `;
+    feed.prepend(entry);
+    while (feed.children.length > 5) {
+        feed.removeChild(feed.lastElementChild);
+    }
 }
 
 function syncStateFromSnapshot(snapshot) {

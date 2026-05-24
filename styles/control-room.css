@@ -192,6 +192,162 @@
     grid-column: span 7;
 }
 
+.command-panel {
+    margin-top: 1rem;
+}
+
+.command-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+    gap: 1rem;
+}
+
+.command-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.85rem;
+}
+
+.command-btn {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03));
+    color: #f5fbf6;
+    border-radius: 20px;
+    padding: 1rem;
+    text-align: left;
+    display: grid;
+    gap: 0.45rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.command-btn i {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    background: rgba(61, 220, 132, 0.12);
+    color: #89f49d;
+}
+
+.command-btn strong {
+    font-size: 1.05rem;
+}
+
+.command-btn span {
+    color: rgba(233, 245, 235, 0.72);
+    font-size: 0.92rem;
+}
+
+.command-btn:hover,
+.command-btn:focus-visible {
+    transform: translateY(-3px);
+    border-color: rgba(143, 240, 155, 0.4);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.18);
+}
+
+.command-btn.danger i {
+    background: rgba(255, 82, 82, 0.14);
+    color: #ff8f8f;
+}
+
+.command-btn.danger:hover,
+.command-btn.danger:focus-visible {
+    border-color: rgba(255, 138, 138, 0.36);
+}
+
+.threshold-panel {
+    border-radius: 20px;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    display: grid;
+    gap: 0.85rem;
+    align-content: start;
+}
+
+.threshold-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    color: #f5fbf6;
+}
+
+.threshold-panel p {
+    margin: 0;
+    color: rgba(233, 245, 235, 0.68);
+}
+
+.threshold-panel input[type="range"] {
+    width: 100%;
+    accent-color: #43a047;
+}
+
+.console-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 0.75rem;
+    color: #f5fbf6;
+}
+
+.console-subtitle {
+    color: rgba(233, 245, 235, 0.62);
+    font-size: 0.92rem;
+}
+
+.command-log {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+}
+
+.placeholder-command,
+.command-entry {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    padding: 0.95rem 1rem;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.command-entry strong,
+.command-entry p {
+    margin: 0;
+}
+
+.command-entry strong {
+    color: #f5fbf6;
+}
+
+.command-entry p {
+    color: rgba(233, 245, 235, 0.68);
+}
+
+.command-entry .event-time {
+    margin-top: 0.1rem;
+}
+
+.command-entry.success {
+    border-color: rgba(61, 220, 132, 0.24);
+}
+
+.command-entry.warning {
+    border-color: rgba(255, 193, 7, 0.2);
+}
+
+.command-entry.danger {
+    border-color: rgba(255, 82, 82, 0.24);
+}
+
 .panel-head {
     display: flex;
     justify-content: space-between;
@@ -480,5 +636,10 @@ body.dark-mode .control-room-page {
 
     .route-board {
         height: 260px;
+    }
+
+    .command-layout,
+    .command-grid {
+        grid-template-columns: 1fr;
     }
 }
