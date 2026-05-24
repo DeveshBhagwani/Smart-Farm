@@ -29,6 +29,7 @@ const controlRoomState = {
     history: [],
     chart: null,
     timer: null,
+    liveSource: null,
     eventIds: new Set()
 };
 
@@ -42,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderTelemetry(controlRoomState);
     controlRoomState.chart = createChart(chartCanvas);
     bindControlConsole();
+    attemptLiveConnection();
     controlRoomState.timer = window.setInterval(stepTelemetry, 1800);
 
     window.SmartFarmControlRoom.receiveSnapshot = receiveExternalSnapshot;
@@ -402,6 +404,44 @@ function bindControlConsole() {
     }
 }
 
+function attemptLiveConnection() {
+    if (typeof EventSource === 'undefined') return;
+
+    try {
+        const source = new EventSource('/api/telemetry');
+        controlRoomState.liveSource = source;
+
+        source.onopen = () => {
+            setStreamMode('Node SSE Live');
+            stopTelemetry();
+            appendCommandEntry('Live stream connected', 'Node telemetry is now driving the control room.', 'success');
+        };
+
+        source.onmessage = (event) => {
+            try {
+                const snapshot = JSON.parse(event.data);
+                receiveExternalSnapshot({
+                    ...snapshot,
+                    streamMode: 'Node SSE Live'
+                });
+            } catch (error) {
+                console.warn('Could not parse telemetry snapshot', error);
+            }
+        };
+
+        source.onerror = () => {
+            if (source.readyState === EventSource.CLOSED) {
+                setStreamMode('Simulated Stream');
+                if (!controlRoomState.timer) {
+                    controlRoomState.timer = window.setInterval(stepTelemetry, 1800);
+                }
+            }
+        };
+    } catch (error) {
+        console.warn('Live connection unavailable, staying in demo mode.', error);
+    }
+}
+
 function executeCommand(command) {
     const commandMap = {
         scan: {
@@ -458,6 +498,7 @@ function executeCommand(command) {
     updateCard('command-state', selected.label);
     appendCommandEntry(selected.label, selected.message, selected.tone);
     maybeAppendManualEvent(selected.label, selected.message, selected.tone);
+    postCommandToServer(command);
 
     if (command === 'stop') {
         stopTelemetry();
@@ -466,6 +507,30 @@ function executeCommand(command) {
                 controlRoomState.timer = window.setInterval(stepTelemetry, 1800);
             }
         }, 2500);
+    }
+}
+
+async function postCommandToServer(command) {
+    try {
+        const response = await fetch('/api/command', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ command })
+        });
+
+        if (!response.ok) return;
+
+        const payload = await response.json();
+        if (payload?.snapshot) {
+            receiveExternalSnapshot({
+                ...payload.snapshot,
+                streamMode: 'Node SSE Live'
+            });
+        }
+    } catch (error) {
+        // Demo mode fallback remains active when the Node server is unavailable.
     }
 }
 

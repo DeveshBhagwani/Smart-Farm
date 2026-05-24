@@ -1,0 +1,9 @@
+{
+  "name": "smartfarm-control-room",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SmartFarm control room demo server and static site",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
