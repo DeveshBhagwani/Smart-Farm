@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupSmoothScrolling();
     setupAnimationTriggers();
     setupInteractiveEffects();
+    setupControlRoomLink();
     updateNavigationAuth();
 });
 
@@ -138,6 +139,35 @@ function setupNavigation() {
             }
         });
     });
+}
+
+/**
+ * Ensures the Control Room nav entry is available across the site.
+ */
+function setupControlRoomLink() {
+    const navMenu = document.querySelector('.nav-menu');
+    if (!navMenu || navMenu.querySelector('a[href="control-room.html"]')) return;
+
+    const loginLink = navMenu.querySelector('a[href="login.html"]');
+    const controlRoomLi = document.createElement('li');
+    const controlRoomLink = document.createElement('a');
+
+    controlRoomLink.href = 'control-room.html';
+    controlRoomLink.className = 'nav-link';
+    controlRoomLink.setAttribute('data-i18n', 'control_room');
+    controlRoomLink.textContent = 'Control Room';
+
+    if (window.location.pathname.endsWith('control-room.html')) {
+        controlRoomLink.classList.add('active');
+    }
+
+    controlRoomLi.appendChild(controlRoomLink);
+
+    if (loginLink && loginLink.parentElement && loginLink.parentElement.parentElement === navMenu) {
+        navMenu.insertBefore(controlRoomLi, loginLink.parentElement);
+    } else {
+        navMenu.appendChild(controlRoomLi);
+    }
 }
 
 /**

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time IoT Control Room - SmartFarm</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/control-room.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body class="control-room-page">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-seedling"></i>
+                <span>SmartFarm</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="weather.html" class="nav-link">Weather</a></li>
+                <li><a href="plant-health.html" class="nav-link">Plant Health</a></li>
+                <li><a href="know-your-plant.html" class="nav-link">Know Your Plant</a></li>
+                <li><a href="live-data.html" class="nav-link">Live Data</a></li>
+                <li><a href="how-it-works.html" class="nav-link">How It Works</a></li>
+                <li><a href="forum.html" class="nav-link" data-i18n="community_forum">Community Forum</a></li>
+                <li><a href="login.html" class="nav-link login-btn">Login</a></li>
+                <li style="display: flex; align-items: center;"><button class="theme-toggle" id="theme-toggle" aria-label="Toggle Dark Mode" style="background:none; border:none; color:inherit; cursor:pointer; margin-left: 15px; font-size:1.2rem;"><i class="fas fa-moon"></i></button></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <header class="control-room-hero">
+        <div class="container control-room-hero-inner">
+            <div class="control-room-copy">
+                <span class="eyebrow"><i class="fas fa-circle"></i> Live Demo Mode</span>
+                <h1>Real-Time IoT Control Room</h1>
+                <p>
+                    Watch the agricultural robot, sensor network, and irrigation workflow from one command center.
+                    This room is designed to evolve from simulation into live WebSocket and Node-driven telemetry.
+                </p>
+                <div class="control-room-actions">
+                    <a href="#mission-center" class="btn-primary">View Mission Status</a>
+                    <a href="#telemetry-panel" class="btn-secondary">Inspect Telemetry</a>
+                </div>
+            </div>
+            <div class="control-room-badge">
+                <div class="badge-ring">
+                    <div class="badge-core">
+                        <i class="fas fa-satellite-dish"></i>
+                    </div>
+                </div>
+                <strong>Command Link Stable</strong>
+                <span>Ready for real-time monitoring</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="control-room-main">
+        <div class="container">
+            <section class="control-room-kpis" aria-label="Mission summary">
+                <article class="kpi-card">
+                    <span class="kpi-label">Robot Status</span>
+                    <strong id="robot-status">Standby</strong>
+                    <small>Awaiting telemetry stream</small>
+                </article>
+                <article class="kpi-card">
+                    <span class="kpi-label">Connectivity</span>
+                    <strong id="connectivity-status">Demo Link</strong>
+                    <small>WebSocket-ready architecture</small>
+                </article>
+                <article class="kpi-card">
+                    <span class="kpi-label">Mission Coverage</span>
+                    <strong id="mission-coverage">0%</strong>
+                    <small>Field scan progress</small>
+                </article>
+                <article class="kpi-card">
+                    <span class="kpi-label">Last Update</span>
+                    <strong id="last-update">--:--:--</strong>
+                    <small>Telemetry timestamp</small>
+                </article>
+            </section>
+
+            <section class="control-room-grid">
+                <article class="control-room-panel telemetry-panel" id="telemetry-panel">
+                    <div class="panel-head">
+                        <div>
+                            <span class="panel-eyebrow">Live Telemetry</span>
+                            <h2>Sensor Snapshot</h2>
+                        </div>
+                        <span class="live-pill">Streaming</span>
+                    </div>
+                    <div class="metric-grid" id="telemetry-summary">
+                        <div class="metric-card placeholder-card">
+                            <span>Temperature</span>
+                            <strong>-- °C</strong>
+                        </div>
+                        <div class="metric-card placeholder-card">
+                            <span>Humidity</span>
+                            <strong>-- %</strong>
+                        </div>
+                        <div class="metric-card placeholder-card">
+                            <span>Soil Moisture</span>
+                            <strong>-- %</strong>
+                        </div>
+                        <div class="metric-card placeholder-card">
+                            <span>Battery</span>
+                            <strong>-- %</strong>
+                        </div>
+                    </div>
+                    <div class="chart-shell">
+                        <canvas id="telemetry-chart" height="220"></canvas>
+                    </div>
+                </article>
+
+                <article class="control-room-panel mission-panel" id="mission-center">
+                    <div class="panel-head">
+                        <div>
+                            <span class="panel-eyebrow">Autonomous Mission</span>
+                            <h2>Robot Journey</h2>
+                        </div>
+                        <span class="state-chip">Scaffold</span>
+                    </div>
+                    <div class="route-board" id="route-board" aria-label="Autonomous route preview">
+                        <div class="route-grid"></div>
+                        <div class="route-path path-a"></div>
+                        <div class="route-path path-b"></div>
+                        <div class="route-point point-home"><i class="fas fa-home"></i></div>
+                        <div class="route-point point-robot"><i class="fas fa-robot"></i></div>
+                        <div class="route-point point-scan"><i class="fas fa-magnifying-glass"></i></div>
+                        <div class="route-point point-water"><i class="fas fa-droplet"></i></div>
+                    </div>
+                    <ul class="mission-notes">
+                        <li><i class="fas fa-circle-check"></i> Scanning field sectors</li>
+                        <li><i class="fas fa-circle-check"></i> Monitoring irrigation readiness</li>
+                        <li><i class="fas fa-circle-check"></i> Optimizing navigation path</li>
+                    </ul>
+                </article>
+
+                <article class="control-room-panel">
+                    <div class="panel-head">
+                        <div>
+                            <span class="panel-eyebrow">Event Feed</span>
+                            <h2>Telemetry Timeline</h2>
+                        </div>
+                        <span class="state-chip success">Live Log</span>
+                    </div>
+                    <ol class="event-feed" id="event-feed">
+                        <li class="placeholder-event">
+                            <span class="event-time">--:--</span>
+                            <div>
+                                <strong>Telemetry stream ready</strong>
+                                <p>Awaiting real-time readings from the IoT robot.</p>
+                            </div>
+                        </li>
+                        <li class="placeholder-event">
+                            <span class="event-time">--:--</span>
+                            <div>
+                                <strong>Mission sync pending</strong>
+                                <p>Route planning and sensor events will appear here.</p>
+                            </div>
+                        </li>
+                    </ol>
+                </article>
+
+                <article class="control-room-panel">
+                    <div class="panel-head">
+                        <div>
+                            <span class="panel-eyebrow">System Snapshot</span>
+                            <h2>Device Health</h2>
+                        </div>
+                        <span class="state-chip warning">Demo Ready</span>
+                    </div>
+                    <div class="device-stack">
+                        <div class="device-card">
+                            <i class="fas fa-microchip"></i>
+                            <div>
+                                <strong>ESP32 Controller</strong>
+                                <p>Edge device orchestration layer</p>
+                            </div>
+                        </div>
+                        <div class="device-card">
+                            <i class="fas fa-tower-broadcast"></i>
+                            <div>
+                                <strong>Telemetry Bus</strong>
+                                <p>Prepared for WebSocket message flow</p>
+                            </div>
+                        </div>
+                        <div class="device-card">
+                            <i class="fas fa-camera"></i>
+                            <div>
+                                <strong>Camera + Vision</strong>
+                                <p>Crop scan visualization placeholder</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-seedling"></i> SmartFarm</h3>
+                    <p>Revolutionizing agriculture with IoT and smart farming solutions</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="weather.html">Weather</a></li>
+                        <li><a href="plant-health.html">Plant Health</a></li>
+                        <li><a href="know-your-plant.html">Know Your Plant</a></li>
+                        <li><a href="how-it-works.html">How It Works</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-envelope"></i> contact@smartfarm.com</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SmartFarm. All rights reserved. | Final Year Project</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/lang.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/control-room.js"></script>
+    <button id="voice-btn" type="button" class="voice-btn" title="Voice Commands" aria-label="Voice Commands">
+        <i class="fas fa-microphone"></i>
+    </button>
+</body>
+</html>

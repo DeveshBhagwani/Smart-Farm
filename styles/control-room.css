@@ -1,0 +1,484 @@
+.control-room-page {
+    background:
+        radial-gradient(circle at top left, rgba(46, 125, 50, 0.16), transparent 25%),
+        radial-gradient(circle at top right, rgba(33, 150, 243, 0.14), transparent 25%),
+        linear-gradient(180deg, #08130c 0%, #0f1a11 100%);
+}
+
+.control-room-hero {
+    padding: 120px 0 48px;
+    color: #f5fbf6;
+    position: relative;
+    overflow: hidden;
+}
+
+.control-room-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 75% 20%, rgba(255, 255, 255, 0.08), transparent 20%),
+        radial-gradient(circle at 20% 70%, rgba(102, 187, 106, 0.16), transparent 25%);
+    pointer-events: none;
+}
+
+.control-room-hero-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+    gap: 2rem;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.control-room-copy h1 {
+    font-size: clamp(2.5rem, 5vw, 4.6rem);
+    line-height: 0.95;
+    margin: 0.8rem 0 1rem;
+    max-width: 11ch;
+}
+
+.control-room-copy p {
+    max-width: 62ch;
+    color: rgba(233, 245, 235, 0.8);
+    font-size: 1.05rem;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #c8ffd1;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.eyebrow i {
+    color: #3ddc84;
+    font-size: 0.6rem;
+}
+
+.control-room-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.75rem;
+}
+
+.control-room-actions .btn-secondary {
+    border-color: rgba(255, 255, 255, 0.35);
+    color: #edf8ef;
+}
+
+.control-room-badge {
+    justify-self: end;
+    display: grid;
+    justify-items: center;
+    gap: 0.75rem;
+    padding: 1.5rem 1.25rem;
+    min-width: 280px;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.24);
+    text-align: center;
+}
+
+.badge-ring {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 1px solid rgba(61, 220, 132, 0.25);
+    display: grid;
+    place-items: center;
+    background:
+        radial-gradient(circle, rgba(46, 125, 50, 0.18) 0%, rgba(15, 26, 17, 0.2) 70%);
+}
+
+.badge-core {
+    width: 86px;
+    height: 86px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #1b5e20, #43a047);
+    box-shadow: 0 18px 28px rgba(67, 160, 71, 0.35);
+}
+
+.badge-core i {
+    font-size: 2rem;
+    color: white;
+}
+
+.control-room-badge strong {
+    font-size: 1.1rem;
+}
+
+.control-room-badge span {
+    color: rgba(233, 245, 235, 0.7);
+}
+
+.control-room-main {
+    padding: 0 0 5rem;
+}
+
+.control-room-kpis {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.kpi-card,
+.control-room-panel {
+    background: rgba(10, 18, 12, 0.74);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    backdrop-filter: blur(18px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+.kpi-card {
+    padding: 1.1rem 1.2rem;
+    display: grid;
+    gap: 0.35rem;
+}
+
+.kpi-label,
+.panel-eyebrow {
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(200, 255, 209, 0.7);
+}
+
+.kpi-card strong {
+    font-size: 1.55rem;
+    color: #f5fbf6;
+}
+
+.kpi-card small {
+    color: rgba(233, 245, 235, 0.58);
+}
+
+.control-room-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.control-room-panel {
+    padding: 1.4rem;
+}
+
+.telemetry-panel {
+    grid-column: span 7;
+}
+
+.mission-panel {
+    grid-column: span 5;
+}
+
+.control-room-grid > .control-room-panel:nth-of-type(3) {
+    grid-column: span 5;
+}
+
+.control-room-grid > .control-room-panel:nth-of-type(4) {
+    grid-column: span 7;
+}
+
+.panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.panel-head h2 {
+    margin-top: 0.2rem;
+    color: #f3fbf4;
+}
+
+.live-pill,
+.state-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.45rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.live-pill {
+    background: rgba(67, 160, 71, 0.22);
+    color: #b8ffbf;
+}
+
+.state-chip.success {
+    background: rgba(46, 125, 50, 0.25);
+    color: #d7ffd9;
+}
+
+.state-chip.warning {
+    background: rgba(255, 193, 7, 0.16);
+    color: #fff0b6;
+}
+
+.metric-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.85rem;
+    margin-bottom: 1rem;
+}
+
+.metric-card {
+    border-radius: 18px;
+    padding: 0.95rem;
+    min-height: 96px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    display: grid;
+    gap: 0.35rem;
+}
+
+.metric-card span {
+    font-size: 0.86rem;
+    color: rgba(233, 245, 235, 0.66);
+}
+
+.metric-card strong {
+    font-size: 1.75rem;
+    color: #f5fbf6;
+}
+
+.placeholder-card {
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+}
+
+.chart-shell {
+    height: 320px;
+    border-radius: 20px;
+    padding: 1rem;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.route-board {
+    position: relative;
+    height: 340px;
+    border-radius: 20px;
+    overflow: hidden;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)),
+        radial-gradient(circle at center, rgba(61, 220, 132, 0.09), transparent 55%);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.route-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 25% 25%;
+    opacity: 0.8;
+}
+
+.route-path {
+    position: absolute;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(61, 220, 132, 0.15), rgba(61, 220, 132, 0.75));
+    box-shadow: 0 0 18px rgba(61, 220, 132, 0.45);
+}
+
+.path-a {
+    top: 22%;
+    left: 12%;
+    width: 72%;
+    height: 7px;
+}
+
+.path-b {
+    top: 58%;
+    left: 16%;
+    width: 58%;
+    height: 7px;
+    transform: rotate(6deg);
+}
+
+.route-point {
+    position: absolute;
+    width: 58px;
+    height: 58px;
+    border-radius: 18px;
+    display: grid;
+    place-items: center;
+    background: rgba(15, 26, 17, 0.78);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+    color: #d9ffe1;
+}
+
+.point-home {
+    top: 13%;
+    left: 12%;
+}
+
+.point-robot {
+    top: 47%;
+    left: 50%;
+}
+
+.point-scan {
+    top: 63%;
+    right: 13%;
+}
+
+.point-water {
+    bottom: 12%;
+    left: 24%;
+}
+
+.mission-notes,
+.event-feed {
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+}
+
+.mission-notes li,
+.placeholder-event {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    padding: 0.9rem 1rem;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.mission-notes i {
+    color: #69f0ae;
+    margin-top: 0.2rem;
+}
+
+.event-time {
+    min-width: 3.2rem;
+    font-size: 0.78rem;
+    color: rgba(233, 245, 235, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.placeholder-event strong {
+    display: block;
+    color: #f5fbf6;
+    margin-bottom: 0.2rem;
+}
+
+.placeholder-event p {
+    margin: 0;
+    color: rgba(233, 245, 235, 0.68);
+    font-size: 0.95rem;
+}
+
+.device-stack {
+    display: grid;
+    gap: 0.85rem;
+}
+
+.device-card {
+    display: flex;
+    gap: 0.9rem;
+    align-items: flex-start;
+    padding: 1rem;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.device-card i {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: rgba(61, 220, 132, 0.12);
+    color: #8ff09b;
+    flex-shrink: 0;
+}
+
+.device-card strong {
+    display: block;
+    color: #f5fbf6;
+    margin-bottom: 0.15rem;
+}
+
+.device-card p {
+    margin: 0;
+    color: rgba(233, 245, 235, 0.68);
+}
+
+body.dark-mode .control-room-page {
+    background:
+        radial-gradient(circle at top left, rgba(46, 125, 50, 0.18), transparent 25%),
+        radial-gradient(circle at top right, rgba(33, 150, 243, 0.12), transparent 25%),
+        linear-gradient(180deg, #050805 0%, #0d120e 100%);
+}
+
+@media (max-width: 1100px) {
+    .control-room-hero-inner,
+    .control-room-kpis,
+    .control-room-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .telemetry-panel,
+    .mission-panel,
+    .control-room-grid > .control-room-panel:nth-of-type(3),
+    .control-room-grid > .control-room-panel:nth-of-type(4) {
+        grid-column: auto;
+    }
+
+    .control-room-badge {
+        justify-self: start;
+    }
+}
+
+@media (max-width: 640px) {
+    .control-room-hero {
+        padding-top: 104px;
+    }
+
+    .control-room-copy h1 {
+        max-width: none;
+    }
+
+    .control-room-actions {
+        flex-direction: column;
+    }
+
+    .metric-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .panel-head {
+        flex-direction: column;
+    }
+
+    .route-board {
+        height: 260px;
+    }
+}
