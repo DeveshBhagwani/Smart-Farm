@@ -89,15 +89,20 @@ function displayPesticideLogs() {
     logContainer.innerHTML = userLogs.map(log => {
         const date = new Date(log.date).toLocaleDateString();
         const time = new Date(log.date).toLocaleTimeString();
+        const plantName = window.SmartFarm.escapeHtml(log.plantName);
+        const pesticide = window.SmartFarm.escapeHtml(log.pesticide);
+        const amount = window.SmartFarm.escapeHtml(log.amount);
+        const area = window.SmartFarm.escapeHtml(log.area || '');
+        const notes = window.SmartFarm.escapeHtml(log.notes || '');
         
         return `
             <div class="log-entry" style="padding: 10px; border-bottom: 1px solid #eee; margin-bottom: 10px;">
                 <div class="log-date" style="font-size: 0.85em; color: #666;">${date} at ${time}</div>
                 <div class="log-details" style="font-weight: 500;">
-                    <i class="fas fa-leaf" style="color:#2c7a2c;"></i> <strong>${log.plantName}</strong> - ${log.pesticide} (${log.amount})
+                    <i class="fas fa-leaf" style="color:#2c7a2c;"></i> <strong>${plantName}</strong> - ${pesticide} (${amount})
                 </div>
-                ${log.area ? `<div style="font-size: 0.9em; color:#555;">Area: ${log.area}</div>` : ''}
-                ${log.notes ? `<div style="font-size: 0.9em; font-style: italic;">Notes: ${log.notes}</div>` : ''}
+                ${log.area ? `<div style="font-size: 0.9em; color:#555;">Area: ${area}</div>` : ''}
+                ${log.notes ? `<div style="font-size: 0.9em; font-style: italic;">Notes: ${notes}</div>` : ''}
             </div>
         `;
     }).join('');
@@ -396,10 +401,10 @@ function predictYield() {
     mlResult.style.display = 'none';
 
     // Simulate ML processing time
-    setTimeout(() => {
-        const currentUser = window.SmartFarm.getCurrentUser();
-        const allLogs = window.SmartFarm.getPesticideLogs();
-        const userLogs = allLogs.filter(log => log.userId === currentUser.id);
+        setTimeout(() => {
+            const currentUser = window.SmartFarm.getCurrentUser();
+            const allLogs = window.SmartFarm.getPesticideLogs();
+            const userLogs = allLogs.filter(log => log.userId === currentUser.id);
 
         let prediction = "";
         let confidence = Math.floor(Math.random() * (98 - 85 + 1)) + 85;
@@ -414,8 +419,9 @@ function predictYield() {
             const plantCounts = {};
             userLogs.forEach(l => plantCounts[l.plantName] = (plantCounts[l.plantName] || 0) + 1);
             const topPlant = Object.keys(plantCounts).reduce((a, b) => plantCounts[a] > plantCounts[b] ? a : b);
+            const safeTopPlant = window.SmartFarm.escapeHtml(topPlant);
             
-            prediction = `<strong>Model Output:</strong> Optimal pesticide management detected for <strong>${topPlant}</strong>. Combined with simulated weather patterns (adequate rainfall, moderate temp), the neural network predicts a <strong>High Yield (+18%)</strong>. Risk of pest-related crop loss is minimal (< 4%).`;
+            prediction = `<strong>Model Output:</strong> Optimal pesticide management detected for <strong>${safeTopPlant}</strong>. Combined with simulated weather patterns (adequate rainfall, moderate temp), the neural network predicts a <strong>High Yield (+18%)</strong>. Risk of pest-related crop loss is minimal (< 4%).`;
         }
 
         mlResult.innerHTML = `

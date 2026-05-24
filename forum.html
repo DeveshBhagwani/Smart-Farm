@@ -13,7 +13,7 @@
 <body>
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">
+            <div class="nav-logo">
                 <i class="fas fa-seedling"></i>
                 <span>SmartFarm</span>
             </div>
@@ -43,32 +43,53 @@
                     <h2><i class="fas fa-users"></i> Expert Community Forum</h2>
                     <p>Ask questions, share pictures, and get live advice from agricultural experts.</p>
                 </div>
-                
+
                 <div class="chat-window">
-                    <div class="chat-messages" id="chatMessages">
+                    <div class="chat-messages" id="chatMessages" aria-live="polite" aria-label="Forum messages">
                         <div class="message system">
                             <p>Welcome to the SmartFarm Community! An agricultural expert is online and ready to help. 🌾</p>
                             <span class="time">Just now</span>
                         </div>
                     </div>
-                    
+
                     <div class="chat-input-area">
-                        <input type="text" id="chatInput" placeholder="Type your question here (e.g. My tomato leaves are turning yellow...)">
-                        <button class="btn-primary" id="sendBtn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+                        <input type="text" id="chatInput" placeholder="Type your question here (e.g. My tomato leaves are turning yellow...)" aria-label="Type your question">
+                        <button type="button" class="btn-primary" id="sendBtn" onclick="sendMessage()" aria-label="Send message"><i class="fas fa-paper-plane"></i></button>
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <footer>
+    <footer class="footer">
         <div class="container">
-            <p>&copy; 2026 SmartFarm. All rights reserved.</p>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-seedling"></i> SmartFarm</h3>
+                    <p>Revolutionizing agriculture with IoT and smart farming solutions</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="weather.html">Weather</a></li>
+                        <li><a href="plant-health.html">Plant Health</a></li>
+                        <li><a href="know-your-plant.html">Know Your Plant</a></li>
+                        <li><a href="how-it-works.html">How It Works</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-envelope"></i> contact@smartfarm.com</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SmartFarm. All rights reserved. | Final Year Project</p>
+            </div>
         </div>
     </footer>
 
-    <!-- Microphone button for voice commands -->
-    <button id="voice-btn" class="voice-btn" title="Voice Commands">
+    <button id="voice-btn" type="button" class="voice-btn" title="Voice Commands" aria-label="Voice Commands">
         <i class="fas fa-microphone"></i>
     </button>
 

@@ -69,7 +69,8 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         
         // Insert before the theme toggle
-        const themeToggleLi = document.querySelector('.theme-toggle').parentElement;
+        const themeToggleBtn = document.querySelector('.theme-toggle');
+        const themeToggleLi = themeToggleBtn ? themeToggleBtn.parentElement : null;
         if(themeToggleLi) {
             navMenu.insertBefore(langLi, themeToggleLi);
         } else {
@@ -82,10 +83,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentLang = localStorage.getItem('appLang') || 'en';
         langSelector.value = currentLang;
         applyTranslations(currentLang);
+        document.documentElement.lang = currentLang;
 
         langSelector.addEventListener('change', (e) => {
             const selectedLang = e.target.value;
             localStorage.setItem('appLang', selectedLang);
+            document.documentElement.lang = selectedLang;
             applyTranslations(selectedLang);
         });
     }
@@ -93,6 +96,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function applyTranslations(lang) {
     const dict = translations[lang] || translations.en;
+    const navMap = new Map([
+        ['Home', dict.home],
+        ['Weather', dict.weather],
+        ['Plant Health', dict.plant_health],
+        ['Know Your Plant', dict.know_plant],
+        ['Live Data', dict.live_data],
+        ['How It Works', dict.how_it_works]
+    ]);
+
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (dict[key]) {
@@ -108,12 +120,9 @@ function applyTranslations(lang) {
     
     // Also translate nav links directly by identifying their text
     document.querySelectorAll('.nav-link').forEach(link => {
-        if(link.textContent.includes('Home')) link.textContent = dict.home;
-        if(link.textContent.includes('Weather')) link.textContent = dict.weather;
-        if(link.textContent.includes('Plant Health')) link.textContent = dict.plant_health;
-        if(link.textContent.includes('Know Your Plant')) link.textContent = dict.know_plant;
-        if(link.textContent.includes('Live Data')) link.textContent = dict.live_data;
-        if(link.textContent.includes('How It Works')) link.textContent = dict.how_it_works;
+        if (navMap.has(link.textContent.trim())) {
+            link.textContent = navMap.get(link.textContent.trim());
+        }
         
         if(link.classList.contains('login-btn') && link.textContent.includes('Login')) link.textContent = dict.login;
     });

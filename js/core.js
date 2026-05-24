@@ -5,6 +5,19 @@
 // Initialize global namespace
 window.SmartFarm = window.SmartFarm || {};
 
+/**
+ * Escapes user-provided text before injecting it into HTML.
+ * Use this for anything that might come from localStorage, forms, or APIs.
+ */
+window.SmartFarm.escapeHtml = function(value) {
+    return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+};
+
 document.addEventListener('DOMContentLoaded', function() {
     setupTheme();
     setupNavigation();
@@ -23,14 +36,12 @@ function setupTheme() {
 
     const currentTheme = localStorage.getItem('theme');
     const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDark = currentTheme === 'dark' || (!currentTheme && prefersDarkScheme);
     
     // Apply theme on load
-    if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme)) {
-        document.body.classList.add('dark-mode');
-        themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
-    } else {
-        themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
-    }
+    document.body.classList.toggle('dark-mode', isDark);
+    themeToggleBtn.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+    themeToggleBtn.setAttribute('aria-pressed', String(isDark));
 
     // Toggle theme on click
     themeToggleBtn.addEventListener('click', function() {
@@ -42,6 +53,7 @@ function setupTheme() {
         } else {
             themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
         }
+        themeToggleBtn.setAttribute('aria-pressed', String(theme === 'dark'));
         localStorage.setItem('theme', theme);
     });
 }
@@ -52,31 +64,78 @@ function setupTheme() {
 function setupNavigation() {
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
+    const navLinks = document.querySelectorAll('.nav-link');
     
     if (hamburger && navMenu) {
-        hamburger.addEventListener('click', function() {
+        hamburger.setAttribute('role', 'button');
+        hamburger.setAttribute('tabindex', '0');
+        hamburger.setAttribute('aria-label', 'Toggle navigation menu');
+        hamburger.setAttribute('aria-expanded', 'false');
+
+        const closeMenu = () => {
+            navMenu.classList.remove('active');
+            document.body.classList.remove('nav-open');
+            hamburger.setAttribute('aria-expanded', 'false');
+            hamburger.querySelectorAll('span').forEach((span) => {
+                span.style.transform = '';
+                span.style.opacity = '';
+            });
+        };
+
+        const toggleMenu = () => {
             navMenu.classList.toggle('active');
+            const isOpen = navMenu.classList.contains('active');
+            document.body.classList.toggle('nav-open', isOpen);
+            hamburger.setAttribute('aria-expanded', String(isOpen));
             
             // Animate hamburger
             const spans = hamburger.querySelectorAll('span');
             spans.forEach((span, index) => {
-                if (navMenu.classList.contains('active')) {
+                if (isOpen) {
                     if (index === 0) span.style.transform = 'rotate(45deg) translate(5px, 5px)';
                     if (index === 1) span.style.opacity = '0';
                     if (index === 2) span.style.transform = 'rotate(-45deg) translate(7px, -6px)';
                 } else {
-                    span.style.transform = 'none';
-                    span.style.opacity = '1';
+                    span.style.transform = '';
+                    span.style.opacity = '';
                 }
             });
+        };
+
+        hamburger.addEventListener('click', function() {
+            toggleMenu();
+        });
+
+        hamburger.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleMenu();
+            }
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!navMenu.contains(event.target) && !hamburger.contains(event.target)) {
+                closeMenu();
+            }
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeMenu();
+            }
         });
     }
     
     // Close mobile menu when clicking on links
-    const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
-            if (navMenu) navMenu.classList.remove('active');
+            if (navMenu) {
+                navMenu.classList.remove('active');
+                document.body.classList.remove('nav-open');
+                if (hamburger) {
+                    hamburger.setAttribute('aria-expanded', 'false');
+                }
+            }
         });
     });
 }
@@ -159,17 +218,6 @@ function animateCounters() {
  * Setup button ripple effects and card hovers
  */
 function setupInteractiveEffects() {
-    // Add hover effect to cards
-    const cards = document.querySelectorAll('.problem-card, .outcome-card, .team-card, .plant-card');
-    cards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-10px) scale(1.02)';
-        });
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
-        });
-    });
-    
     // Add ripple effect to buttons
     const buttons = document.querySelectorAll('.btn-primary, .btn-secondary');
     buttons.forEach(button => {
@@ -201,8 +249,8 @@ function setupInteractiveEffects() {
                 transform: scale(0); animation: ripple-animation 0.6s linear; pointer-events: none;
             }
             @keyframes ripple-animation { to { transform: scale(4); opacity: 0; } }
-            #message-container { position: fixed; top: 100px; right: 20px; z-index: 10000; }
-            .message { min-width: 300px; margin-bottom: 10px; padding: 15px; border-radius: 5px; color: #fff; opacity: 0; transform: translateX(100%); transition: all 0.3s ease; }
+            #message-container { position: fixed; top: 90px; right: 20px; z-index: 10000; display: grid; gap: 10px; }
+            .message { min-width: min(320px, calc(100vw - 40px)); margin-bottom: 0; padding: 15px; border-radius: 14px; color: #fff; opacity: 0; transform: translateX(100%); transition: all 0.3s ease; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18); backdrop-filter: blur(10px); }
             .message.show { opacity: 1; transform: translateX(0); }
             .message.success { background-color: #28a745; }
             .message.error { background-color: #dc3545; }
@@ -261,6 +309,8 @@ window.SmartFarm.showMessage = function(text, type = 'info') {
 window.SmartFarm.showLoading = function(button) {
     if (button) {
         button.setAttribute('data-original-text', button.innerHTML);
+        button.setAttribute('data-loading', 'true');
+        button.setAttribute('aria-busy', 'true');
         button.innerHTML = '<span class="loading"></span> Processing...';
         button.disabled = true;
     }
@@ -270,12 +320,13 @@ window.SmartFarm.showLoading = function(button) {
  * Hides loading state from all buttons
  */
 window.SmartFarm.hideLoading = function() {
-    const buttons = document.querySelectorAll('button');
+    const buttons = document.querySelectorAll('button[data-loading="true"]');
     buttons.forEach(button => {
-        if (button.innerHTML.includes('loading')) {
-            button.innerHTML = button.getAttribute('data-original-text') || 'Submit';
-            button.disabled = false;
-        }
+        button.innerHTML = button.getAttribute('data-original-text') || 'Submit';
+        button.removeAttribute('data-original-text');
+        button.removeAttribute('data-loading');
+        button.removeAttribute('aria-busy');
+        button.disabled = false;
     });
 };
 
@@ -283,12 +334,24 @@ window.SmartFarm.hideLoading = function() {
  * Updates navbar login link if user is logged in
  */
 function updateNavigationAuth() {
-    const loginLink = document.querySelector('a[href="login.html"]');
+    const loginLinks = document.querySelectorAll('a[href="login.html"]');
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    if (loginLink && currentUser) {
-        loginLink.textContent = 'Dashboard';
-        loginLink.href = 'dashboard.html';
-        loginLink.innerHTML = '<i class="fas fa-user"></i> Dashboard';
+    loginLinks.forEach((loginLink) => {
+        if (!loginLink) return;
+        if (currentUser) {
+            loginLink.href = 'dashboard.html';
+            loginLink.classList.add('dashboard-link');
+            loginLink.innerHTML = '<i class="fas fa-user"></i> Dashboard';
+        } else {
+            loginLink.href = 'login.html';
+            loginLink.classList.remove('dashboard-link');
+        }
+    });
+    if (currentUser) {
+        const activeLoginLink = document.querySelector('.nav-link.active.login-btn');
+        if (activeLoginLink) {
+            activeLoginLink.classList.remove('active');
+        }
     }
 }
 

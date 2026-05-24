@@ -16,13 +16,12 @@ function updateMarketPrices() {
     if (!container) return;
 
     let html = '';
-    
+
     commodities.forEach(item => {
-        // Simulate a price change between -2% and +2%
-        const fluctuation = (Math.random() * 0.04) - 0.02; 
+        const fluctuation = (Math.random() * 0.04) - 0.02;
         const currentPrice = (item.basePrice * (1 + fluctuation)).toFixed(2);
         const change = (currentPrice - item.basePrice).toFixed(2);
-        
+
         const isUp = change >= 0;
         const color = isUp ? '#4CAF50' : '#e53935';
         const icon = isUp ? 'fa-arrow-up' : 'fa-arrow-down';
@@ -42,7 +41,6 @@ function updateMarketPrices() {
     container.innerHTML = html;
 }
 
-// Initialize and set interval to update every 5 seconds
 document.addEventListener('DOMContentLoaded', () => {
     updateMarketPrices();
     setInterval(updateMarketPrices, 5000);

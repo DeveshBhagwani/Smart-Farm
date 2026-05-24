@@ -41,20 +41,35 @@ function appendMessage(text, type) {
     const chatMessages = document.getElementById('chatMessages');
     const msgDiv = document.createElement('div');
     msgDiv.className = `message ${type}`;
-    
-    let icon = '';
-    if (type === 'expert') {
-        icon = '<i class="fas fa-user-md" style="color: var(--primary-color); margin-right: 5px;"></i> <b>Expert Dr. Sharma:</b><br>';
-    } else if (type === 'user') {
-        icon = '<b>You:</b><br>';
-    }
 
     const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const content = document.createElement('p');
 
-    msgDiv.innerHTML = `
-        <p>${icon}${text}</p>
-        <span class="time">${time}</span>
-    `;
+    if (type === 'expert') {
+        const title = document.createElement('strong');
+        title.innerHTML = '<i class="fas fa-user-md"></i> Expert Dr. Sharma';
+        title.querySelector('i').style.color = 'var(--primary-color)';
+        title.style.display = 'inline-flex';
+        title.style.alignItems = 'center';
+        title.style.gap = '6px';
+        content.appendChild(title);
+        content.appendChild(document.createElement('br'));
+    } else if (type === 'user') {
+        const title = document.createElement('strong');
+        title.textContent = 'You';
+        content.appendChild(title);
+        content.appendChild(document.createElement('br'));
+    }
+
+    const messageText = document.createElement('span');
+    messageText.textContent = text;
+    content.appendChild(messageText);
+
+    msgDiv.appendChild(content);
+    const timeSpan = document.createElement('span');
+    timeSpan.className = 'time';
+    timeSpan.textContent = time;
+    msgDiv.appendChild(timeSpan);
     
     chatMessages.appendChild(msgDiv);
     

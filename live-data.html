@@ -49,7 +49,7 @@
                         <i class="fas fa-thermometer-half"></i>
                         <span>Temperature</span>
                     </div>
-                    <div class="data-value" id="temperature-value">--°C</div>
+                    <div class="data-value" id="temperature-value">-- °C</div>
                     <p>Real-time ambient temperature.</p>
                 </div>
 
@@ -70,7 +70,7 @@
                     <div class="data-value" id="front-distance-value">-- cm</div>
                     <p>Forward-facing sensor.</p>
                 </div>
-                
+
                 <div class="live-data-card">
                     <div class="card-header">
                         <i class="fas fa-arrow-down"></i>
@@ -99,8 +99,7 @@
                 </div>
             </div>
             <p class="last-updated" id="last-updated">Initializing live feed...</p>
-            
-            </div>
+        </div>
     </main>
 
     <footer class="footer">
@@ -135,10 +134,8 @@
     <script src="js/core.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/live-data.js"></script>
-    <!-- Microphone button for voice commands -->
-    <button id="voice-btn" class="voice-btn" title="Voice Commands">
+    <button id="voice-btn" type="button" class="voice-btn" title="Voice Commands" aria-label="Voice Commands">
         <i class="fas fa-microphone"></i>
     </button>
-
 </body>
 </html>

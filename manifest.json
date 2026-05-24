@@ -2,10 +2,11 @@
   "name": "SmartFarm IoT",
   "short_name": "SmartFarm",
   "description": "IoT Enabled Agricultural Robot for Soil Monitoring and Smart Irrigation",
-  "start_url": "/index.html",
+  "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#4CAF50",
+  "scope": "./",
+  "background_color": "#f7fbf8",
+  "theme_color": "#2e7d32",
   "icons": [
     {
       "src": "https://cdn-icons-png.flaticon.com/512/683/683566.png",

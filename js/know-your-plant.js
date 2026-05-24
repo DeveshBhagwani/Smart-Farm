@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
             plantGrid.innerHTML = plants.map(plant => {
                 // Check if an image path exists, otherwise fallback to the icon
                 const imageContent = plant.image 
-                    ? `<img src="${plant.image}" alt="${plant.name}" class="plant-img-src">`
+                    ? `<img src="${plant.image}" alt="${window.SmartFarm.escapeHtml(plant.name)}" class="plant-img-src" loading="lazy" decoding="async">`
                     : `<i class="fas ${plant.icon}"></i>`;
 
                 return `
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <div class="pesticide-amount">Amount: ${plant.amount}</div>
                                 <div class="pesticide-frequency">Frequency: ${plant.frequency}</div>
                             </div>
-                            <button class="btn-primary" onclick="window.SmartFarm.logPesticideUsage('${plant.name}', '${plant.pesticide}', '${plant.amount}')">
+                            <button type="button" class="btn-primary" onclick="window.SmartFarm.logPesticideUsage('${plant.name}', '${plant.pesticide}', '${plant.amount}')">
                                 Log Usage
                             </button>
                         </div>
