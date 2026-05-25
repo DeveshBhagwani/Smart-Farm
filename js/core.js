@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupSmoothScrolling();
     setupAnimationTriggers();
     setupInteractiveEffects();
+    setupPathPlannerLink();
     setupControlRoomLink();
     updateNavigationAuth();
 });
@@ -139,6 +140,37 @@ function setupNavigation() {
             }
         });
     });
+}
+
+/**
+ * Ensures the Path Planner nav entry is available across the site.
+ */
+function setupPathPlannerLink() {
+    const navMenu = document.querySelector('.nav-menu');
+    if (!navMenu || navMenu.querySelector('a[href="path-planner.html"]')) return;
+
+    const loginLink = navMenu.querySelector('a[href="login.html"]');
+    const plannerLi = document.createElement('li');
+    const plannerLink = document.createElement('a');
+
+    plannerLink.href = 'path-planner.html';
+    plannerLink.className = 'nav-link';
+    plannerLink.textContent = 'Autonomous Path Planner';
+
+    if (window.location.pathname.endsWith('path-planner.html')) {
+        plannerLink.classList.add('active');
+    }
+
+    plannerLi.appendChild(plannerLink);
+
+    const anchorTarget = navMenu.querySelector('a[href="control-room.html"]');
+    if (anchorTarget && anchorTarget.parentElement) {
+        navMenu.insertBefore(plannerLi, anchorTarget.parentElement);
+    } else if (loginLink && loginLink.parentElement && loginLink.parentElement.parentElement === navMenu) {
+        navMenu.insertBefore(plannerLi, loginLink.parentElement);
+    } else {
+        navMenu.appendChild(plannerLi);
+    }
 }
 
 /**

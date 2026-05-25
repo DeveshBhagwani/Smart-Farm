@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autonomous Path Planner - SmartFarm</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/path-planner.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body class="path-planner-page">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-seedling"></i>
+                <span>SmartFarm</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="weather.html" class="nav-link">Weather</a></li>
+                <li><a href="plant-health.html" class="nav-link">Plant Health</a></li>
+                <li><a href="know-your-plant.html" class="nav-link">Know Your Plant</a></li>
+                <li><a href="live-data.html" class="nav-link">Live Data</a></li>
+                <li><a href="how-it-works.html" class="nav-link">How It Works</a></li>
+                <li><a href="forum.html" class="nav-link" data-i18n="community_forum">Community Forum</a></li>
+                <li><a href="login.html" class="nav-link login-btn">Login</a></li>
+                <li style="display: flex; align-items: center;"><button class="theme-toggle" id="theme-toggle" aria-label="Toggle Dark Mode" style="background:none; border:none; color:inherit; cursor:pointer; margin-left: 15px; font-size:1.2rem;"><i class="fas fa-moon"></i></button></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <header class="planner-hero">
+        <div class="container planner-hero-inner">
+            <div>
+                <span class="eyebrow"><i class="fas fa-circle"></i> Autonomous Navigation Demo</span>
+                <h1>Autonomous Path Planner</h1>
+                <p>
+                    Generate optimal robot routes across a farm grid, avoid obstacles, and visualize coverage
+                    before the robot moves. Built for hackathons, exhibitions, and technical demos.
+                </p>
+                <div class="hero-actions">
+                    <a href="#planner-workbench" class="btn-primary">Open Planner</a>
+                    <a href="#route-analysis" class="btn-secondary">View Analysis</a>
+                </div>
+            </div>
+            <div class="hero-tile">
+                <div class="tile-glow"></div>
+                <div class="tile-stat">
+                    <span>Route Quality</span>
+                    <strong id="route-quality">--</strong>
+                </div>
+                <div class="tile-stat">
+                    <span>Coverage</span>
+                    <strong id="coverage-stat">--%</strong>
+                </div>
+                <div class="tile-stat">
+                    <span>Turn Cost</span>
+                    <strong id="turn-stat">--</strong>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="planner-main">
+        <div class="container">
+            <section class="planner-layout" id="planner-workbench">
+                <article class="planner-panel planner-stage">
+                    <div class="panel-head">
+                        <div>
+                            <span class="panel-eyebrow">Field Simulation</span>
+                            <h2>Mission Grid</h2>
+                        </div>
+                        <span class="live-pill">Canvas/SVG Ready</span>
+                    </div>
+                    <div class="planner-stage-shell">
+                        <svg id="planner-grid" viewBox="0 0 600 600" role="img" aria-label="Autonomous farm grid">
+                            <defs>
+                                <pattern id="gridPattern" width="60" height="60" patternUnits="userSpaceOnUse">
+                                    <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"></path>
+                                </pattern>
+                                <linearGradient id="plannerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#7cf29d"></stop>
+                                    <stop offset="100%" stop-color="#58c9ff"></stop>
+                                </linearGradient>
+                            </defs>
+                            <rect width="600" height="600" fill="url(#gridPattern)"></rect>
+                            <g id="planner-obstacles"></g>
+                            <g id="planner-path-layer"></g>
+                            <g id="planner-points-layer"></g>
+                            <g id="planner-robot-layer">
+                                <circle id="robot-node" cx="30" cy="30" r="14" fill="url(#plannerGradient)"></circle>
+                                <text x="30" y="35" text-anchor="middle" font-size="12" fill="#08130c" font-weight="700">R</text>
+                            </g>
+                        </svg>
+                    </div>
+                </article>
+
+                <aside class="planner-panel planner-controls">
+                    <div class="panel-head">
+                        <div>
+                            <span class="panel-eyebrow">Planner Controls</span>
+                            <h2>Route Setup</h2>
+                        </div>
+                    </div>
+
+                    <div class="control-stack">
+                        <button class="control-chip active" data-plan-mode="coverage">Coverage Sweep</button>
+                        <button class="control-chip" data-plan-mode="point-to-point">Point to Point</button>
+                        <button class="control-chip" data-plan-mode="irrigation">Irrigation Run</button>
+                    </div>
+
+                    <div class="planner-form">
+                        <label for="start-node">Start Node</label>
+                        <input id="start-node" type="text" value="A1" readonly>
+
+                        <label for="end-node">Target Node</label>
+                        <input id="end-node" type="text" value="J10" readonly>
+
+                        <label for="planner-speed">Motion Speed</label>
+                        <input id="planner-speed" type="range" min="1" max="5" value="3">
+                    </div>
+
+                    <div class="planner-summary" id="route-analysis">
+                        <div class="summary-card">
+                            <span>Estimated Distance</span>
+                            <strong id="distance-stat">-- m</strong>
+                        </div>
+                        <div class="summary-card">
+                            <span>Estimated Time</span>
+                            <strong id="time-stat">-- min</strong>
+                        </div>
+                        <div class="summary-card">
+                            <span>Obstacle Avoidance</span>
+                            <strong id="avoidance-stat">--</strong>
+                        </div>
+                    </div>
+
+                    <div class="planner-legend">
+                        <div><span class="legend-dot start"></span> Start</div>
+                        <div><span class="legend-dot target"></span> Target</div>
+                        <div><span class="legend-dot obstacle"></span> Obstacle</div>
+                        <div><span class="legend-dot path"></span> Planned Path</div>
+                    </div>
+                </aside>
+            </section>
+
+            <section class="planner-panel planner-insights">
+                <div class="panel-head">
+                    <div>
+                        <span class="panel-eyebrow">Navigation Intelligence</span>
+                        <h2>Planning Notes</h2>
+                    </div>
+                </div>
+                <div class="insight-grid">
+                    <article class="insight-card">
+                        <i class="fas fa-route"></i>
+                        <h3>Optimal Route</h3>
+                        <p>Shortest path planning with obstacle-aware traversal for field coverage.</p>
+                    </article>
+                    <article class="insight-card">
+                        <i class="fas fa-robot"></i>
+                        <h3>Robot Aware</h3>
+                        <p>Mission rules adapt to turning cost, watering zones, and scan zones.</p>
+                    </article>
+                    <article class="insight-card">
+                        <i class="fas fa-satellite-dish"></i>
+                        <h3>Telemetry Ready</h3>
+                        <p>Planner output is designed to feed directly into the control room mission loop.</p>
+                    </article>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-seedling"></i> SmartFarm</h3>
+                    <p>Revolutionizing agriculture with IoT and smart farming solutions</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="weather.html">Weather</a></li>
+                        <li><a href="plant-health.html">Plant Health</a></li>
+                        <li><a href="know-your-plant.html">Know Your Plant</a></li>
+                        <li><a href="how-it-works.html">How It Works</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-envelope"></i> contact@smartfarm.com</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SmartFarm. All rights reserved. | Final Year Project</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/lang.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/path-planner.js"></script>
+    <button id="voice-btn" type="button" class="voice-btn" title="Voice Commands" aria-label="Voice Commands">
+        <i class="fas fa-microphone"></i>
+    </button>
+</body>
+</html>

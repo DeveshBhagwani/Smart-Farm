@@ -1,4 +1,4 @@
-const CACHE_NAME = 'smartfarm-v5';
+const CACHE_NAME = 'smartfarm-v6';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -8,11 +8,13 @@ const ASSETS_TO_CACHE = [
   './know-your-plant.html',
   './live-data.html',
   './how-it-works.html',
+  './path-planner.html',
   './control-room.html',
   './login.html',
   './styles/main.css',
   './styles/dashboard.css',
   './styles/forum.css',
+  './styles/path-planner.css',
   './styles/control-room.css',
   './styles/how-it-works.css',
   './styles/kyp.css',
@@ -27,6 +29,7 @@ const ASSETS_TO_CACHE = [
   './js/know-your-plant.js',
   './js/live-data.js',
   './js/how-it-works.js',
+  './js/path-planner.js',
   './js/control-room.js',
   './js/forum.js',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css',
