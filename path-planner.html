@@ -110,9 +110,9 @@
                     </div>
 
                     <div class="control-stack">
-                        <button class="control-chip active" data-plan-mode="coverage">Coverage Sweep</button>
-                        <button class="control-chip" data-plan-mode="point-to-point">Point to Point</button>
-                        <button class="control-chip" data-plan-mode="irrigation">Irrigation Run</button>
+                        <button class="control-chip active" type="button" aria-pressed="true" data-plan-mode="coverage">Coverage Sweep</button>
+                        <button class="control-chip" type="button" aria-pressed="false" data-plan-mode="point-to-point">Point to Point</button>
+                        <button class="control-chip" type="button" aria-pressed="false" data-plan-mode="irrigation">Irrigation Run</button>
                     </div>
 
                     <div class="planner-form">
@@ -141,11 +141,25 @@
                         </div>
                     </div>
 
+                    <div class="planner-actions" aria-label="Planner actions">
+                        <button class="action-pill" type="button" data-planner-action="replan">Replan Mission</button>
+                        <button class="action-pill" type="button" data-planner-action="shuffle">Shuffle Obstacles</button>
+                        <button class="action-pill ghost" type="button" data-planner-action="reset">Reset Field</button>
+                    </div>
+
                     <div class="planner-legend">
                         <div><span class="legend-dot start"></span> Start</div>
                         <div><span class="legend-dot target"></span> Target</div>
                         <div><span class="legend-dot obstacle"></span> Obstacle</div>
                         <div><span class="legend-dot path"></span> Planned Path</div>
+                    </div>
+
+                    <div class="mission-log" aria-live="polite" aria-label="Mission log">
+                        <div class="mission-log-head">
+                            <span class="panel-eyebrow">Live Mission Feed</span>
+                            <strong>Planner events</strong>
+                        </div>
+                        <div id="planner-log" class="mission-log-list"></div>
                     </div>
                 </aside>
             </section>

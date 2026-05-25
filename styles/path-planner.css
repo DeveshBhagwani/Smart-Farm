@@ -253,6 +253,37 @@
     color: #f5fbf6;
 }
 
+.planner-actions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.action-pill {
+    border: 1px solid rgba(124, 242, 157, 0.28);
+    background: linear-gradient(135deg, rgba(67, 160, 71, 0.24), rgba(61, 220, 132, 0.14));
+    color: #f4fbf6;
+    border-radius: 16px;
+    padding: 0.85rem 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.action-pill.ghost {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: rgba(244, 251, 246, 0.9);
+}
+
+.action-pill:hover,
+.action-pill:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+    border-color: rgba(143, 240, 155, 0.42);
+}
+
 .planner-legend {
     display: grid;
     gap: 0.6rem;
@@ -281,6 +312,56 @@
 
 .planner-insights {
     margin-top: 1rem;
+}
+
+.mission-log {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.mission-log-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.mission-log-head strong {
+    color: #f5fbf6;
+    font-size: 0.95rem;
+}
+
+.mission-log-list {
+    display: grid;
+    gap: 0.6rem;
+    max-height: 220px;
+    overflow: auto;
+    padding-right: 0.2rem;
+}
+
+.mission-log-item {
+    padding: 0.7rem 0.8rem;
+    border-radius: 14px;
+    background: rgba(8, 19, 12, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.mission-log-item span {
+    display: block;
+    color: rgba(233, 245, 235, 0.58);
+    font-size: 0.76rem;
+    margin-bottom: 0.22rem;
+}
+
+.mission-log-item p {
+    margin: 0;
+    color: rgba(245, 251, 246, 0.9);
+    font-size: 0.92rem;
+    line-height: 1.45;
 }
 
 .insight-grid {
@@ -324,6 +405,18 @@ body.dark-mode .path-planner-page {
         linear-gradient(180deg, #050805 0%, #0d120e 100%);
 }
 
+body.dark-mode .planner-panel {
+    background: rgba(8, 14, 9, 0.8);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+body.dark-mode .mission-log,
+body.dark-mode .insight-card,
+body.dark-mode .summary-card,
+body.dark-mode .planner-stage-shell {
+    background: rgba(255, 255, 255, 0.045);
+}
+
 @media (max-width: 1100px) {
     .planner-hero-inner,
     .planner-layout,
@@ -355,5 +448,27 @@ body.dark-mode .path-planner-page {
 
     .planner-legend {
         grid-template-columns: 1fr;
+    }
+
+    .planner-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .mission-log-head {
+        flex-direction: column;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .control-chip,
+    .action-pill {
+        transition: none;
+    }
+
+    .planner-panel,
+    .planner-stage-shell,
+    .mission-log-item,
+    .insight-card {
+        scroll-behavior: auto;
     }
 }
