@@ -410,6 +410,53 @@ body.dark-mode .planner-panel {
     border-color: rgba(255, 255, 255, 0.08);
 }
 
+body.dark-mode .planner-hero,
+body.dark-mode .planner-hero h1,
+body.dark-mode .planner-hero p,
+body.dark-mode .eyebrow,
+body.dark-mode .panel-head h2,
+body.dark-mode .panel-eyebrow,
+body.dark-mode .live-pill,
+body.dark-mode .control-chip,
+body.dark-mode .summary-card strong,
+body.dark-mode .summary-card span,
+body.dark-mode .insight-card h3,
+body.dark-mode .insight-card p,
+body.dark-mode .mission-log-head strong,
+body.dark-mode .mission-log-item p,
+body.dark-mode .mission-log-item span {
+    color: #eef7ef;
+}
+
+body.dark-mode .hero-tile,
+body.dark-mode .tile-stat,
+body.dark-mode .planner-stage-shell,
+body.dark-mode .summary-card,
+body.dark-mode .insight-card,
+body.dark-mode .mission-log {
+    background: rgba(255, 255, 255, 0.045);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+body.dark-mode .planner-form input[type="text"] {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f5fbf6;
+}
+
+body.dark-mode .control-chip {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .action-pill {
+    color: #f5fbf6;
+}
+
+body.dark-mode .action-pill.ghost {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
 body.dark-mode .mission-log,
 body.dark-mode .insight-card,
 body.dark-mode .summary-card,

@@ -594,6 +594,60 @@ body.dark-mode .control-room-page {
         linear-gradient(180deg, #050805 0%, #0d120e 100%);
 }
 
+body.dark-mode .control-room-hero,
+body.dark-mode .control-room-copy h1,
+body.dark-mode .control-room-copy p,
+body.dark-mode .eyebrow,
+body.dark-mode .control-room-badge strong,
+body.dark-mode .control-room-badge span,
+body.dark-mode .kpi-card strong,
+body.dark-mode .kpi-label,
+body.dark-mode .panel-head h2,
+body.dark-mode .panel-eyebrow,
+body.dark-mode .state-chip,
+body.dark-mode .console-head,
+body.dark-mode .threshold-head strong,
+body.dark-mode .threshold-head span,
+body.dark-mode .device-card strong,
+body.dark-mode .device-card p,
+body.dark-mode .mission-notes,
+body.dark-mode .metric-card strong,
+body.dark-mode .metric-card span,
+body.dark-mode .event-feed strong,
+body.dark-mode .event-feed p,
+body.dark-mode .command-log strong,
+body.dark-mode .command-log p {
+    color: #eef7ef;
+}
+
+body.dark-mode .control-room-badge,
+body.dark-mode .kpi-card,
+body.dark-mode .control-room-panel,
+body.dark-mode .device-card,
+body.dark-mode .metric-card,
+body.dark-mode .route-board,
+body.dark-mode .threshold-panel {
+    background: rgba(255, 255, 255, 0.045);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+body.dark-mode .route-grid {
+    opacity: 0.3;
+}
+
+body.dark-mode .command-btn {
+    background: rgba(255, 255, 255, 0.045);
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #f5fbf6;
+}
+
+body.dark-mode .command-btn span,
+body.dark-mode .command-btn strong,
+body.dark-mode .state-chip,
+body.dark-mode .console-subtitle {
+    color: inherit;
+}
+
 @media (max-width: 1100px) {
     .control-room-hero-inner,
     .control-room-kpis,
