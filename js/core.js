@@ -20,12 +20,13 @@ window.SmartFarm.escapeHtml = function(value) {
 
 document.addEventListener('DOMContentLoaded', function() {
     setupTheme();
+    setupPathPlannerLink();
+    setupControlRoomLink();
+    setupGroupedNavigation();
     setupNavigation();
     setupSmoothScrolling();
     setupAnimationTriggers();
     setupInteractiveEffects();
-    setupPathPlannerLink();
-    setupControlRoomLink();
     updateNavigationAuth();
 });
 
@@ -140,6 +141,64 @@ function setupNavigation() {
             }
         });
     });
+}
+
+/**
+ * Reorganizes the top navigation into clearer feature groups.
+ */
+function setupGroupedNavigation() {
+    const navMenu = document.querySelector('.nav-menu');
+    if (!navMenu || navMenu.dataset.grouped === 'true') return;
+
+    const navItems = Array.from(navMenu.children);
+    const groups = {
+        core: [],
+        operations: [],
+        utility: []
+    };
+
+    navItems.forEach((item) => {
+        const anchor = item.querySelector('a.nav-link');
+        const button = item.querySelector('.theme-toggle');
+        const href = anchor?.getAttribute('href') || '';
+
+        if (button || href === 'login.html') {
+            groups.utility.push(item);
+            return;
+        }
+
+        if (['live-data.html', 'how-it-works.html', 'control-room.html', 'path-planner.html', 'forum.html'].includes(href)) {
+            groups.operations.push(item);
+            return;
+        }
+
+        groups.core.push(item);
+    });
+
+    const buildGroup = (title, className, items) => {
+        const group = document.createElement('li');
+        group.className = `nav-group ${className}`;
+
+        const label = document.createElement('span');
+        label.className = 'nav-group-label';
+        label.textContent = title;
+
+        const links = document.createElement('div');
+        links.className = 'nav-group-links';
+
+        items.forEach((item) => {
+            links.append(...Array.from(item.childNodes));
+        });
+
+        group.append(label, links);
+        return group;
+    };
+
+    navMenu.innerHTML = '';
+    navMenu.appendChild(buildGroup('Discover', 'nav-group-core', groups.core));
+    navMenu.appendChild(buildGroup('Automation', 'nav-group-ops', groups.operations));
+    navMenu.appendChild(buildGroup('Account', 'nav-group-utility', groups.utility));
+    navMenu.dataset.grouped = 'true';
 }
 
 /**
