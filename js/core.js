@@ -20,6 +20,7 @@ window.SmartFarm.escapeHtml = function(value) {
 
 document.addEventListener('DOMContentLoaded', function() {
     setupTheme();
+    setupDigitalTwinLink();
     setupPathPlannerLink();
     setupControlRoomLink();
     setupGroupedNavigation();
@@ -167,7 +168,7 @@ function setupGroupedNavigation() {
             return;
         }
 
-        if (['live-data.html', 'how-it-works.html', 'control-room.html', 'path-planner.html', 'forum.html'].includes(href)) {
+        if (['live-data.html', 'how-it-works.html', 'digital-twin.html', 'control-room.html', 'path-planner.html', 'forum.html'].includes(href)) {
             groups.operations.push(item);
             return;
         }
@@ -199,6 +200,37 @@ function setupGroupedNavigation() {
     navMenu.appendChild(buildGroup('Automation', 'nav-group-ops', groups.operations));
     navMenu.appendChild(buildGroup('Account', 'nav-group-utility', groups.utility));
     navMenu.dataset.grouped = 'true';
+}
+
+/**
+ * Ensures the Digital Twin nav entry is available across the site.
+ */
+function setupDigitalTwinLink() {
+    const navMenu = document.querySelector('.nav-menu');
+    if (!navMenu || navMenu.querySelector('a[href="digital-twin.html"]')) return;
+
+    const loginLink = navMenu.querySelector('a[href="login.html"]');
+    const twinLi = document.createElement('li');
+    const twinLink = document.createElement('a');
+
+    twinLink.href = 'digital-twin.html';
+    twinLink.className = 'nav-link';
+    twinLink.textContent = 'Digital Twin';
+
+    if (window.location.pathname.endsWith('digital-twin.html')) {
+        twinLink.classList.add('active');
+    }
+
+    twinLi.appendChild(twinLink);
+
+    const anchorTarget = navMenu.querySelector('a[href="control-room.html"]');
+    if (anchorTarget && anchorTarget.parentElement) {
+        navMenu.insertBefore(twinLi, anchorTarget.parentElement);
+    } else if (loginLink && loginLink.parentElement && loginLink.parentElement.parentElement === navMenu) {
+        navMenu.insertBefore(twinLi, loginLink.parentElement);
+    } else {
+        navMenu.appendChild(twinLi);
+    }
 }
 
 /**

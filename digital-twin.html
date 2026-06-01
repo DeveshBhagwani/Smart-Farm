@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Field Digital Twin - SmartFarm</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/digital-twin.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body class="digital-twin-page">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-seedling"></i>
+                <span>SmartFarm</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="weather.html" class="nav-link">Weather</a></li>
+                <li><a href="plant-health.html" class="nav-link">Plant Health</a></li>
+                <li><a href="know-your-plant.html" class="nav-link">Know Your Plant</a></li>
+                <li><a href="live-data.html" class="nav-link">Live Data</a></li>
+                <li><a href="how-it-works.html" class="nav-link">How It Works</a></li>
+                <li><a href="forum.html" class="nav-link" data-i18n="community_forum">Community Forum</a></li>
+                <li><a href="login.html" class="nav-link login-btn">Login</a></li>
+                <li style="display: flex; align-items: center;"><button class="theme-toggle" id="theme-toggle" aria-label="Toggle Dark Mode" style="background:none; border:none; color:inherit; cursor:pointer; margin-left: 15px; font-size:1.2rem;"><i class="fas fa-moon"></i></button></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <header class="digital-twin-hero">
+        <div class="container digital-twin-hero-inner">
+            <div>
+                <span class="eyebrow"><i class="fas fa-circle"></i> Live 3D Farm Replica</span>
+                <h1>Field Digital Twin</h1>
+                <p>
+                    Explore a real-time 3D twin of the agricultural field, robot, crop lanes, and sensor
+                    network. The scene is powered by Three.js and can sync with live WebSocket telemetry or
+                    fall back to a high-fidelity simulation.
+                </p>
+                <div class="hero-actions">
+                    <a href="#twin-view" class="btn-primary">Open Twin</a>
+                    <a href="#twin-insights" class="btn-secondary">View Insights</a>
+                </div>
+            </div>
+            <div class="twin-status-card">
+                <div class="status-pill" id="twin-connection">Simulated Stream</div>
+                <div class="status-grid">
+                    <div>
+                        <span>Coverage</span>
+                        <strong id="twin-coverage">12%</strong>
+                    </div>
+                    <div>
+                        <span>Battery</span>
+                        <strong id="twin-battery">92%</strong>
+                    </div>
+                    <div>
+                        <span>Route</span>
+                        <strong id="twin-route">Patrol</strong>
+                    </div>
+                    <div>
+                        <span>Node Count</span>
+                        <strong id="twin-nodes">18</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="digital-twin-main">
+        <div class="container">
+            <section class="twin-layout" id="twin-view">
+                <article class="twin-stage panel">
+                    <div class="panel-head">
+                        <div>
+                            <span class="panel-eyebrow">Three.js Scene</span>
+                            <h2>3D Field Replica</h2>
+                        </div>
+                        <span class="live-pill">GLTF Ready</span>
+                    </div>
+                    <div class="twin-tool-launcher">
+                        <button
+                            type="button"
+                            class="tool-launcher-btn"
+                            id="twin-tool-button"
+                            aria-haspopup="menu"
+                            aria-expanded="false"
+                            aria-controls="twin-tool-menu"
+                        >
+                            <span>Twin Tools</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="tool-launcher-menu" id="twin-tool-menu" role="menu" aria-label="Digital twin tools">
+                            <button type="button" class="tool-option" data-tool-action="heatmap" role="menuitem">
+                                <i class="fas fa-fire"></i>
+                                <span>Heatmap Overlay</span>
+                            </button>
+                            <button type="button" class="tool-option" data-tool-action="inspector" role="menuitem">
+                                <i class="fas fa-robot"></i>
+                                <span>Robot Inspector</span>
+                            </button>
+                            <button type="button" class="tool-option" data-tool-action="replay" role="menuitem">
+                                <i class="fas fa-sliders-h"></i>
+                                <span>Replay Scrubber</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="twin-canvas-shell">
+                        <div id="twin-canvas" class="twin-canvas" aria-label="Digital twin 3D scene"></div>
+                        <canvas id="twin-heatmap" class="twin-heatmap" aria-hidden="true"></canvas>
+                        <div class="twin-overlay">
+                            <div class="overlay-chip">Topographic Field</div>
+                            <div class="overlay-chip">Robot + Sensors</div>
+                            <div class="overlay-chip">Path Playback</div>
+                            <div class="overlay-chip heatmap-chip">Coverage Heatmap</div>
+                        </div>
+                    </div>
+                    <div class="view-toolbar" role="group" aria-label="Camera views">
+                        <button class="control-chip active" type="button" data-view="overview">Overview</button>
+                        <button class="control-chip" type="button" data-view="orbit">Orbit</button>
+                        <button class="control-chip" type="button" data-view="field">Field</button>
+                        <button class="control-chip" type="button" data-view="payload">Payload</button>
+                    </div>
+                </article>
+
+                <aside class="twin-sidebar">
+                    <section class="panel twin-panel">
+                        <div class="panel-head">
+                            <div>
+                                <span class="panel-eyebrow">Live Systems</span>
+                                <h2>Telemetry Mirror</h2>
+                            </div>
+                            <span class="state-chip" id="twin-stream-chip">Simulation</span>
+                        </div>
+                        <div class="metric-grid twin-metrics">
+                            <div class="metric-card">
+                                <span>Soil Moisture</span>
+                                <strong id="twin-moisture">48%</strong>
+                            </div>
+                            <div class="metric-card">
+                                <span>Robot Heading</span>
+                                <strong id="twin-heading">0°</strong>
+                            </div>
+                            <div class="metric-card">
+                                <span>Distance</span>
+                                <strong id="twin-distance">0.0 m</strong>
+                            </div>
+                            <div class="metric-card">
+                                <span>Coverage Delta</span>
+                                <strong id="twin-delta">+0.0%</strong>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="panel twin-panel">
+                        <div class="panel-head">
+                            <div>
+                                <span class="panel-eyebrow">Scene Controls</span>
+                                <h2>Playback Console</h2>
+                            </div>
+                        </div>
+                        <div class="twin-controls">
+                            <button type="button" class="action-pill" data-twin-action="play">Play Route</button>
+                            <button type="button" class="action-pill" data-twin-action="pause">Pause</button>
+                            <button type="button" class="action-pill ghost" data-twin-action="reset">Reset View</button>
+                            <button type="button" class="action-pill ghost" data-twin-action="sensors">Toggle Sensors</button>
+                        </div>
+                        <label for="twin-speed" class="slider-label">Playback Speed</label>
+                        <input id="twin-speed" type="range" min="1" max="5" value="3">
+                        <label for="twin-field-mode" class="slider-label">Mission Mode</label>
+                        <select id="twin-field-mode">
+                            <option value="survey">Survey Sweep</option>
+                            <option value="irrigation">Irrigation Pass</option>
+                            <option value="scan">Disease Scan</option>
+                        </select>
+                    </section>
+
+                    <section class="panel twin-panel">
+                        <div class="panel-head">
+                            <div>
+                                <span class="panel-eyebrow">Field Events</span>
+                                <h2>Mission Timeline</h2>
+                            </div>
+                        </div>
+                        <div id="twin-events" class="event-stream" aria-live="polite"></div>
+                    </section>
+                </aside>
+            </section>
+
+            <section class="twin-advanced-grid" id="twin-advanced-tools">
+                <article class="panel twin-inspector-panel" id="robot-inspector">
+                    <div class="panel-head">
+                        <div>
+                            <span class="panel-eyebrow">Robot Model Inspector</span>
+                            <h2>Side-by-Side Assembly</h2>
+                        </div>
+                        <span class="live-pill">GLTF / Fallback</span>
+                    </div>
+                    <div class="inspector-layout">
+                        <div class="inspector-visual">
+                            <div class="inspector-hero-badge">Field Rover MK-II</div>
+                            <div class="inspector-model-card">
+                                <i class="fas fa-robot"></i>
+                                <strong id="inspector-model-name">Field Rover MK-II</strong>
+                                <span id="inspector-model-state">Survey Sweep Ready</span>
+                            </div>
+                            <div class="inspector-parts">
+                                <div class="part-chip"><span>Chassis</span><strong>Reinforced</strong></div>
+                                <div class="part-chip"><span>Sensor Mast</span><strong>Active</strong></div>
+                                <div class="part-chip"><span>Drive Train</span><strong>Balanced</strong></div>
+                                <div class="part-chip"><span>Payload</span><strong>Spray / Scan</strong></div>
+                            </div>
+                        </div>
+                        <div class="inspector-details">
+                            <div class="detail-row">
+                                <span>Mission</span>
+                                <strong id="inspector-mission">Survey Sweep</strong>
+                            </div>
+                            <div class="detail-row">
+                                <span>Heading</span>
+                                <strong id="inspector-heading">0°</strong>
+                            </div>
+                            <div class="detail-row">
+                                <span>Travelled</span>
+                                <strong id="inspector-distance">0.0 m</strong>
+                            </div>
+                            <div class="detail-row">
+                                <span>Coverage</span>
+                                <strong id="inspector-coverage">12%</strong>
+                            </div>
+                            <div class="detail-row">
+                                <span>Battery</span>
+                                <strong id="inspector-battery">92%</strong>
+                            </div>
+                            <div class="component-list">
+                                <div class="component-item">
+                                    <span>Navigation Stack</span>
+                                    <strong>Autonomous Routing</strong>
+                                </div>
+                                <div class="component-item">
+                                    <span>Sensor Fusion</span>
+                                    <strong>Soil + Position + Vision</strong>
+                                </div>
+                                <div class="component-item">
+                                    <span>Field Logic</span>
+                                    <strong>Coverage-Aware Missioning</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="panel twin-replay-panel" id="mission-replay">
+                    <div class="panel-head">
+                        <div>
+                            <span class="panel-eyebrow">Mission Replay Scrubber</span>
+                            <h2>Timestamped Playback</h2>
+                        </div>
+                        <span class="live-pill">Timeline</span>
+                    </div>
+                    <div class="replay-header">
+                        <div>
+                            <span>Current Time</span>
+                            <strong id="replay-current-time">00:00</strong>
+                        </div>
+                        <div>
+                            <span>Window</span>
+                            <strong id="replay-window">00:00 / 04:00</strong>
+                        </div>
+                    </div>
+                    <label for="twin-replay" class="slider-label">Scrub Mission</label>
+                    <input id="twin-replay" type="range" min="0" max="0" value="0">
+                    <div class="replay-timestamps">
+                        <span id="replay-start-time">00:00</span>
+                        <span id="replay-live-label">Live</span>
+                        <span id="replay-end-time">04:00</span>
+                    </div>
+                    <div class="replay-actions">
+                        <button type="button" class="action-pill" data-replay-action="back">-10s</button>
+                        <button type="button" class="action-pill" data-replay-action="toggle">Play / Pause</button>
+                        <button type="button" class="action-pill ghost" data-replay-action="live">Jump Live</button>
+                    </div>
+                    <div class="replay-markers" id="replay-markers" aria-label="Mission checkpoints"></div>
+                </article>
+            </section>
+
+            <section class="panel twin-insights" id="twin-insights">
+                <div class="panel-head">
+                    <div>
+                        <span class="panel-eyebrow">Digital Twin Intelligence</span>
+                        <h2>Why it matters</h2>
+                    </div>
+                </div>
+                <div class="insight-grid">
+                    <article class="insight-card">
+                        <i class="fas fa-cube"></i>
+                        <h3>Operational Replay</h3>
+                        <p>Replay missions, inspect coverage, and explain every field decision visually.</p>
+                    </article>
+                    <article class="insight-card">
+                        <i class="fas fa-broadcast-tower"></i>
+                        <h3>WebSocket Ready</h3>
+                        <p>Connect live telemetry from the robot or run the synchronized simulation demo.</p>
+                    </article>
+                    <article class="insight-card">
+                        <i class="fas fa-layer-group"></i>
+                        <h3>GLTF Friendly</h3>
+                        <p>Swap the procedural robot for a GLTF asset when the hardware model is ready.</p>
+                    </article>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-seedling"></i> SmartFarm</h3>
+                    <p>Revolutionizing agriculture with IoT and smart farming solutions</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="weather.html">Weather</a></li>
+                        <li><a href="plant-health.html">Plant Health</a></li>
+                        <li><a href="how-it-works.html">How It Works</a></li>
+                        <li><a href="control-room.html">Control Room</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-envelope"></i> contact@smartfarm.com</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SmartFarm. All rights reserved. | Final Year Project</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.160.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://unpkg.com/three@0.160.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="js/lang.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/digital-twin.js"></script>
+    <button id="voice-btn" type="button" class="voice-btn" title="Voice Commands" aria-label="Voice Commands">
+        <i class="fas fa-microphone"></i>
+    </button>
+</body>
+</html>
