@@ -1,4 +1,4 @@
-const CACHE_NAME = 'smartfarm-v10';
+const CACHE_NAME = 'smartfarm-v11';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

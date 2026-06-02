@@ -37,60 +37,217 @@
 
     <header class="page-header">
         <div class="container">
-            <h1><i class="fas fa-leaf"></i> Plant Health Analysis</h1>
-            <p>Plant disease detection and health assessment</p>
+            <h1><i class="fas fa-leaf"></i> AI Crop Health Scanner</h1>
+            <p>TensorFlow.js + OpenCV.js powered crop disease detection and health assessment</p>
         </div>
     </header>
 
     <main class="main-content">
         <div class="container">
-            <div class="form-container">
-                <h2>Upload Plant Image for Analysis</h2>
-                <p class="text-center mb-3">Take a clear photo of the plant leaf or affected area and upload it below.</p>
-                
-                <form id="plant-health-form">
-                    <div class="form-group">
-                        <label for="plant-type">Plant Type (Optional)</label>
-                        <select id="plant-type" name="plant-type">
-                            <option value="">Select plant type...</option>
-                            <option value="tomato">Tomato</option>
-                            <option value="potato">Potato</option>
-                            <option value="corn">Corn</option>
-                            <option value="brinjal">Brinjal</option>
-                            <option value="bottle-gourd">Bottle Gourd</option>
-                            <option value="lady-finger">Lady Finger</option>
-                            <option value="other">Other</option>
-                        </select>
+            <section class="scanner-hero-card">
+                <div>
+                    <span class="scanner-eyebrow">AI Vision Pipeline</span>
+                    <h2>Real-time crop diagnosis for hackathons and field demos</h2>
+                    <p>
+                        Upload a leaf photo and the scanner blends TensorFlow.js predictions with OpenCV.js
+                        color analysis to estimate crop health, highlight symptoms, and recommend next steps.
+                    </p>
+                </div>
+                <div class="scanner-stat-grid">
+                    <div>
+                        <span>Model</span>
+                        <strong>TensorFlow.js</strong>
                     </div>
+                    <div>
+                        <span>Preprocessing</span>
+                        <strong>OpenCV.js</strong>
+                    </div>
+                    <div>
+                        <span>Output</span>
+                        <strong>Health Score</strong>
+                    </div>
+                    <div>
+                        <span>Use Case</span>
+                        <strong>Crop Diagnostics</strong>
+                    </div>
+                </div>
+            </section>
 
-                    <div class="form-group">
-                        <label for="plant-image">Upload Plant Image</label>
-                        <div class="file-upload">
-                            <input type="file" id="plant-image" name="plant-image" accept="image/*" required>
-                            <label for="plant-image" class="file-upload-label">
-                                <i class="fas fa-cloud-upload-alt"></i> Choose image file...
-                            </label>
+            <section class="scanner-workbench">
+                <div class="form-container scanner-upload-card">
+                    <h2>Upload Plant Image for Analysis</h2>
+                    <p class="text-center mb-3">Take a clear photo of the leaf or affected area and upload it below.</p>
+
+                    <form id="plant-health-form">
+                        <div class="form-group">
+                            <label for="plant-type">Plant Type (Optional)</label>
+                            <select id="plant-type" name="plant-type">
+                                <option value="">Select plant type...</option>
+                                <option value="tomato">Tomato</option>
+                                <option value="potato">Potato</option>
+                                <option value="corn">Corn</option>
+                                <option value="brinjal">Brinjal</option>
+                                <option value="bottle-gourd">Bottle Gourd</option>
+                                <option value="lady-finger">Lady Finger</option>
+                                <option value="other">Other</option>
+                            </select>
                         </div>
-                        <small>Supported formats: JPG, PNG, JPEG (Max 5MB)</small>
+
+                        <div class="form-group">
+                            <label for="plant-image">Upload Plant Image</label>
+                            <div class="file-upload">
+                                <input type="file" id="plant-image" name="plant-image" accept="image/*" required>
+                                <label for="plant-image" class="file-upload-label">
+                                    <i class="fas fa-cloud-upload-alt"></i> Choose image file...
+                                </label>
+                            </div>
+                            <small>Supported formats: JPG, PNG, JPEG (Max 5MB)</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="symptoms">Observed Symptoms (Optional)</label>
+                            <textarea
+                                id="symptoms"
+                                name="symptoms"
+                                rows="3"
+                                placeholder="Describe any symptoms you've observed (e.g., yellowing leaves, spots, wilting...)"
+                            ></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-microscope"></i> Run AI Scan
+                        </button>
+
+                        <div class="scanner-tool-row" aria-label="Scanner tools">
+                            <div class="demo-launcher" id="demo-launcher">
+                                <button type="button" class="demo-launcher-btn" id="demo-launcher-btn" aria-haspopup="menu" aria-expanded="false" aria-controls="demo-launcher-menu">
+                                    <span>Demo Mode</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                                <div class="demo-launcher-menu" id="demo-launcher-menu" role="menu" aria-label="Demo crop samples">
+                                    <button type="button" class="demo-option" data-demo-sample="healthy" role="menuitem">
+                                        <i class="fas fa-leaf"></i>
+                                        <strong>Healthy Leaf</strong>
+                                        <span>Bright canopy, strong health</span>
+                                    </button>
+                                    <button type="button" class="demo-option" data-demo-sample="nutrient" role="menuitem">
+                                        <i class="fas fa-vial"></i>
+                                        <strong>Nutrient Stress</strong>
+                                        <span>Yellowing leaf for live demo</span>
+                                    </button>
+                                    <button type="button" class="demo-option" data-demo-sample="fungal" role="menuitem">
+                                        <i class="fas fa-biohazard"></i>
+                                        <strong>Fungal Risk</strong>
+                                        <span>Spots and discoloration overlay</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-secondary scanner-ghost-btn" id="heatmap-toggle">
+                                <i class="fas fa-braille"></i> Toggle Heatmap
+                            </button>
+                            <button type="button" class="btn-secondary scanner-ghost-btn" id="compare-focus-btn">
+                                <i class="fas fa-layer-group"></i> Compare Scans
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <aside class="scanner-live-card">
+                    <div class="scanner-live-header">
+                        <div>
+                            <span class="scanner-eyebrow">Live Scan</span>
+                            <h2>Health Intelligence</h2>
+                        </div>
+                        <span class="scan-status-pill" id="scan-status-pill">Ready</span>
                     </div>
 
-                    <div class="form-group">
-                        <label for="symptoms">Observed Symptoms (Optional)</label>
-                        <textarea 
-                            id="symptoms" 
-                            name="symptoms" 
-                            rows="3" 
-                            placeholder="Describe any symptoms you've observed (e.g., yellowing leaves, spots, wilting...)"
-                        ></textarea>
+                    <div class="scanner-preview-shell">
+                        <div id="image-preview-container" class="image-preview-container"></div>
+                        <canvas id="scan-heatmap" class="scan-heatmap" aria-hidden="true"></canvas>
+                        <div class="scanner-progress">
+                            <div class="scanner-progress-bar">
+                                <span id="scan-progress-bar"></span>
+                            </div>
+                            <div class="scanner-progress-meta">
+                                <span id="scan-step-label">Waiting for image</span>
+                                <strong id="scan-confidence">--%</strong>
+                            </div>
+                        </div>
                     </div>
 
-                    <button type="submit" class="btn-primary">
-                        <i class="fas fa-microscope"></i> Analyze Plant Health
-                    </button>
-                </form>
-            </div>
+                    <div class="scanner-metric-grid">
+                        <div class="scanner-metric">
+                            <span>Health Score</span>
+                            <strong id="scan-health-score">--</strong>
+                        </div>
+                        <div class="scanner-metric">
+                            <span>Confidence</span>
+                            <strong id="scan-confidence-main">--</strong>
+                        </div>
+                        <div class="scanner-metric">
+                            <span>Likely Issue</span>
+                            <strong id="scan-issue">Awaiting scan</strong>
+                        </div>
+                        <div class="scanner-metric">
+                            <span>Leaf Coverage</span>
+                            <strong id="scan-coverage">--</strong>
+                        </div>
+                    </div>
+
+                    <div class="scanner-insight-list">
+                        <div class="scanner-insight" id="scan-recommendation">
+                            Upload a crop photo to receive an AI diagnosis and treatment guidance.
+                        </div>
+                        <ul id="scan-feature-list" class="feature-list">
+                            <li>TensorFlow.js classification</li>
+                            <li>OpenCV.js color profiling</li>
+                            <li>Actionable crop care guidance</li>
+                        </ul>
+                    </div>
+                </aside>
+            </section>
 
             <div id="analysis-result" class="analysis-result"></div>
+
+            <section class="info-card scanner-compare-card" id="scan-compare-card">
+                <div class="scanner-compare-header">
+                    <div>
+                        <span class="scanner-eyebrow">Scan Comparison</span>
+                        <h3><i class="fas fa-chart-line"></i> Compare Two Scans Over Time</h3>
+                        <p>Track how a crop changes across presentations, field rounds, or follow-up scans.</p>
+                    </div>
+                    <div class="scanner-compare-summary">
+                        <div>
+                            <span>Latest</span>
+                            <strong id="compare-latest-score">--</strong>
+                        </div>
+                        <div>
+                            <span>Previous</span>
+                            <strong id="compare-previous-score">--</strong>
+                        </div>
+                        <div>
+                            <span>Delta</span>
+                            <strong id="compare-score-delta">--</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="scanner-compare-grid">
+                    <article class="scanner-compare-panel">
+                        <h4>Current Scan</h4>
+                        <div id="compare-current-card" class="scanner-compare-card-body">
+                            <p>Run a scan to populate the latest diagnosis.</p>
+                        </div>
+                    </article>
+                    <article class="scanner-compare-panel">
+                        <h4>Previous Scan</h4>
+                        <div id="compare-previous-card" class="scanner-compare-card-body">
+                            <p>Previous results will appear here automatically.</p>
+                        </div>
+                    </article>
+                </div>
+                <div class="scanner-compare-deltas" id="compare-deltas"></div>
+                <div class="scanner-history-strip" id="scan-history-strip"></div>
+            </section>
 
             <div class="info-card">
                 <h3><i class="fas fa-camera"></i> Photography Tips for Better Analysis</h3>
@@ -209,6 +366,9 @@
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.1"></script>
+    <script async src="https://docs.opencv.org/4.10.0/opencv.js"></script>
     <script src="js/lang.js"></script>
     <script src="js/core.js"></script>
     <script src="js/auth.js"></script>
