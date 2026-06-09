@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Irrigation Brain - SmartFarm</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/smart-irrigation.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body class="smart-irrigation-page">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-seedling"></i>
+                <span>SmartFarm</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="weather.html" class="nav-link">Weather</a></li>
+                <li><a href="plant-health.html" class="nav-link">Plant Health</a></li>
+                <li><a href="know-your-plant.html" class="nav-link">Know Your Plant</a></li>
+                <li><a href="live-data.html" class="nav-link">Live Data</a></li>
+                <li><a href="how-it-works.html" class="nav-link">How It Works</a></li>
+                <li><a href="forum.html" class="nav-link" data-i18n="community_forum">Community Forum</a></li>
+                <li><a href="login.html" class="nav-link login-btn">Login</a></li>
+                <li style="display: flex; align-items: center;"><button class="theme-toggle" id="theme-toggle" aria-label="Toggle Dark Mode" style="background:none; border:none; color:inherit; cursor:pointer; margin-left: 15px; font-size:1.2rem;"><i class="fas fa-moon"></i></button></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <header class="smart-irrigation-hero">
+        <div class="container smart-irrigation-hero-inner">
+            <div>
+                <span class="eyebrow"><i class="fas fa-droplet"></i> Water Intelligence</span>
+                <h1>Smart Irrigation Brain</h1>
+                <p>
+                    Combine real weather, soil state, crop rules, and forecast risk to decide when to water,
+                    how much to water, and when to pause irrigation for a safer, more efficient farm.
+                </p>
+                <div class="hero-actions">
+                    <a href="#irrigation-workbench" class="btn-primary">Open Planner</a>
+                    <a href="#irrigation-insights" class="btn-secondary">See Logic</a>
+                </div>
+            </div>
+            <div class="irrigation-status-card">
+                <div class="status-pill" id="irrigation-status-pill">Planning Mode</div>
+                <div class="status-grid">
+                    <div>
+                        <span>Water Need</span>
+                        <strong id="summary-water-need">-- mm</strong>
+                    </div>
+                    <div>
+                        <span>Risk Level</span>
+                        <strong id="summary-risk-level">--</strong>
+                    </div>
+                    <div>
+                        <span>Next Window</span>
+                        <strong id="summary-next-window">--</strong>
+                    </div>
+                    <div>
+                        <span>Efficiency</span>
+                        <strong id="summary-efficiency">--%</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="smart-irrigation-main">
+        <div class="container">
+            <section class="irrigation-workbench panel" id="irrigation-workbench">
+                <div class="panel-head">
+                    <div>
+                        <span class="panel-eyebrow">Irrigation Planner</span>
+                        <h2>Forecast-Aware Watering</h2>
+                    </div>
+                    <span class="live-pill">Weather + Soil + Rules</span>
+                </div>
+
+                <div class="irrigation-layout">
+                    <article class="planner-card">
+                        <h3>Field Inputs</h3>
+                        <form id="irrigation-form" class="irrigation-form">
+                            <div class="form-group">
+                                <label for="irrigation-city">Location</label>
+                                <input type="text" id="irrigation-city" name="irrigation-city" placeholder="e.g., New Delhi" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="irrigation-crop">Crop Type</label>
+                                <select id="irrigation-crop" name="irrigation-crop">
+                                    <option value="tomato">Tomato</option>
+                                    <option value="potato">Potato</option>
+                                    <option value="corn">Corn</option>
+                                    <option value="wheat">Wheat</option>
+                                    <option value="rice">Rice</option>
+                                    <option value="sugarcane">Sugarcane</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="irrigation-soil">Current Soil Moisture</label>
+                                <input type="range" id="irrigation-soil" name="irrigation-soil" min="0" max="100" value="42">
+                                <div class="range-meta"><span>Dry</span><strong id="irrigation-soil-value">42%</strong><span>Wet</span></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="irrigation-area">Field Area</label>
+                                <input type="number" id="irrigation-area" name="irrigation-area" min="0.1" step="0.1" value="1.5">
+                            </div>
+                            <div class="form-group">
+                                <label for="irrigation-stage">Crop Stage</label>
+                                <select id="irrigation-stage" name="irrigation-stage">
+                                    <option value="seedling">Seedling</option>
+                                    <option value="vegetative" selected>Vegetative</option>
+                                    <option value="flowering">Flowering</option>
+                                    <option value="fruiting">Fruiting</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn-primary">
+                                <i class="fas fa-satellite-dish"></i> Generate Irrigation Plan
+                            </button>
+                        </form>
+                    </article>
+
+                    <article class="planner-card weather-card">
+                        <h3>Weather Snapshot</h3>
+                        <div id="irrigation-weather-summary" class="summary-shell">
+                            <p>Run the planner to load live weather and forecast signals.</p>
+                        </div>
+                        <div class="snapshot-grid">
+                            <div><span>Rain Chance</span><strong id="summary-rain">--%</strong></div>
+                            <div><span>Temp</span><strong id="summary-temp">--°C</strong></div>
+                            <div><span>Humidity</span><strong id="summary-humidity">--%</strong></div>
+                            <div><span>Wind</span><strong id="summary-wind">-- km/h</strong></div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="panel irrigation-results" id="irrigation-results">
+                <div class="panel-head">
+                    <div>
+                        <span class="panel-eyebrow">Brain Output</span>
+                        <h2>Recommendation Engine</h2>
+                    </div>
+                    <span class="state-chip" id="irrigation-mode-chip">Awaiting plan</span>
+                </div>
+                <div class="result-grid">
+                    <article class="result-card">
+                        <span>Recommended Water</span>
+                        <strong id="result-water-amount">-- mm</strong>
+                        <p>Estimated irrigation depth for this field and crop stage.</p>
+                    </article>
+                    <article class="result-card">
+                        <span>Pump Duration</span>
+                        <strong id="result-pump-time">-- min</strong>
+                        <p>Approximate runtime at the current flow rate.</p>
+                    </article>
+                    <article class="result-card">
+                        <span>Best Window</span>
+                        <strong id="result-window">--</strong>
+                        <p>Recommended time window based on temperature and wind.</p>
+                    </article>
+                    <article class="result-card">
+                        <span>Water Savings</span>
+                        <strong id="result-savings">--%</strong>
+                        <p>Efficiency gain over a fixed daily watering routine.</p>
+                    </article>
+                </div>
+                <div class="recommendation-panel" id="recommendation-panel">
+                    <p>Enter your field inputs to calculate a weather-aware irrigation plan.</p>
+                </div>
+            </section>
+
+            <section class="panel irrigation-insights" id="irrigation-insights">
+                <div class="panel-head">
+                    <div>
+                        <span class="panel-eyebrow">Why It Works</span>
+                        <h2>Decision Logic</h2>
+                    </div>
+                </div>
+                <div class="insight-grid">
+                    <article class="insight-card">
+                        <i class="fas fa-cloud-rain"></i>
+                        <h3>Forecast first</h3>
+                        <p>WeatherAPI forecast data is used to avoid watering before rain or in high wind.</p>
+                    </article>
+                    <article class="insight-card">
+                        <i class="fas fa-water"></i>
+                        <h3>Soil aware</h3>
+                        <p>Current soil moisture drives the urgency score so the plan matches field conditions.</p>
+                    </article>
+                    <article class="insight-card">
+                        <i class="fas fa-chart-area"></i>
+                        <h3>Rules engine</h3>
+                        <p>Simple agronomy rules convert weather and crop stage into a practical watering schedule.</p>
+                    </article>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-seedling"></i> SmartFarm</h3>
+                    <p>Revolutionizing agriculture with IoT and smart farming solutions</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="weather.html">Weather</a></li>
+                        <li><a href="plant-health.html">Plant Health</a></li>
+                        <li><a href="control-room.html">Control Room</a></li>
+                        <li><a href="digital-twin.html">Digital Twin</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-envelope"></i> contact@smartfarm.com</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SmartFarm. All rights reserved. | Final Year Project</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/lang.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/smart-irrigation.js"></script>
+</body>
+</html>

@@ -1,0 +1,289 @@
+.smart-irrigation-page {
+    background:
+        radial-gradient(circle at top left, rgba(46, 125, 50, 0.2), transparent 24%),
+        radial-gradient(circle at top right, rgba(33, 150, 243, 0.12), transparent 18%),
+        linear-gradient(180deg, #08120c 0%, #0f1812 100%);
+}
+
+.smart-irrigation-hero {
+    padding: 120px 0 44px;
+    color: #f5fbf6;
+}
+
+.smart-irrigation-hero-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.smart-irrigation-hero h1 {
+    font-size: clamp(2.6rem, 5vw, 4.6rem);
+    margin: 0.85rem 0 1rem;
+    max-width: 11ch;
+    line-height: 0.98;
+}
+
+.smart-irrigation-hero p {
+    max-width: 62ch;
+    color: rgba(233, 245, 235, 0.78);
+    font-size: 1.05rem;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.78rem;
+    border-radius: 999px;
+    background: rgba(67, 160, 71, 0.16);
+    color: #9ef7b3;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.irrigation-status-card {
+    justify-self: end;
+    padding: 1.25rem;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.24);
+}
+
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    padding: 0.45rem 0.8rem;
+    border-radius: 999px;
+    background: rgba(67, 160, 71, 0.22);
+    color: #b8ffbf;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.status-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+}
+
+.status-grid div,
+.result-card,
+.planner-card,
+.recommendation-panel,
+.insight-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 22px;
+    backdrop-filter: blur(18px);
+    box-shadow: 0 22px 50px rgba(0, 0, 0, 0.18);
+}
+
+.status-grid div {
+    padding: 0.9rem;
+    display: grid;
+    gap: 0.25rem;
+}
+
+.status-grid span,
+.result-card span,
+.snapshot-grid span,
+.range-meta span {
+    color: rgba(233, 245, 235, 0.68);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.status-grid strong,
+.result-card strong,
+.snapshot-grid strong {
+    color: #f5fbf6;
+    font-size: 1.3rem;
+}
+
+.smart-irrigation-main {
+    padding: 0 0 5rem;
+}
+
+.panel {
+    background: rgba(10, 18, 12, 0.74);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    backdrop-filter: blur(18px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+    padding: 1.35rem;
+}
+
+.irrigation-workbench,
+.irrigation-results,
+.irrigation-insights {
+    margin-top: 1rem;
+}
+
+.irrigation-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+    gap: 1rem;
+}
+
+.planner-card,
+.weather-card,
+.result-card,
+.recommendation-panel {
+    padding: 1.2rem;
+}
+
+.planner-card h3,
+.weather-card h3 {
+    color: #f5fbf6;
+    margin: 0 0 0.9rem;
+}
+
+.irrigation-form {
+    display: grid;
+    gap: 0.95rem;
+}
+
+.range-meta,
+.snapshot-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.range-meta {
+    margin-top: 0.5rem;
+}
+
+#irrigation-soil {
+    width: 100%;
+    accent-color: #43a047;
+}
+
+.summary-shell {
+    min-height: 130px;
+    padding: 1rem;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: rgba(233, 245, 235, 0.78);
+}
+
+.snapshot-grid {
+    margin-top: 0.95rem;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.snapshot-grid div {
+    padding: 0.9rem;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    display: grid;
+    gap: 0.2rem;
+}
+
+.result-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.75rem;
+}
+
+.result-card p {
+    color: rgba(233, 245, 235, 0.74);
+    margin: 0.65rem 0 0;
+}
+
+.recommendation-panel {
+    margin-top: 1rem;
+    color: rgba(233, 245, 235, 0.78);
+}
+
+.insight-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.insight-card {
+    padding: 1.2rem;
+}
+
+.insight-card i {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    background: rgba(61, 220, 132, 0.12);
+    color: #89f49d;
+    margin-bottom: 0.8rem;
+}
+
+.insight-card h3 {
+    color: #f5fbf6;
+    margin: 0 0 0.45rem;
+}
+
+.insight-card p {
+    color: rgba(233, 245, 235, 0.74);
+    margin: 0;
+}
+
+body.dark-mode .smart-irrigation-page {
+    background:
+        radial-gradient(circle at top left, rgba(46, 125, 50, 0.18), transparent 24%),
+        radial-gradient(circle at top right, rgba(33, 150, 243, 0.1), transparent 18%),
+        linear-gradient(180deg, #050705 0%, #0d120d 100%);
+}
+
+body.dark-mode .status-grid div,
+body.dark-mode .planner-card,
+body.dark-mode .weather-card,
+body.dark-mode .result-card,
+body.dark-mode .recommendation-panel,
+body.dark-mode .insight-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+body.dark-mode .status-grid strong,
+body.dark-mode .result-card strong,
+body.dark-mode .snapshot-grid strong,
+body.dark-mode .planner-card h3,
+body.dark-mode .weather-card h3,
+body.dark-mode .insight-card h3 {
+    color: #f5fbf6;
+}
+
+@media (max-width: 1100px) {
+    .smart-irrigation-hero-inner,
+    .irrigation-layout,
+    .result-grid,
+    .insight-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .irrigation-status-card {
+        justify-self: start;
+    }
+}
+
+@media (max-width: 640px) {
+    .smart-irrigation-hero {
+        padding-top: 104px;
+    }
+
+    .status-grid,
+    .snapshot-grid {
+        grid-template-columns: 1fr;
+    }
+}
