@@ -21,6 +21,7 @@ window.SmartFarm.escapeHtml = function(value) {
 document.addEventListener('DOMContentLoaded', function() {
     setupTheme();
     setupDigitalTwinLink();
+    setupIrrigationBrainLink();
     setupPathPlannerLink();
     setupControlRoomLink();
     setupGroupedNavigation();
@@ -145,6 +146,37 @@ function setupNavigation() {
 }
 
 /**
+ * Ensures the Smart Irrigation Brain nav entry is available across the site.
+ */
+function setupIrrigationBrainLink() {
+    const navMenu = document.querySelector('.nav-menu');
+    if (!navMenu || navMenu.querySelector('a[href="smart-irrigation.html"]')) return;
+
+    const loginLink = navMenu.querySelector('a[href="login.html"]');
+    const irrigationLi = document.createElement('li');
+    const irrigationLink = document.createElement('a');
+
+    irrigationLink.href = 'smart-irrigation.html';
+    irrigationLink.className = 'nav-link';
+    irrigationLink.textContent = 'Smart Irrigation';
+
+    if (window.location.pathname.endsWith('smart-irrigation.html')) {
+        irrigationLink.classList.add('active');
+    }
+
+    irrigationLi.appendChild(irrigationLink);
+
+    const anchorTarget = navMenu.querySelector('a[href="control-room.html"]');
+    if (anchorTarget && anchorTarget.parentElement) {
+        navMenu.insertBefore(irrigationLi, anchorTarget.parentElement);
+    } else if (loginLink && loginLink.parentElement && loginLink.parentElement.parentElement === navMenu) {
+        navMenu.insertBefore(irrigationLi, loginLink.parentElement);
+    } else {
+        navMenu.appendChild(irrigationLi);
+    }
+}
+
+/**
  * Reorganizes the top navigation into clearer feature groups.
  */
 function setupGroupedNavigation() {
@@ -168,7 +200,7 @@ function setupGroupedNavigation() {
             return;
         }
 
-        if (['live-data.html', 'how-it-works.html', 'digital-twin.html', 'control-room.html', 'path-planner.html', 'forum.html'].includes(href)) {
+        if (['live-data.html', 'how-it-works.html', 'digital-twin.html', 'smart-irrigation.html', 'control-room.html', 'path-planner.html', 'forum.html'].includes(href)) {
             groups.operations.push(item);
             return;
         }

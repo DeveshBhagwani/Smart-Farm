@@ -1,4 +1,4 @@
-const CACHE_NAME = 'smartfarm-v11';
+const CACHE_NAME = 'smartfarm-v12';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -10,6 +10,7 @@ const ASSETS_TO_CACHE = [
   './how-it-works.html',
   './path-planner.html',
   './digital-twin.html',
+  './smart-irrigation.html',
   './control-room.html',
   './login.html',
   './styles/main.css',
@@ -17,6 +18,7 @@ const ASSETS_TO_CACHE = [
   './styles/forum.css',
   './styles/path-planner.css',
   './styles/digital-twin.css',
+  './styles/smart-irrigation.css',
   './styles/control-room.css',
   './styles/how-it-works.css',
   './styles/kyp.css',
@@ -34,6 +36,7 @@ const ASSETS_TO_CACHE = [
   './js/path-planner.js',
   './js/path-planner-worker.js',
   './js/digital-twin.js',
+  './js/smart-irrigation.js',
   './js/control-room.js',
   './js/forum.js',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css',
