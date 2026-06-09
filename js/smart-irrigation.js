@@ -601,3 +601,9 @@ function escapeHtml(value) {
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#39;');
 }
+
+window.SmartIrrigation = {
+    generateIrrigationPlan,
+    applyScenario,
+    getLatestPlan: () => irrigationState.latestPlan
+};
