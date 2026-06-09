@@ -19,18 +19,21 @@ const irrigationState = {
     chart: null,
     latestPlan: null,
     latestForecast: null,
-    weather: null
+    weather: null,
+    history: []
 };
 
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('irrigation-form');
     const soilSlider = document.getElementById('irrigation-soil');
     const soilValue = document.getElementById('irrigation-soil-value');
+    const scenarioButtons = document.querySelectorAll('[data-scenario]');
 
     if (!form) return;
 
     syncSummaryPlaceholders();
     renderEmptyChart();
+    renderHistoryList();
 
     if (soilSlider && soilValue) {
         const syncSlider = () => {
@@ -43,6 +46,13 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
         await generateIrrigationPlan();
+    });
+
+    scenarioButtons.forEach((button) => {
+        button.addEventListener('click', async () => {
+            applyScenario(button.dataset.scenario || 'dry');
+            await generateIrrigationPlan();
+        });
     });
 });
 
@@ -68,9 +78,11 @@ async function generateIrrigationPlan() {
         const plan = buildIrrigationPlan({ city, cropKey, stage, soilMoisture, area }, weather);
         irrigationState.latestPlan = plan;
         irrigationState.latestForecast = weather.forecastDays;
+        pushPlanHistory(plan);
         renderWeatherSummary(weather);
         renderIrrigationPlan(plan, weather);
         renderForecastChart(plan, weather);
+        renderHistoryList();
         showIrrigationMessage('Irrigation plan generated successfully.', 'success');
     } catch (error) {
         console.error('Irrigation planner failed:', error);
@@ -252,7 +264,7 @@ function renderIrrigationPlan(plan, weather) {
         recommendationPanel.innerHTML = `
             <div class="recommendation-title">
                 <strong>${escapeHtml(plan.cropLabel)} irrigation plan</strong>
-                <span>${escapeHtml(formatForecastLabel(new Date().toISOString().slice(0, 10)))}</span>
+                <span>${escapeHtml(plan.forecastDays[0]?.label || formatForecastLabel(new Date().toISOString().slice(0, 10)))}</span>
             </div>
             <p>${escapeHtml(plan.recommendation.summary)}</p>
             <ul class="recommendation-list">
@@ -275,6 +287,78 @@ function renderIrrigationPlan(plan, weather) {
 
     irrigationState.latestPlan = plan;
     irrigationState.latestForecast = weather.forecastDays;
+}
+
+function pushPlanHistory(plan) {
+    irrigationState.history.unshift({
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+        timestamp: new Date(),
+        city: plan.city,
+        cropLabel: plan.cropLabel,
+        waterNeedMm: plan.waterNeedMm,
+        pumpMinutes: plan.pumpMinutes,
+        nextWindow: plan.nextWindow,
+        riskScore: plan.riskScore,
+        savings: plan.savings,
+        rainChance: plan.metrics.rainChance,
+        temperature: plan.metrics.temp,
+        weatherLabel: plan.forecastDays[0]?.condition || 'Weather plan'
+    });
+
+    irrigationState.history = irrigationState.history.slice(0, 5);
+}
+
+function renderHistoryList() {
+    const historyList = document.getElementById('irrigation-history-list');
+    if (!historyList) return;
+
+    if (!irrigationState.history.length) {
+        historyList.innerHTML = '<p class="history-empty">Run a few plans to build a comparison timeline.</p>';
+        return;
+    }
+
+    historyList.innerHTML = irrigationState.history.map((item, index) => `
+        <article class="history-card ${index === 0 ? 'is-latest' : ''}">
+            <div class="history-card-header">
+                <strong>${escapeHtml(item.cropLabel)}</strong>
+                <span>${escapeHtml(formatPlanTimestamp(item.timestamp))}</span>
+            </div>
+            <div class="history-card-meta">
+                <span>${escapeHtml(item.city)}</span>
+                <span>${item.riskScore >= 70 ? 'Critical' : item.riskScore >= 45 ? 'Moderate' : 'Low'} risk</span>
+            </div>
+            <div class="history-card-stats">
+                <div><span>Water</span><strong>${item.waterNeedMm} mm</strong></div>
+                <div><span>Window</span><strong>${escapeHtml(item.nextWindow)}</strong></div>
+                <div><span>Save</span><strong>${item.savings}%</strong></div>
+                <div><span>Rain</span><strong>${item.rainChance}%</strong></div>
+            </div>
+        </article>
+    `).join('');
+}
+
+function applyScenario(key) {
+    const city = document.getElementById('irrigation-city');
+    const crop = document.getElementById('irrigation-crop');
+    const soil = document.getElementById('irrigation-soil');
+    const area = document.getElementById('irrigation-area');
+    const stage = document.getElementById('irrigation-stage');
+
+    const scenarios = {
+        dry: { city: 'New Delhi', crop: 'corn', soil: 24, area: 1.8, stage: 'vegetative' },
+        rain: { city: 'Mumbai', crop: 'rice', soil: 63, area: 2.2, stage: 'flowering' },
+        heat: { city: 'Jaipur', crop: 'tomato', soil: 31, area: 1.4, stage: 'fruiting' }
+    };
+
+    const scenario = scenarios[key] || scenarios.dry;
+    if (city) city.value = scenario.city;
+    if (crop) crop.value = scenario.crop;
+    if (soil) soil.value = scenario.soil;
+    if (area) area.value = scenario.area;
+    if (stage) stage.value = scenario.stage;
+
+    const soilValue = document.getElementById('irrigation-soil-value');
+    if (soilValue) soilValue.textContent = `${scenario.soil}%`;
 }
 
 function renderForecastChart(plan) {
@@ -453,6 +537,15 @@ function chooseNextWindow(forecastDay, current, riskScore) {
         return 'Tomorrow 5:30-7:00 AM';
     }
     return 'Today 5:00-6:30 AM';
+}
+
+function formatPlanTimestamp(dateValue) {
+    return new Date(dateValue).toLocaleString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+        month: 'short',
+        day: 'numeric'
+    });
 }
 
 function riskLabel(score) {

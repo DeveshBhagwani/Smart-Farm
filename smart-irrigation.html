@@ -124,6 +124,17 @@
                             <button type="submit" class="btn-primary">
                                 <i class="fas fa-satellite-dish"></i> Generate Irrigation Plan
                             </button>
+                            <div class="scenario-row" aria-label="Quick irrigation scenarios">
+                                <button type="button" class="scenario-pill" data-scenario="dry">
+                                    <i class="fas fa-sun"></i> Dry Field
+                                </button>
+                                <button type="button" class="scenario-pill" data-scenario="rain">
+                                    <i class="fas fa-cloud-rain"></i> Rain Alert
+                                </button>
+                                <button type="button" class="scenario-pill" data-scenario="heat">
+                                    <i class="fas fa-temperature-high"></i> Heat Stress
+                                </button>
+                            </div>
                         </form>
                     </article>
 
@@ -187,6 +198,19 @@
                         <canvas id="irrigation-chart" height="120"></canvas>
                     </div>
                 </section>
+            </section>
+
+            <section class="panel irrigation-history" id="irrigation-history">
+                <div class="panel-head">
+                    <div>
+                        <span class="panel-eyebrow">Plan Timeline</span>
+                        <h2>Recent Irrigation Plans</h2>
+                    </div>
+                    <span class="live-pill">History</span>
+                </div>
+                <div id="irrigation-history-list" class="history-list">
+                    <p class="history-empty">Run a few plans to build a comparison timeline.</p>
+                </div>
             </section>
 
             <section class="panel irrigation-insights" id="irrigation-insights">
